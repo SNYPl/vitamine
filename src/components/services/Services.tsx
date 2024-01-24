@@ -28,8 +28,8 @@ const servicesList = [
 const Services: React.FC = ({}) => {
   return (
     <section className={`${style.services}`}>
-      {servicesList.map((el: any) => (
-        <article className={`${style.service}`}>
+      {servicesList.map((el: any, id: any) => (
+        <article className={`${style.service}`} key={id}>
           <Image src={el.img} alt="service" width={30} height={30} />
           <h3>{el.title}</h3>
           <p>{el.info}</p>

@@ -3,6 +3,7 @@ import styles from "./style.module.scss";
 import Navigation from "./navigation/Navigation";
 import Cart from "./cart/Cart";
 import MobileMenuOpener from "./mobileMenu/menuOpener/MenuOpener";
+import Image from "next/image";
 
 const Menu = () => {
   return (
@@ -11,7 +12,12 @@ const Menu = () => {
         <div className="menu-wrapper">
           <MobileMenuOpener />
           <Link href={"#"} className="menu-logo">
-            <img src={"/images/logo.png"} alt=" logo" />
+            <Image
+              src={"/images/logo.png"}
+              alt=" logo"
+              width={93}
+              height={37}
+            />
           </Link>
           <Navigation />
           <Cart />
