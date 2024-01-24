@@ -1,0 +1,10 @@
+.productMenu {
+  display: flex;
+  column-gap: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+  .productMenu {
+    flex-direction: column;
+  }
+}

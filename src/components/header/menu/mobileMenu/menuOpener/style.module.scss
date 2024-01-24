@@ -1,0 +1,16 @@
+.menuOpener {
+  display: none;
+  color: #252525;
+  font-size: 1em;
+  font-family: "CeraPro Regular";
+  text-decoration: none;
+  line-height: 1;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .menuOpener {
+    display: block;
+  }
+}

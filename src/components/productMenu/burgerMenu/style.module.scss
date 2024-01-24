@@ -1,0 +1,112 @@
+.burgerMenu {
+  position: relative;
+  //   width: 100%;
+  width: 300px;
+  height: 3.125em;
+  z-index: 10;
+  cursor: pointer;
+  min-width: 270px;
+}
+
+.btnCont {
+  background-color: #f79823;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.btnCont h3 {
+  color: #fff;
+  font-size: 1.125em;
+  font-family: ceraBold;
+  line-height: 2.7777777778em;
+}
+
+.burgerButton {
+  background-color: transparent;
+  margin-right: 10px;
+  outline: none;
+
+  i {
+    color: #fff;
+    font-size: 1.125em;
+  }
+}
+
+.btnArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: #fff;
+    font-size: 12px;
+
+    svg {
+      transition: transform 0.24s;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.open {
+  // animation: slideDown 1s ease;
+  display: none;
+}
+
+.menu {
+  padding: 14px;
+  background-color: #fafafa;
+
+  li {
+    border-bottom: 1px dashed #ebebeb;
+    padding: 10px 0;
+
+    a {
+      color: #636363;
+      font-size: 1em;
+      font-family: ceraReg;
+      line-height: 1;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+      display: block;
+    }
+  }
+}
+
+.arrowTransform {
+  svg {
+    transform: rotate(180deg);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .burgerMenu {
+    width: 100%;
+    margin-bottom: 1.0714285714em;
+  }
+
+  .menu {
+    display: none;
+    width: 100%;
+
+    ul {
+      width: 100%;
+    }
+  }
+
+  .open {
+    display: flex;
+  }
+}

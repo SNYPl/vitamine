@@ -1,0 +1,30 @@
+.icons {
+  list-style: none;
+  display: inline-block;
+  &::after {
+    content: "|";
+    display: inline-block;
+    margin: 0 15px;
+    color: #ebebeb;
+  }
+
+  li {
+    margin-right: 0.625em;
+    display: inline-block;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  a {
+    color: #252525;
+    font-size: 1em;
+    font-family: ceraReg;
+    text-decoration: none;
+    line-height: 1;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+    height: auto;
+  }
+}
