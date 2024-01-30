@@ -1,0 +1,53 @@
+.productSlide {
+  margin-top: 0.875em;
+  width: 29%;
+  margin-bottom: 1.875em;
+  padding: 0 15px;
+
+  h5 {
+    color: #252525;
+    font-size: 1.5em;
+    font-family: ceraBold;
+    line-height: 1;
+  }
+}
+
+.productSlideHeader {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.625em;
+  margin-bottom: 1.875em;
+}
+
+.controller {
+  color: #252525;
+
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+
+  button {
+    height: 22.5px !important;
+    width: 22.5px !important;
+    border-radius: 999px;
+    background-color: rgba(0, 0, 0, 0);
+    color: #252525;
+    border: 1px solid #ebebeb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 0.775em;
+    }
+  }
+}
+
+.content {
+  margin: 0 -0.9375em;
+}
+
+.slideItem {
+  width: 100%;
+  display: inline-block;
+}

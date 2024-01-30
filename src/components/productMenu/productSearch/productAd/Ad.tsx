@@ -12,6 +12,7 @@ const Ad = () => {
           width={1070}
           height={405}
           alt="img"
+          priority
         />
       </div>
       <div className={styles.adInfo}>

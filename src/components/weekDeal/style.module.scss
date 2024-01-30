@@ -1,0 +1,105 @@
+.deal {
+  padding: 3.125em 0;
+  background-color: #fff3dd;
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 60px;
+}
+
+.dealImg {
+  max-width: 50%;
+  padding: 0 15px;
+}
+
+.dealInfo {
+  max-width: 41.66666667%;
+  padding: 0 0.9375em;
+}
+
+.title {
+  color: #252525;
+  font-size: 2.75em;
+  font-family: ceraBold;
+  line-height: 1;
+  margin-bottom: 2.1875rem;
+
+  span {
+    border-bottom: 3px solid var(--green-color);
+  }
+}
+
+.price {
+  color: var(--green-color);
+  font-size: 1.875em;
+  font-family: ceraBold;
+  line-height: 1;
+  margin-bottom: 0.5em;
+
+  span {
+    color: rgb(99, 99, 99, 0.7);
+    font-size: 0.6em;
+    font-family: ceraReg;
+    line-height: 1;
+    font-weight: 500;
+    margin-left: 3px;
+  }
+}
+
+.info {
+  color: #636363;
+  font-size: 1rem;
+  font-family: ceraReg;
+  line-height: 1.875em;
+  margin-bottom: 0.6666666667em;
+}
+
+.time {
+  display: flex;
+  column-gap: 15px;
+  margin-bottom: 30px;
+}
+
+.timeItem {
+  background-color: #fff;
+  border-radius: 999px;
+  text-align: center;
+  height: 5em;
+  width: 5em;
+  box-shadow: 0px 2px 2px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h4 {
+    color: var(--green-color);
+    font-size: 1.875em;
+    font-family: ceraBold;
+    line-height: 1;
+  }
+  span {
+    font-family: ceraReg;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+.shopBtn {
+  font-size: 0.8125em;
+  font-family: ceraBold;
+  padding: 0 2.3076923077em;
+  text-transform: uppercase;
+  background-color: var(--green-color);
+  border-color: var(--green-color);
+  border-radius: 32px;
+  color: #fff;
+  height: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 132px;
+}
+
+@media only screen and (min-width: 1500px) {
+  .deal {
+    justify-content: space-around;
+  }
+}

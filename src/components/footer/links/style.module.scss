@@ -1,0 +1,34 @@
+.links {
+  h3 {
+    color: #252525;
+    font-size: 1rem;
+    font-family: ceraBold;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 1.625em;
+    margin-top: 1em;
+  }
+
+  ul {
+    max-height: 130px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+
+    li {
+      margin-bottom: 0.625em;
+    }
+
+    a {
+      color: rgb(99, 99, 99, 0.8);
+      font-size: 1em;
+      font-family: ceraReg;
+      text-decoration: none;
+      line-height: 1;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  }
+}

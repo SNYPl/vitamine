@@ -1,0 +1,25 @@
+.featureList {
+  margin-bottom: 2.5em;
+  display: flex;
+  column-gap: 32px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+
+  li {
+    padding: 12px 0;
+    font-family: ceraBold;
+    text-transform: capitalize;
+    color: #b2b2b2;
+    transition: all 0.3s;
+    white-space: nowrap;
+    line-height: 1.5715;
+    cursor: pointer;
+  }
+}
+
+.active {
+  color: var(--green-color);
+  text-shadow: 0 0 0.25px currentcolor;
+  border-bottom: 4px solid var(--green-color);
+}
