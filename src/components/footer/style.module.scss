@@ -48,3 +48,25 @@
     }
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+  }
+
+  .footerInfoItem {
+    text-align: center;
+  }
+
+  .footerList {
+    li {
+      font-size: 0.95rem;
+    }
+  }
+
+  .footerInfoItem ul:last-child {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+}

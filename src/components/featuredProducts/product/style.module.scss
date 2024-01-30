@@ -76,10 +76,17 @@
   width: 100%;
 
   .productImg {
-    padding: 15px;
     border: 1px solid #ebebeb;
     transition: border 0.2s ease-in-out;
     margin-right: 1.5625em;
+
+    &:hover {
+      border-color: var(--green-color);
+    }
+
+    .imgLink {
+      padding: 15px;
+    }
 
     img {
       margin-bottom: 0;
@@ -95,6 +102,55 @@
 
     a {
       font-family: ceraBold;
+    }
+
+    .productNameLink:hover {
+      color: #fd5f5c;
+    }
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  .nonIntroduction {
+    display: block;
+    flex: 0 0 33.33333333%;
+    max-width: 33.33333333%;
+    // margin: 0 7.5px;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .nonIntroduction {
+    display: block;
+    flex: 0 0 23%;
+    max-width: 23%;
+    margin: 0 7.5px;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .nonIntroduction {
+    margin: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .nonIntroduction {
+    display: block;
+    flex: 0 0 50%;
+    max-width: 50%;
+    margin: 0 7.5px;
+    padding: 1.475em 0;
+
+    img {
+      width: 100%;
+    }
+    a {
+      text-align: center;
     }
   }
 }

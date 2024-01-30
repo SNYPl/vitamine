@@ -23,7 +23,7 @@ const FeaturedProducts: React.FC<featureMenu> = ({
 }) => {
   return (
     <ul className={`${style.featureList}`}>
-      {featuredMenu.map((el: any, id: any) => (
+      {featuredMenu.slice(0, 5).map((el: any, id: any) => (
         <li
           key={id}
           onClick={() => setActiveMenu(el.value)}

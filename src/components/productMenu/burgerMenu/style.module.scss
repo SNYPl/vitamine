@@ -81,6 +81,10 @@
       transition: 0.2s ease-in-out;
       cursor: pointer;
       display: block;
+
+      &:hover {
+        color: var(--green-color);
+      }
     }
   }
 }

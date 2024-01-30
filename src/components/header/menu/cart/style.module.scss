@@ -10,6 +10,10 @@
     line-height: 1;
     transition: 0.2s ease-in-out;
     cursor: pointer;
+
+    &:hover {
+      color: var(--green-color);
+    }
   }
 
   span {

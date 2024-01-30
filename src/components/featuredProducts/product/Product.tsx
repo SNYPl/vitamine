@@ -22,19 +22,25 @@ const Product: React.FC<product> = ({
 }) => {
   return (
     <article
-      className={`${style.product} ${introduction ? style.introduction : ""}`}
+      className={`${style.product} ${
+        introduction ? style.introduction : style.nonIntroduction
+      }`}
     >
       <div className={`${style.productImg}`}>
-        <Image
-          src={img}
-          alt="item"
-          width={introduction ? 70 : 210}
-          height={introduction ? 70 : 138}
-        />
+        <Link href={"#"} className={`${style.imgLink}`}>
+          <Image
+            src={img}
+            alt="item"
+            width={introduction ? 70 : 210}
+            height={introduction ? 70 : 138}
+          />
+        </Link>
       </div>
       <div className={`${style.productInfo}`}>
         <h3>{category}</h3>
-        <Link href={"#"}>{description}</Link>
+        <Link href={"#"} className={`${style.productNameLink}`}>
+          {description}
+        </Link>
         <h4>
           {sale ? sale : price} <del> {sale ? price : null}</del>
         </h4>

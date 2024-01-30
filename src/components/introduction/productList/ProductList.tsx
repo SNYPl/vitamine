@@ -76,7 +76,7 @@ const ProductList: React.FC<props> = ({ rows }) => {
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 1,
         },
       },
       {

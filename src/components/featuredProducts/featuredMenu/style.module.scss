@@ -19,7 +19,13 @@
 }
 
 .active {
-  color: var(--green-color);
+  color: var(--green-color) !important;
   text-shadow: 0 0 0.25px currentcolor;
   border-bottom: 4px solid var(--green-color);
+}
+
+@media only screen and (max-width: 450px) {
+  .featureList {
+    flex-wrap: wrap;
+  }
 }

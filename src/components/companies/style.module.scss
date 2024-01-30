@@ -16,3 +16,18 @@
     }
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .companies {
+    column-gap: 25px;
+    div {
+      padding: 7px 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .companies {
+    overflow-x: scroll;
+  }
+}

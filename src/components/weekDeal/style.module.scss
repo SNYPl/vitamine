@@ -107,3 +107,30 @@
     justify-content: space-around;
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .dealImg {
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .deal {
+    flex-direction: column;
+  }
+  .dealImg {
+    max-width: 100%;
+    margin-bottom: 2.1428571429em;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  .dealInfo {
+    width: 100%;
+    max-width: 100%;
+  }
+}

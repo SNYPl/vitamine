@@ -37,6 +37,11 @@
     align-items: center;
     justify-content: center;
 
+    &:hover {
+      background-color: transparent !important;
+      color: rgb(37, 37, 37) !important;
+    }
+
     i {
       font-size: 0.775em;
     }
@@ -50,4 +55,18 @@
 .slideItem {
   width: 100%;
   display: inline-block;
+}
+
+@media only screen and (max-width: 992px) {
+  .productSlide {
+    width: 32%;
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .productSlide {
+    width: 100%;
+    max-width: 100%;
+  }
 }
