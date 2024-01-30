@@ -2,7 +2,7 @@ import React from "react";
 import style from "./style.module.scss";
 import Image from "next/image";
 import Socials from "../header/topNav/socials/Socials";
-import FooterLink from "./links/footerLink";
+import FooterLink from "./links/FooterLink";
 
 const company = ["/images/companies/1.png", "/images/companies/2.png"];
 
