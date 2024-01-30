@@ -28,7 +28,7 @@
   &::after {
     display: none;
   }
-  li {
+  a {
     background-color: #eaeff4;
     color: #636363;
     border: 0;
@@ -41,7 +41,10 @@
     min-width: 32px;
     border-radius: 30px;
 
-    a {
+    &:hover {
+      background-color: var(--green-color);
+      color: #fff;
+      opacity: 0.8;
     }
   }
 }

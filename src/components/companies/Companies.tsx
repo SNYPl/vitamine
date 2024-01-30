@@ -2,7 +2,11 @@ import React from "react";
 import style from "./style.module.scss";
 import Image from "next/image";
 
-const company = ["/images/companies/1.png", "/images/companies/2.png"];
+const company = [
+  "/images/companies/3.png",
+  "/images/companies/4.png",
+  "/images/companies/5.png",
+];
 
 const Companies: React.FC = ({}) => {
   return (
