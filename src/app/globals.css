@@ -91,6 +91,17 @@ button {
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
+.ant-float-btn-body {
+  background-color: rgba(0, 0, 0, 0.45) !important;
+}
+.ant-float-btn-body:hover {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+.ant-float-btn-body span {
+  color: #fff !important;
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body {

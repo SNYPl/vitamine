@@ -17,7 +17,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       onClick={onSubmitButton}
       {...props}
-      className={`${style.button} ${className}`}
+      className={`${className} ${style.button} `}
     >
       {children}
     </button>

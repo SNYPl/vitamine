@@ -63,6 +63,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
+  position: relative;
 }
 
 .introduction {
@@ -79,6 +81,8 @@
     border: 1px solid #ebebeb;
     transition: border 0.2s ease-in-out;
     margin-right: 1.5625em;
+    z-index: 9999;
+    position: static;
 
     &:hover {
       border-color: var(--green-color);
@@ -108,6 +112,86 @@
       color: #fd5f5c;
     }
   }
+}
+
+.nonIntroduction::after,
+.nonIntroduction::before {
+  content: "";
+  position: absolute;
+  display: block;
+  bottom: 0px;
+  left: 0;
+  height: 0px;
+  width: 100%;
+  background-color: #fff;
+  z-index: 0;
+  opacity: 0;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: 0.2s ease-in-out;
+}
+
+.nonIntroduction::before {
+  height: calc(100% + 40px);
+  bottom: -40px;
+  border: 0;
+  visibility: hidden;
+  box-shadow: 0px 20px 32px 0 rgba(53, 78, 84, 0.15);
+}
+
+.nonIntroduction:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
+.nonIntroduction:hover {
+  border: 0 rgba(0, 0, 0, 0);
+  z-index: 20;
+
+  img {
+    transform: scale(1.05);
+    transform-origin: 50% 50%;
+  }
+
+  .productInfo a {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  h4 {
+    transform: translateY(-20px);
+  }
+
+  .productBtn {
+    transform: scale(1) translateY(-20px);
+
+    &:hover {
+      background-color: var(--green-color);
+    }
+  }
+}
+.cartButtons {
+  position: absolute;
+  transition: 0.3s ease;
+  top: 96%;
+  z-index: 5;
+  bottom: 0;
+  left: 25%;
+}
+
+.productBtn {
+  transform: scale(0) translateY(0px);
+  height: 2.5em;
+  width: 2.5em;
+  padding: 0;
+  transition: 0.2s ease-in-out;
+  background-color: #eaeff4;
+  color: #252525;
+  border: 0;
+  font-size: 16px;
+  margin-right: 0.3125em;
+}
+
+.cartButtons {
 }
 
 @media only screen and (min-width: 576px) {

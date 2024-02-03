@@ -60,14 +60,10 @@
   }
 }
 
-.open {
-  // animation: slideDown 1s ease;
-  display: none;
-}
-
 .menu {
   padding: 14px;
   background-color: #fafafa;
+  display: none;
 
   li {
     border-bottom: 1px dashed #ebebeb;
@@ -89,6 +85,10 @@
   }
 }
 
+.open {
+  display: flex;
+}
+
 .arrowTransform {
   svg {
     transform: rotate(180deg);
@@ -100,17 +100,15 @@
     width: 100%;
     margin-bottom: 1.0714285714em;
   }
+  .mobileClosed {
+    display: none;
+  }
 
   .menu {
-    display: none;
     width: 100%;
 
     ul {
       width: 100%;
     }
-  }
-
-  .open {
-    display: flex;
   }
 }

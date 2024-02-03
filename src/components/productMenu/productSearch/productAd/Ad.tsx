@@ -5,7 +5,7 @@ import Button from "@/components/button/Button";
 
 const Ad = () => {
   return (
-    <section className={styles.ad}>
+    <section className={`${styles.ad} adImage`}>
       <div className={styles.adBackground}>
         <Image
           src="/images/home/adBgrnd.png"

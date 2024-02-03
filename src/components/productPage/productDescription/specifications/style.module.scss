@@ -1,0 +1,35 @@
+.specifications {
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 90%;
+
+  tr {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+  }
+
+  td {
+    border: 1px solid #ebebeb;
+    padding: 18px;
+    font-size: 1rem;
+    line-height: 1;
+
+    &:first-child {
+      color: #252525;
+      font-family: ceraBold;
+      text-transform: uppercase;
+    }
+  }
+}

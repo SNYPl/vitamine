@@ -5,7 +5,6 @@ import FeaturedProducts from "@/components/featuredProducts/FeaturedProducts";
 import Deal from "@/components/weekDeal/Deal";
 import Introduction from "@/components/introduction/Introduction";
 import Companies from "@/components/companies/Companies";
-import Footer from "@/components/footer/Footer";
 
 export default function Home() {
   return (
@@ -20,9 +19,6 @@ export default function Home() {
           <Companies />
         </div>
       </main>
-      <footer className={"container"}>
-        <Footer />
-      </footer>
     </>
   );
 }

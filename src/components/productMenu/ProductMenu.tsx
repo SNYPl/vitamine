@@ -5,7 +5,7 @@ import ProductSearch from "./productSearch/ProductSearch";
 const ProductMenu = () => {
   return (
     <section className={styles.productMenu}>
-      <BurgerMenu />
+      <BurgerMenu activeMenu />
       <ProductSearch />
     </section>
   );

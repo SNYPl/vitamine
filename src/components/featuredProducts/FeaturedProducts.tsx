@@ -83,7 +83,7 @@ const FeaturedProducts: React.FC = ({}) => {
       <FeaturedMenu setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
       <section className={`${style.featuredProductsList}`}>
         {featuredProducts.map((el: FeaturedProduct, id: any) => (
-          <Product {...el} key={id} />
+          <Product {...el} key={id} id={id} />
         ))}
       </section>
     </section>

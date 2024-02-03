@@ -3,15 +3,24 @@
 import { useState } from "react";
 import styles from "./style.module.scss";
 import Button from "@/components/button/Button";
-import { arrowDown, arrowUp } from "../../../common/svg";
+import { arrowUp } from "../../../common/svg";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const BurgerMenu = () => {
-  const [isOpen, setIsOpen] = useState(true);
+interface BurgerMenu {
+  activeMenu: boolean;
+}
+
+const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
+  const path = usePathname();
+  const homePage = path === "/" ? true : false;
+  const [isOpen, setIsOpen] = useState(activeMenu);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  console.log(isOpen);
 
   return (
     <section className={styles.burgerMenu}>
@@ -28,7 +37,11 @@ const BurgerMenu = () => {
         </div>
       </article>
       {/* {isOpen && ( */}
-      <div className={`${styles.menu} ${!isOpen ? styles.open : ""}`}>
+      <div
+        className={`${styles.menu} ${isOpen ? styles.open : ""} ${
+          homePage ? styles.homePageMenu : styles.differentPages
+        } `}
+      >
         <ul>
           <li>
             <Link href="#">Home</Link>

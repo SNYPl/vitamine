@@ -1,0 +1,30 @@
+.gallery {
+  display: block;
+  flex: 0 0 53%;
+  max-width: 53%;
+  padding-right: 15px;
+  padding-left: 30px;
+}
+.bigImage img {
+  //   height: 100%;
+  width: 100%;
+  object-fit: contain;
+  border: 1px solid #ebebeb;
+  margin-bottom: 8px;
+}
+
+.thumbNails img {
+  border: 1px solid #ebebeb;
+  object-fit: contain;
+  width: 100%;
+  padding: 0.625em;
+}
+
+@media only screen and (max-width: 768px) {
+  .gallery {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: 30px;
+  }
+}

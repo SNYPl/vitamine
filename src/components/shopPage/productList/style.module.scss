@@ -1,0 +1,17 @@
+.productList {
+  flex: 0 0 77%;
+  max-width: 77%;
+  padding-left: 15px;
+
+  ul {
+    margin-top: 60px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .productList {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+}

@@ -1,6 +1,7 @@
 [
-  { "name": "bread", "value": "bread" },
-  { "name": "fastfood", "value": "fast-food" },
+  { "name": "All departments", "value": "all" },
+  { "name": "Bread", "value": "bread" },
+  { "name": "Fastfood", "value": "fast-food" },
   { "name": "fresh meat", "value": "fresh-meat" },
   { "name": "ocean foods", "value": "ocean-foods" },
   { "name": "oranges", "value": "oranges" },

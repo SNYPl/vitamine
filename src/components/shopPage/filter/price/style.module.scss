@@ -1,0 +1,40 @@
+.price {
+  h3 {
+    color: #252525;
+    font-size: 1.5em;
+    font-family: ceraBold;
+    line-height: 1;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  button {
+    font-size: 16px;
+    line-height: 16px;
+    height: 36px;
+    width: 115px;
+    background-color: var(--green-color);
+    color: #fff;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.range {
+  margin: 15px 0 10px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    color: #252525;
+    font-family: ceraReg;
+  }
+
+  span {
+    font-family: ceraBold;
+  }
+}

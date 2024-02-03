@@ -1,0 +1,47 @@
+.categories {
+  margin-bottom: 40px;
+  ul {
+    a {
+      color: #636363;
+      font-size: 1em;
+      font-family: ceraReg;
+      text-decoration: none;
+      line-height: 2em;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+      text-transform: capitalize;
+
+      &:hover {
+        color: var(--green-color);
+      }
+    }
+  }
+}
+
+.active {
+  color: var(--green-color) !important;
+}
+
+.filterTitle {
+  display: flex;
+  align-items: center;
+  color: #252525;
+  font-size: 1.5em;
+  font-family: ceraBold;
+  line-height: 1;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ebebeb;
+  position: relative;
+
+  &::after {
+    content: "";
+    left: 0;
+    bottom: -1.5px;
+    position: absolute;
+    display: inline-block;
+    height: 3px;
+    width: 3em;
+    background-color: var(--green-color);
+  }
+}

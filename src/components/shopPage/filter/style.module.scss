@@ -1,0 +1,11 @@
+.filter {
+  position: relative;
+  width: 23%;
+  padding-right: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .filter {
+    width: 100%;
+  }
+}
