@@ -5,15 +5,14 @@ const Socials = () => {
   return (
     <ul className={`${styles.icons}`}>
       <li>
-        <Link href="#">
+        <Link
+          href="https://www.facebook.com/profile.php?id=61555898082492"
+          target="_blank"
+        >
           <i className="fab fa-facebook-f"></i>
         </Link>
       </li>
-      <li>
-        <Link href="#">
-          <i className="fab fa-twitter"></i>
-        </Link>
-      </li>
+
       <li>
         <Link href="#">
           <i className="fab fa-invision"></i>
@@ -21,7 +20,7 @@ const Socials = () => {
       </li>
       <li>
         <Link href="#">
-          <i className="fab fa-pinterest-p"></i>
+          <i className="fab fa-twitter"></i>
         </Link>
       </li>
     </ul>

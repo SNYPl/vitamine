@@ -11,7 +11,7 @@ const ParamInfo: React.FC = () => {
   return (
     <section className={`${style.info}`}>
       <i className="fa-solid fa-house-chimney"></i>
-      <p className={`${style.params}`}>Home </p>
+      <p className={`${style.params}`}>მთავარი </p>
       {pathArray.map((el: string, id: number) => (
         <p className={`${style.addedParams}`} key={id}>
           <span className={`${style.paramArrow}`}>{">"}</span>

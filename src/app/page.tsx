@@ -5,6 +5,8 @@ import FeaturedProducts from "@/components/featuredProducts/FeaturedProducts";
 import Deal from "@/components/weekDeal/Deal";
 import Introduction from "@/components/introduction/Introduction";
 import Companies from "@/components/companies/Companies";
+import { Suspense } from "react";
+import { Skeleton } from "antd";
 
 export default function Home() {
   return (
@@ -13,7 +15,9 @@ export default function Home() {
         <div className={"container"}>
           <ProductMenu />
           <Services />
-          <FeaturedProducts />
+          <Suspense fallback={<Skeleton />}>
+            <FeaturedProducts />
+          </Suspense>
           <Deal />
           <Introduction />
           <Companies />

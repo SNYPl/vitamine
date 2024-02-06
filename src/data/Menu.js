@@ -1,19 +1,19 @@
 export const navigatorData = [
   {
-    title: "Home",
+    title: "მთავარი",
     href: "/",
   },
   {
-    title: "Shop",
+    title: "მაღაზია",
     href: "/shop",
   },
 
   {
-    title: "About us",
+    title: "ჩვენს შესახებ",
     href: "/about",
   },
   {
-    title: "Contact",
-    href: "/other/about-us",
+    title: "კონტაქტი",
+    href: "/contact",
   },
 ];

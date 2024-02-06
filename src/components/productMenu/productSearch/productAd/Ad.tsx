@@ -1,7 +1,6 @@
 import styles from "./style.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import Button from "@/components/button/Button";
 
 const Ad = () => {
   return (
@@ -10,16 +9,16 @@ const Ad = () => {
         <Image
           src="/images/home/adBgrnd.png"
           width={1070}
-          height={405}
+          height={455}
           alt="img"
           priority
         />
       </div>
       <div className={styles.adInfo}>
-        <h4>FRUIT FRESH</h4>
-        <h2>Orange Lemon</h2>
-        <h3>13$</h3>
-        <Link href={"#"}>Shop Now</Link>
+        <h4>ტოპ ბრენდები</h4>
+        <h2>საუკეთესო ხარისხის პროდუქცია</h2>
+        <h3>საუკეთესო ფასად</h3>
+        <Link href={"/shop"}>იყიდე</Link>
       </div>
     </section>
   );

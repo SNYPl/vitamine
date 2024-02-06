@@ -1,21 +1,11 @@
 import React from "react";
 import style from "./style.module.scss";
+import { categories } from "@/data/categories";
 
 interface featureMenu {
   setActiveMenu: any;
   activeMenu: string;
 }
-
-const featuredMenu = [
-  { name: "All", value: "all" },
-  { name: "Bread", value: "bread" },
-  { name: "Fastfood", value: "fast-food" },
-  { name: "Fresh meat", value: "fresh-meat" },
-  { name: "Ocean foods", value: "ocean-foods" },
-  { name: "Oranges", value: "oranges" },
-  { name: "Organic drinks", value: "organic-drinks" },
-  { name: "Vegetables", value: "vegetables" },
-];
 
 const FeaturedProducts: React.FC<featureMenu> = ({
   setActiveMenu,
@@ -23,7 +13,7 @@ const FeaturedProducts: React.FC<featureMenu> = ({
 }) => {
   return (
     <ul className={`${style.featureList}`}>
-      {featuredMenu.slice(0, 5).map((el: any, id: any) => (
+      {categories.slice(0, 5).map((el: any, id: any) => (
         <li
           key={id}
           onClick={() => setActiveMenu(el.value)}

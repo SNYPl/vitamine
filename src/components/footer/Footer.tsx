@@ -10,11 +10,11 @@ const Footer: React.FC = ({}) => {
   return (
     <section className={`${style.footer}`}>
       <article className={`${style.footerInfoItem}`}>
-        <Image src={"/images/logo.png"} alt="logo" width={93} height={37} />
+        <Image src={"/images/lg.png"} alt="logo" width={150} height={37} />
         <ul className={`${style.footerList}`}>
-          <li>Address: 60-49 Road 11378 New York</li>
-          <li>Phone: +65 11.188.888</li>
-          <li>Email: info.deercreative@gmail.com</li>
+          <li>მისამართი: თბილისი,</li>
+          <li>ტელეფონი: +995 557 00 76 37</li>
+          <li>ელ.ფოსტა: vitamine.vitvit@gmail.com</li>
         </ul>
         <Socials />
       </article>

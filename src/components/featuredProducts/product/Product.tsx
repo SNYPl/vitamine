@@ -3,23 +3,24 @@ import Image from "next/image";
 import style from "./style.module.scss";
 import Link from "next/link";
 import { Button } from "antd";
+import { formatCurrency } from "@/common/utils";
 
 interface product {
   category?: string;
-  description: string;
-  img: string;
+  name: string;
+  mainImage: string;
   price: string;
-  sale?: string;
+  discount?: number;
   introduction?: boolean;
   id: number;
 }
 
 const Product: React.FC<product> = ({
   category,
-  description,
-  img,
+  name,
+  mainImage,
   price,
-  sale,
+  discount,
   introduction,
   id,
 }) => {
@@ -32,8 +33,8 @@ const Product: React.FC<product> = ({
       <div className={`${style.productImg}`}>
         <Link href={`/shop/${id}`} className={`${style.imgLink}`}>
           <Image
-            src={img}
-            alt="item"
+            src={mainImage}
+            alt="img"
             width={introduction ? 70 : 210}
             height={introduction ? 70 : 138}
           />
@@ -42,10 +43,12 @@ const Product: React.FC<product> = ({
       <div className={`${style.productInfo}`}>
         <h3>{category}</h3>
         <Link href={`/shop/${id}`} className={`${style.productNameLink}`}>
-          {description}
+          {name}
         </Link>
         <h4>
-          {sale ? sale : price} <del> {sale ? price : null}</del>
+          {discount ? formatCurrency(discount) : formatCurrency(price)}
+          <del>{discount ? formatCurrency(price) : null}</del>
+          {/* <span className={`${style.currenct}`}>₾</span> */}
         </h4>
       </div>
       <div className={`${style.cartButtons}`}>

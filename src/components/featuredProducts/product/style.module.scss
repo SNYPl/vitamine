@@ -190,10 +190,11 @@
   font-size: 16px;
   margin-right: 0.3125em;
 }
-
-.cartButtons {
+.currenct {
+  color: var(--green-color);
+  font-weight: normal;
+  font-size: 15px;
 }
-
 @media only screen and (min-width: 576px) {
   .nonIntroduction {
     display: block;

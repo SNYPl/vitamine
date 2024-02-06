@@ -4,23 +4,23 @@ import Image from "next/image";
 
 const servicesList = [
   {
-    title: "FREE SHIPPING",
-    info: "For all order over 99$",
+    title: "უფასო მიტანა",
+    info: "თბილისის მაშტაბით",
     img: "/images/services/1.png",
   },
   {
-    title: "DELIVERY ON TIME",
-    info: "If good have prolems",
+    title: "სწრაფი მიტანის სერვისი",
+    info: "ხარისხიანად",
     img: "/images/services/2.png",
   },
   {
-    title: "SECURE PAYMENT",
-    info: "100% secure payment",
+    title: "თანხის გადახდა ადგილზე",
+    info: "უსაფრთხოდ და სწრაფად",
     img: "/images/services/3.png",
   },
   {
-    title: "24/7 SUPPORT",
-    info: "Dedicated support",
+    title: "24/7 საფორთი",
+    info: "მოგვწერეთ როცა გინდათ",
     img: "/images/services/4.png",
   },
 ];

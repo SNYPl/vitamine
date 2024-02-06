@@ -6,6 +6,7 @@ import Button from "@/components/button/Button";
 import { arrowUp } from "../../../common/svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { categories } from "@/data/categories.js";
 
 interface BurgerMenu {
   activeMenu: boolean;
@@ -20,12 +21,10 @@ const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
     setIsOpen(!isOpen);
   };
 
-  console.log(isOpen);
-
   return (
     <section className={styles.burgerMenu}>
       <article className={`${styles.btnCont} `} onClick={toggleMenu}>
-        <h3>All departments</h3>
+        <h3>კატეგორიები</h3>
 
         <div className={styles.btnArrow}>
           <Button className={styles.burgerButton}>
@@ -36,7 +35,6 @@ const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
           </span>
         </div>
       </article>
-      {/* {isOpen && ( */}
       <div
         className={`${styles.menu} ${isOpen ? styles.open : ""} ${
           homePage ? styles.homePageMenu : styles.differentPages
@@ -44,17 +42,15 @@ const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
       >
         <ul>
           <li>
-            <Link href="#">Home</Link>
+            <Link href={`/shop`}>ყველა</Link>
           </li>
-          <li>
-            <Link href="#">About</Link>
-          </li>
-          <li>
-            <Link href="#">Contact</Link>
-          </li>
+          {categories.slice(1).map((el: any) => (
+            <li key={el.value}>
+              <Link href={`/shop?category=${el.value}`}>{el.name}</Link>
+            </li>
+          ))}
         </ul>
       </div>
-      {/* )} */}
     </section>
   );
 };

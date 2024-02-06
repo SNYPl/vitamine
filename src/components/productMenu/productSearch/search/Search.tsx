@@ -4,8 +4,8 @@ import Button from "@/components/button/Button";
 const Search = () => {
   return (
     <section className={styles.search}>
-      <input type="text" placeholder="what you need" />
-      <Button>Search</Button>
+      <input type="text" placeholder="მოძებნე პროდუქცია" />
+      <Button>ძებნა</Button>
     </section>
   );
 };

@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "../components/header/Header";
 import Footer from "@/components/footer/Footer";
 import BackTop from "antd/es/float-button/BackTop";
+import { QueryClientProviderHelper } from "@/components/helper/queryClient";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        {children}
+        <QueryClientProviderHelper>{children}</QueryClientProviderHelper>
         <footer className={"container"}>
           <Footer />
         </footer>

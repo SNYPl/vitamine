@@ -31,7 +31,7 @@ function MobileNavigator() {
 
       <div className={styles.mobileLogin}>
         <Link href={process.env.PUBLIC_URL + "/other/login"}>
-          Login / Register
+          შესვლა / რეგისტრაცია
         </Link>
 
         <SocialIcons />

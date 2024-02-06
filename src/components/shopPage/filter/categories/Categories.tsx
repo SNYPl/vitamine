@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import style from "./style.module.scss";
-import categories from "@/data/categories.json";
+import { categories } from "@/data/categories.js";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 interface Category {
   name: string;
@@ -11,17 +12,30 @@ interface Category {
 
 const Categories: React.FC = ({}) => {
   const categoriesData: Category[] = categories;
-  const [activeProduct, setActiveProduct] = useState<string>("all");
+  const param = useSearchParams();
+  const category = param.get("category");
+  const activeCategory = category ? category : "all";
+
+  const [activeProduct, setActiveProduct] = useState<string>(activeCategory);
 
   return (
     <article className={`${style.categories}`}>
-      <h2 className={`${style.filterTitle}`}>Departments</h2>
+      <h2 className={`${style.filterTitle}`}>კატეგორიები</h2>
 
       <ul>
-        {categoriesData.map((el, id) => (
+        <li>
+          <Link
+            href={`/shop`}
+            onClick={() => setActiveProduct("all")}
+            className={activeProduct === "all" ? style.active : ""}
+          >
+            ყველა
+          </Link>
+        </li>
+        {categoriesData.slice(1).map((el, id) => (
           <li key={id}>
             <Link
-              href={`#`}
+              href={`/shop?category=${el.value}`}
               onClick={() => setActiveProduct(el.value)}
               className={activeProduct === el.value ? style.active : ""}
             >

@@ -18,7 +18,7 @@
 
 .btnCont h3 {
   color: #fff;
-  font-size: 1.125em;
+  font-size: 1.225em;
   font-family: ceraBold;
   line-height: 2.7777777778em;
 }
@@ -47,6 +47,10 @@
       transition: transform 0.24s;
     }
   }
+}
+
+.active {
+  color: var(--green-color) !important;
 }
 
 @keyframes slideDown {

@@ -28,6 +28,16 @@
         }
       }
     }
+    a {
+      color: #252525;
+      font-size: 1rem;
+      font-family: ceraBold;
+      transition: 0.3 all;
+
+      &:hover {
+        color: var(--green-color);
+      }
+    }
   }
 
   .right {

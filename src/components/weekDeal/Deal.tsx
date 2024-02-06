@@ -58,5 +58,3 @@ const Deal: React.FC = ({}) => {
 const MemoizedDeal = React.memo(Deal);
 
 export default MemoizedDeal;
-
-// export default Deal;

@@ -11,11 +11,13 @@ const TopNav = () => {
             <ul>
               <li>
                 <i className="fas fa-envelope" />
-                info.deercreative@gmail.com
+                <a href="mailto::vitamine.vitvit@gmail.com">
+                  vitamine.vitvit@gmail.com
+                </a>
               </li>
               <li>
                 <i className="fas fa-phone-alt" />
-                +65 11.188.888
+                +995 557 00 76 37
               </li>
             </ul>
           </div>
@@ -27,7 +29,7 @@ const TopNav = () => {
             <div className={`${styles.right__item} ${styles.logo}`}>
               <Link href="#">
                 <i className="fas fa-user" />
-                Login
+                შესვლა
               </Link>
             </div>
           </div>

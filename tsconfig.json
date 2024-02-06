@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/header/menu/navigation"
+    "src/components/header/menu/navigation",
+    "src/app/api/featuredProducts/get/route.js"
   ],
   "exclude": ["node_modules"]
 }

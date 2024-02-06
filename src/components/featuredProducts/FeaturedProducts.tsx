@@ -4,86 +4,50 @@ import React, { useState } from "react";
 import style from "./style.module.scss";
 import FeaturedMenu from "./featuredMenu/FeaturedMenu";
 import Product from "./product/Product";
-
-interface FeaturedProduct {
-  category: string;
-  description: string;
-  img: string;
-  price: string;
-  sale?: string;
-}
-
-const featuredProducts = [
-  {
-    category: "Bread",
-    description: "Fresh orange",
-    img: "/images/featured/1.png",
-    price: "6.5$",
-    sale: "5.5$",
-  },
-  {
-    category: "Bread",
-    description: "Green Chrusanthemum",
-    img: "/images/featured/2.png",
-    price: "$5.5",
-    sale: "",
-  },
-  {
-    category: "Bread",
-    description: "Mustard Australia",
-    img: "/images/featured/3.png",
-    price: "6.5$",
-    sale: "5.5$",
-  },
-  {
-    category: "Bread",
-    description: "Fresh orange",
-    img: "/images/featured/4.png",
-    price: "6.5$",
-    sale: "5.5$",
-  },
-  {
-    category: "Bread",
-    description: "Fresh orange",
-    img: "/images/featured/5.png",
-    price: "6.5$",
-    sale: "5.5$",
-  },
-  {
-    category: "Bread",
-    description: "Fresh orange",
-    img: "/images/featured/6.png",
-    price: "6.5$",
-    sale: "",
-  },
-  {
-    category: "Bread",
-    description: "Fresh orange",
-    img: "/images/featured/7.png",
-    price: "6.5$",
-    sale: "",
-  },
-  {
-    category: "Bread",
-    description: "Fresh orange",
-    img: "/images/featured/8.png",
-    price: "2.5$",
-    sale: "",
-  },
-];
+import { useQuery } from "react-query";
+import axios from "axios";
+import { Skeleton } from "antd";
 
 const FeaturedProducts: React.FC = ({}) => {
   const [activeMenu, setActiveMenu] = useState("all");
+
+  const { data, isLoading, isError, isFetching } = useQuery(
+    "featuredProducts",
+    async () => {
+      try {
+        const response = await axios.get("/api/featuredProducts/get");
+
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching featured products", error);
+        throw new Error("Error fetching featured products");
+      }
+    }
+  );
+
+  const filteredData = data?.filter((product: any) => {
+    if (activeMenu === "all") {
+      return product;
+    } else if (activeMenu === product.category) {
+      return product;
+    }
+  });
+
   return (
     <section className={`${style.featured}`}>
       <article className={`${style.title}`}>
-        <h2>Featured products</h2>
+        <h2>პოპულალური პროდუქტები</h2>
         <div></div>
       </article>
       <FeaturedMenu setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
       <section className={`${style.featuredProductsList}`}>
-        {featuredProducts.map((el: FeaturedProduct, id: any) => (
-          <Product {...el} key={id} id={id} />
+        {isLoading && (
+          <article className={`${style.skeletion}`}>
+            <Skeleton />
+          </article>
+        )}
+        {filteredData?.slice(0, 8).map((el: any, id: any) => (
+          <Product {...el} key={el._id} id={el._id} />
         ))}
       </section>
     </section>

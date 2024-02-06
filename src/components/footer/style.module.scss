@@ -7,6 +7,8 @@
 .footerInfoItem {
   img {
     margin-bottom: 20px;
+    object-fit: cover;
+    transform: scale(1.3);
   }
 }
 

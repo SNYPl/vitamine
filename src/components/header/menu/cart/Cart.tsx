@@ -18,7 +18,7 @@ const Cart = () => {
       >
         <i className="fa-solid fa-cart-shopping"></i>
 
-        <span>{formatCurrency(10)}</span>
+        <span>{formatCurrency(0)}</span>
       </Link>
     </section>
   );
