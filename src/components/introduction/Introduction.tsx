@@ -7,12 +7,10 @@ import { useQuery } from "react-query";
 
 const Introduction: React.FC = ({}) => {
   const { data, isLoading, isError } = useQuery(
-    "getAllSupplement",
+    ["getAllSupplement"],
     async () => {
       try {
-        const response = await axios.get("/api/supplements/get", {
-          params: { category: "all" },
-        });
+        const response = await axios.get("/api/supplements/get");
         return response.data;
       } catch (error) {
         console.error("Error fetching featured products", error);
