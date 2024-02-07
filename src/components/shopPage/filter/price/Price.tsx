@@ -6,7 +6,7 @@ import "rc-slider/assets/index.css";
 import Button from "@/components/button/Button";
 
 const Price: React.FC = ({}) => {
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState([0, 500]);
 
   const handleSliderChange = (values: any) => {
     setPriceRange(values);
@@ -17,16 +17,18 @@ const Price: React.FC = ({}) => {
       <Slider
         range
         min={0}
-        max={100}
-        defaultValue={[0, 100]}
+        max={500}
+        defaultValue={[0, 500]}
         value={priceRange}
         onChange={handleSliderChange}
       />
       <div className={`${style.range}`}>
         <h4>
-          Price Range:{" "}
+          ფასი:
           <span>
-            ${priceRange[0]} - ${priceRange[1]}
+            {priceRange[0]}
+            <h5>₾</h5> - {priceRange[1]}
+            <h5>₾</h5>
           </span>
         </h4>
         <Button>გაფილტვრა</Button>

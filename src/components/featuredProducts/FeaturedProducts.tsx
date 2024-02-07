@@ -43,7 +43,7 @@ const FeaturedProducts: React.FC = ({}) => {
       <section className={`${style.featuredProductsList}`}>
         {isLoading && (
           <article className={`${style.skeletion} `}>
-            <Skeleton />
+            <Skeleton active />
           </article>
         )}
         {filteredData?.slice(0, 8).map((el: any, id: any) => (

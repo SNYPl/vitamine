@@ -14,7 +14,7 @@ export default function Home() {
       <div className={"container"}>
         <ProductMenu />
         <Services />
-        <Suspense fallback={<Skeleton />}>
+        <Suspense fallback={<Skeleton active />}>
           <FeaturedProducts />
         </Suspense>
         <Deal />

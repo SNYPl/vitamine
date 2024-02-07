@@ -1,8 +1,8 @@
 .price {
   h3 {
     color: #252525;
-    font-size: 1.5em;
-    font-family: ceraBold;
+    font-size: 1.15em;
+    font-family: geoMr;
     line-height: 1;
     margin-bottom: 20px;
     position: relative;
@@ -29,12 +29,21 @@
   align-items: center;
   justify-content: space-between;
 
-  h3 {
+  h4 {
     color: #252525;
     font-family: ceraReg;
+    display: flex;
+    align-items: center;
   }
 
   span {
     font-family: ceraBold;
+    display: flex;
+    align-items: center;
+  }
+
+  h5 {
+    font-size: 12px;
+    padding-top: 4px;
   }
 }

@@ -40,7 +40,7 @@ const ShopList: React.FC = ({}) => {
   if (isLoading)
     return (
       <article className={`${style.skeletion} `}>
-        <Skeleton />
+        <Skeleton active />
       </article>
     );
 
