@@ -12,7 +12,7 @@ interface product {
   price: string;
   discount?: number;
   introduction?: boolean;
-  id: number;
+  _id: number;
 }
 
 const Product: React.FC<product> = ({
@@ -22,7 +22,7 @@ const Product: React.FC<product> = ({
   price,
   discount,
   introduction,
-  id,
+  _id,
 }) => {
   return (
     <article
@@ -31,7 +31,7 @@ const Product: React.FC<product> = ({
       }`}
     >
       <div className={`${style.productImg}`}>
-        <Link href={`/shop/${id}`} className={`${style.imgLink}`}>
+        <Link href={`/shop/product?id=${_id}`} className={`${style.imgLink}`}>
           <Image
             src={mainImage}
             alt="img"
@@ -42,13 +42,15 @@ const Product: React.FC<product> = ({
       </div>
       <div className={`${style.productInfo}`}>
         <h3>{category}</h3>
-        <Link href={`/shop/${id}`} className={`${style.productNameLink}`}>
+        <Link
+          href={`/shop/product?id=${_id}`}
+          className={`${style.productNameLink}`}
+        >
           {name}
         </Link>
         <h4>
           {discount ? formatCurrency(discount) : formatCurrency(price)}
           <del>{discount ? formatCurrency(price) : null}</del>
-          {/* <span className={`${style.currenct}`}>₾</span> */}
         </h4>
       </div>
       <div className={`${style.cartButtons}`}>

@@ -5,4 +5,11 @@
   align-items: center;
   justify-content: center;
   border: none;
+
+  &:disabled {
+    background-color: #d3d3d3 !important;
+    color: #808080 !important;
+    border-color: #d3d3d3 !important;
+    cursor: not-allowed;
+  }
 }

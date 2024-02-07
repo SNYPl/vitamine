@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import style from "./style.module.scss";
 import FeaturedMenu from "./featuredMenu/FeaturedMenu";
-import Product from "./product/Product";
+import Product from "../product/Product";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { Skeleton } from "antd";
@@ -47,7 +47,7 @@ const FeaturedProducts: React.FC = ({}) => {
           </article>
         )}
         {filteredData?.slice(0, 8).map((el: any, id: any) => (
-          <Product {...el} key={el._id} id={el._id} />
+          <Product {...el} key={el._id} />
         ))}
       </section>
     </section>

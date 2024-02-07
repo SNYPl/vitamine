@@ -1,22 +1,26 @@
 "use client";
 import React from "react";
 import style from "./style.module.scss";
-import Product from "@/components/featuredProducts/product/Product";
+import Product from "@/components/product/Product";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setProductList } from "@/store/slices/paginationSlice";
 
 const ShopList: React.FC = ({}) => {
   const searchParams = useSearchParams();
+  const dispatch = useDispatch();
+  const pageCount = useSelector((state: any) => state.products.shopPageValue);
 
   const categoryList = searchParams.get("category");
 
   const { data, isLoading, isError } = useQuery(
-    ["getAllSupplement", categoryList],
+    ["getSupplementByCategory", categoryList, pageCount],
     async () => {
       try {
-        const response = await axios.get("/api/supplements/get", {
-          params: { category: categoryList },
+        const response = await axios.get("/api/withCategory/get", {
+          params: { category: categoryList, page: pageCount },
         });
         return response.data;
       } catch (error) {
@@ -26,9 +30,15 @@ const ShopList: React.FC = ({}) => {
     }
   );
 
+  React.useEffect(() => {
+    if (data) {
+      dispatch(setProductList(data));
+    }
+  }, [data, dispatch]);
+
   return (
     <section className={`${style.shopList}`}>
-      {data?.map((item: any, index: any) => (
+      {data?.map((item: any) => (
         <Product {...item} key={item._id} />
       ))}
     </section>

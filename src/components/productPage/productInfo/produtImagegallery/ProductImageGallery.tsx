@@ -9,32 +9,23 @@ import "swiper/css/free-mode";
 import "swiper/css/thumbs";
 import "swiper/css/zoom";
 
+interface imageProps {
+  images: string[];
+}
+
 import { FreeMode, Thumbs, Zoom } from "swiper/modules";
 
-const ProductImageGallery: React.FC = ({}) => {
+const ProductImageGallery: React.FC<imageProps> = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const handleThumbsSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
   };
 
-  const images = [
-    "/images/featured/1.png",
-    "/images/featured/2.png",
-    "/images/featured/3.png",
-    "/images/featured/4.png",
-    "/images/featured/1.png",
-  ];
-
   return (
-    <article className={`${style.gallery} `}>
+    <div className={`${style.gallery} `}>
       <Swiper
-        style={
-          {
-            // '--swiper-navigation-color': '#fff',
-            // '--swiper-pagination-color': '#fff',
-          }
-        }
+        // style={}
         spaceBetween={10}
         zoom={true}
         thumbs={{ swiper: thumbsSwiper }}
@@ -64,7 +55,7 @@ const ProductImageGallery: React.FC = ({}) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </article>
+    </div>
   );
 };
 

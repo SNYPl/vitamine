@@ -1,0 +1,8 @@
+.quantity {
+  div {
+    &:hover,
+    &:focus {
+      border-color: #f79823;
+    }
+  }
+}

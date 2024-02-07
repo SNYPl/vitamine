@@ -2,7 +2,7 @@
 
 import React, { useRef, RefObject } from "react";
 import style from "./style.module.scss";
-import Product from "@/components/featuredProducts/product/Product";
+import Product from "@/components/product/Product";
 import { Button } from "antd";
 import Slider from "react-slick";
 
@@ -71,7 +71,7 @@ const ProductList: React.FC<props> = ({ title, products = [] }) => {
         <Slider ref={sliderRef} {...sliderSettings}>
           {products?.map((item, index) => (
             <div className={style.slideItem} key={index}>
-              <Product {...item} key={index} introduction id={item._id} />
+              <Product {...item} key={index} introduction />
             </div>
           ))}
         </Slider>

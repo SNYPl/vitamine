@@ -7,18 +7,6 @@
   width: 20%;
 }
 
-.productInfoContainer {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-
-.productInfo {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
 @media only screen and (max-width: 768px) {
   .productpage {
     flex-direction: column;
@@ -27,13 +15,5 @@
 
   .categoriesContainer {
     width: 100%;
-  }
-
-  .productInfoContainer {
-    width: 100%;
-  }
-
-  .productInfo {
-    flex-direction: column;
   }
 }

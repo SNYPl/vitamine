@@ -7,10 +7,12 @@
 }
 .bigImage img {
   //   height: 100%;
-  width: 100%;
+  width: 99.5%;
   object-fit: contain;
   border: 1px solid #ebebeb;
   margin-bottom: 8px;
+  padding: 12px 0;
+  cursor: pointer;
 }
 
 .thumbNails img {
@@ -18,6 +20,7 @@
   object-fit: contain;
   width: 100%;
   padding: 0.625em;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 768px) {

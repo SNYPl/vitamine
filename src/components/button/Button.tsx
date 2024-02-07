@@ -5,12 +5,14 @@ interface buttonProps {
   onSubmitButton?: any;
   className?: string;
   children?: any;
+  disabled?: boolean;
 }
 
 const Button: React.FC<buttonProps> = ({
   onSubmitButton,
   className,
   children,
+  disabled = false,
   ...props
 }) => {
   return (
@@ -18,6 +20,7 @@ const Button: React.FC<buttonProps> = ({
       onClick={onSubmitButton}
       {...props}
       className={`${className} ${style.button} `}
+      disabled={disabled}
     >
       {children}
     </button>

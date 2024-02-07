@@ -1,9 +1,7 @@
 import React from "react";
 import style from "./style.module.scss";
-import ImageGallery from "./produtImagegallery/ProductImageGallery";
 import Categories from "../shopPage/filter/categories/Categories";
-import ProductDetails from "./productDetails/ProductDetails";
-import ProductDescription from "./productDescription/ProductDescription";
+import ProductInfo from "./productInfo/ProductInfo";
 
 const ProductPage: React.FC = ({}) => {
   return (
@@ -11,13 +9,7 @@ const ProductPage: React.FC = ({}) => {
       <div className={`${style.categoriesContainer}`}>
         <Categories />
       </div>
-      <div className={`${style.productInfoContainer}`}>
-        <section className={`${style.productInfo}`}>
-          <ImageGallery />
-          <ProductDetails />
-        </section>
-        <ProductDescription />
-      </div>
+      <ProductInfo />
     </section>
   );
 };
