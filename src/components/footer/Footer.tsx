@@ -10,7 +10,7 @@ const Footer: React.FC = ({}) => {
   return (
     <section className={`${style.footer}`}>
       <article className={`${style.footerInfoItem}`}>
-        <Image src={"/images/lg.png"} alt="logo" width={150} height={37} />
+        <Image src={"/images/logo.png"} alt="logo" width={150} height={37} />
         <ul className={`${style.footerList}`}>
           <li>მისამართი: თბილისი,</li>
           <li>ტელეფონი: +995 557 00 76 37</li>
