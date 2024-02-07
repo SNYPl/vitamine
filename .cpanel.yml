@@ -1,5 +1,7 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/vitvitge394/public_html/
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp style.css $DEPLOYPATH
+    - export DEPLOYPATH=/home/vitvitge394/public_html
+    - /usr/local/bin/npm install
+    - /usr/local/bin/npm run build
+    - /bin/cp -R .next $DEPLOYPATH
+    - /bin/cp -R out $DEPLOYPATH
