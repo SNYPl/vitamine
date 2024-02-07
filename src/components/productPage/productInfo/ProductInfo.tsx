@@ -7,6 +7,7 @@ import axios from "axios";
 import ProductDetails from "./productDetails/ProductDetails";
 import ProductDescription from "./productDescription/ProductDescription";
 import ImageGallery from "./produtImagegallery/ProductImageGallery";
+import { Skeleton } from "antd";
 
 const ProductInfo: React.FC = ({}) => {
   const searchParams = useSearchParams();
@@ -28,7 +29,11 @@ const ProductInfo: React.FC = ({}) => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <article className={`${style.skeletion}`}>
+        <Skeleton />
+      </article>
+    );
   }
 
   if (isError || !data) {
@@ -46,6 +51,13 @@ const ProductInfo: React.FC = ({}) => {
     rating,
     productQuantity,
     infoTitle,
+    about,
+    description,
+    otherIngredients,
+    review,
+    supplementFacts,
+    use,
+    warning,
   } = dataObj;
 
   console.log(dataObj);
@@ -64,7 +76,16 @@ const ProductInfo: React.FC = ({}) => {
           infoTitle={infoTitle}
         />
       </section>
-      <ProductDescription />
+      <ProductDescription
+        about={about}
+        description={description}
+        otherIngredients={otherIngredients}
+        review={review}
+        supplementFacts={supplementFacts}
+        use={use}
+        warning={warning}
+        name={name}
+      />
     </div>
   );
 };

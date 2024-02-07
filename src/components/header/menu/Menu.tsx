@@ -12,7 +12,12 @@ const Menu = () => {
         <div className="menu-wrapper">
           <MobileMenuOpener />
           <Link href={"/"} className={styles.menuLogo}>
-            <Image src={"/images/lg.png"} alt=" logo" width={139} height={37} />
+            <Image
+              src={"/images/logo.png"}
+              alt="logo"
+              width={139}
+              height={37}
+            />
           </Link>
           <Navigation />
           <Cart />

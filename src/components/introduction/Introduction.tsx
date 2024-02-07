@@ -4,6 +4,7 @@ import style from "./style.module.scss";
 import ProductList from "./productList/ProductList";
 import axios from "axios";
 import { useQuery } from "react-query";
+import { Skeleton } from "antd";
 
 const Introduction: React.FC = ({}) => {
   const { data, isLoading, isError } = useQuery(
@@ -18,6 +19,13 @@ const Introduction: React.FC = ({}) => {
       }
     }
   );
+
+  if (isLoading)
+    return (
+      <article className={`${style.skeletion} `}>
+        <Skeleton />
+      </article>
+    );
 
   const weekDaleProductFilter = data?.filter(
     (el: { daleofWeek: boolean }) => el.daleofWeek

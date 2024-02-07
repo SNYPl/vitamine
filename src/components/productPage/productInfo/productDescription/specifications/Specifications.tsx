@@ -1,19 +1,26 @@
 import React from "react";
 import style from "./style.module.scss";
 
-const Specifications: React.FC = ({}) => {
+interface fact {
+  info: string;
+  title: string;
+}
+
+interface SpecProps {
+  supplementFacts: fact[];
+}
+
+const Specifications: React.FC<SpecProps> = ({ supplementFacts }) => {
   return (
     <article className={`${style.specifications}`}>
       <div className={`${style.container}`}>
         <table className={`${style.table}`}>
-          <tr>
-            <td>Weight</td>
-            <td>1kg</td>
-          </tr>
-          <tr>
-            <td>Dimension</td>
-            <td>30x30x</td>
-          </tr>
+          {supplementFacts.map((el: any, id: number) => (
+            <tr key={id}>
+              <td>{el.title}</td>
+              <td>{el.info}</td>
+            </tr>
+          ))}
         </table>
       </div>
     </article>

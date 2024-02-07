@@ -42,7 +42,7 @@ const FeaturedProducts: React.FC = ({}) => {
       <FeaturedMenu setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
       <section className={`${style.featuredProductsList}`}>
         {isLoading && (
-          <article className={`${style.skeletion}`}>
+          <article className={`${style.skeletion} `}>
             <Skeleton />
           </article>
         )}

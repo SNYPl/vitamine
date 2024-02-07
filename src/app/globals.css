@@ -54,6 +54,11 @@ a {
   src: "/fonts/Cera Pro Black.otf";
 }
 
+@font-face {
+  font-family: geoMr;
+  src: "/fonts/mrgvlovani.ttf";
+}
+
 .slick-slider {
   position: relative;
   display: block;

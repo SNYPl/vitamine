@@ -7,6 +7,7 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductList } from "@/store/slices/paginationSlice";
+import { Skeleton } from "antd";
 
 const ShopList: React.FC = ({}) => {
   const searchParams = useSearchParams();
@@ -34,7 +35,14 @@ const ShopList: React.FC = ({}) => {
     if (data) {
       dispatch(setProductList(data));
     }
-  }, [data, dispatch]);
+  }, [data]);
+
+  if (isLoading)
+    return (
+      <article className={`${style.skeletion} `}>
+        <Skeleton />
+      </article>
+    );
 
   return (
     <section className={`${style.shopList}`}>

@@ -3,8 +3,54 @@
     color: rgba(0, 0, 0, 0.85);
     font-size: 16px;
     font-variant: tabular-nums;
-    font-family: ceraReg;
-    line-height: 1.8715;
+    font-family: geoMr;
+    line-height: 1.4715;
     list-style: none;
+  }
+  h3 {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 6px;
+    font-family: geoMr;
+    font-size: 16px;
+  }
+}
+
+.about {
+  margin-bottom: 30px;
+  span {
+    font-weight: 600;
+    color: #000;
+  }
+}
+
+.descriptionList {
+  margin-bottom: 30px;
+
+  ul {
+    padding-left: 20px;
+    li {
+      list-style: circle;
+      margin: 7px 0;
+      font-family: geoMr;
+      font-size: 16px;
+      list-style-type: disc;
+    }
+  }
+}
+
+.usage {
+  margin-bottom: 30px;
+}
+
+.otherIngredients {
+  margin-bottom: 35px;
+  h3 {
+    margin-bottom: 12px;
+  }
+  li {
+    margin-bottom: 15px;
+    font-family: geoMr;
+    font-size: 16px;
   }
 }

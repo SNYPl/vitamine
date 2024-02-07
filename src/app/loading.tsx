@@ -3,9 +3,8 @@ import { Skeleton } from "antd";
 
 const Loading = () => {
   return (
-    <div className="loader">
+    <div className=" container loader">
       <Skeleton active />
-      <p>dawdawdawdwadawdwdadawdawd</p>
     </div>
   );
 };

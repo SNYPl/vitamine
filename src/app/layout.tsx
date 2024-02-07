@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import BackTop from "antd/es/float-button/BackTop";
 import { QueryClientProviderHelper } from "@/components/helper/queryClient";
 import { ReduxToolkitProvider } from "@/components/helper/reduxProvider";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,16 +22,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ReduxToolkitProvider>
+      <React.StrictMode>
         <body className={inter.className}>
-          <Header />
-          <QueryClientProviderHelper>{children}</QueryClientProviderHelper>
-          <footer className={"container"}>
-            <Footer />
-          </footer>
-          <BackTop />
+          <ReduxToolkitProvider>
+            <Header />
+            <QueryClientProviderHelper>{children}</QueryClientProviderHelper>
+            <footer className={"container"}>
+              <Footer />{" "}
+            </footer>
+            <BackTop />
+          </ReduxToolkitProvider>
         </body>
-      </ReduxToolkitProvider>
+      </React.StrictMode>
     </html>
   );
 }

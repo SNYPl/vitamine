@@ -10,19 +10,17 @@ import { Skeleton } from "antd";
 
 export default function Home() {
   return (
-    <>
-      <main className={styles.main}>
-        <div className={"container"}>
-          <ProductMenu />
-          <Services />
-          <Suspense fallback={<Skeleton />}>
-            <FeaturedProducts />
-          </Suspense>
-          <Deal />
-          <Introduction />
-          <Companies />
-        </div>
-      </main>
-    </>
+    <main className={styles.main}>
+      <div className={"container"}>
+        <ProductMenu />
+        <Services />
+        <Suspense fallback={<Skeleton />}>
+          <FeaturedProducts />
+        </Suspense>
+        <Deal />
+        <Introduction />
+        <Companies />
+      </div>
+    </main>
   );
 }
