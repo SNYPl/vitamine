@@ -18,16 +18,23 @@ const Description: React.FC<DescriptionProps> = ({
   use,
   warning,
 }) => {
+  const aboutParagraphs = about.split("*");
+  console.log(aboutParagraphs);
   return (
     <article className={`${style.description}`}>
-      <p className={`${style.about}`}>
-        <span>{name}</span> {about}
-      </p>
+      <div className={`${style.about}`}>
+        <p className={`${style.aboutTitle}`}>{name}</p>
+        {aboutParagraphs.map((el: string, id: number) => (
+          <p className={`${style.aboutItem}`} key={id}>
+            {el}
+          </p>
+        ))}
+      </div>
 
       <div className={`${style.descriptionList}`}>
         <h3>{name} -ის ძირითადი თვისებები და მახასიათებლები:</h3>
         <ul>
-          {description.map((el: string, id: number) => (
+          {description?.map((el: string, id: number) => (
             <li key={id}>{el}</li>
           ))}
         </ul>
@@ -41,7 +48,7 @@ const Description: React.FC<DescriptionProps> = ({
       <div className={`${style.otherIngredients}`}>
         <h3>სხვა ინგრენდიენტები:</h3>
         <ul>
-          {otherIngredients.map((el: string, id: number) => (
+          {otherIngredients?.map((el: string, id: number) => (
             <li key={id}>{el}</li>
           ))}
         </ul>

@@ -7,7 +7,7 @@ const Ad = () => {
     <section className={`${styles.ad} adImage`}>
       <div className={styles.adBackground}>
         <Image
-          src="/images/home/adBgrnd.png"
+          src="/images/home/vit.jfif"
           width={1070}
           height={455}
           alt="img"

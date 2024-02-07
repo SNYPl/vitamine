@@ -17,7 +17,7 @@ export default function Home() {
         <Suspense fallback={<Skeleton active />}>
           <FeaturedProducts />
         </Suspense>
-        <Deal />
+        {/* <Deal /> */}
         <Introduction />
         <Companies />
       </div>

@@ -18,9 +18,10 @@
 
 .about {
   margin-bottom: 30px;
-  span {
+  .aboutTitle {
     font-weight: 600;
     color: #000;
+    margin-bottom: 8px;
   }
 }
 
@@ -53,4 +54,8 @@
     font-family: geoMr;
     font-size: 16px;
   }
+}
+
+.aboutItem {
+  margin-bottom: 18px;
 }

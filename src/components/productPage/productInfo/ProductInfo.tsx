@@ -37,7 +37,7 @@ const ProductInfo: React.FC = ({}) => {
   }
 
   if (isError || !data) {
-    return <div>Error loading product information</div>;
+    return <div>შეცდომაა</div>;
   }
 
   const dataObj = Object.assign({}, data[0]);
@@ -59,8 +59,6 @@ const ProductInfo: React.FC = ({}) => {
     use,
     warning,
   } = dataObj;
-
-  console.log(dataObj);
 
   return (
     <div className={`${style.productInfoContainer}`}>

@@ -32,7 +32,7 @@ const ProductImageGallery: React.FC<imageProps> = ({ images }) => {
         modules={[FreeMode, Thumbs, Zoom]}
         className="mySwiper2"
       >
-        {images.map((el: any, id: number) => (
+        {images?.map((el: any, id: number) => (
           <SwiperSlide key={id}>
             <div className={`swiper-zoom-container ${style.bigImage}`}>
               <Image src={el} alt="img" width={400} height={400} />
@@ -49,7 +49,7 @@ const ProductImageGallery: React.FC<imageProps> = ({ images }) => {
         modules={[FreeMode, Thumbs, Zoom]}
         className={`mySwiper ${style.thumbNails}`}
       >
-        {images.map((el: any, id: number) => (
+        {images?.map((el: any, id: number) => (
           <SwiperSlide key={id}>
             <Image src={el} alt="img" width={130} height={120} />
           </SwiperSlide>

@@ -138,6 +138,9 @@
   visibility: hidden;
   box-shadow: 0px 20px 32px 0 rgba(53, 78, 84, 0.15);
 }
+.nonIntroduction .imgLink {
+  text-align: center;
+}
 
 .nonIntroduction:hover::before {
   visibility: visible;
@@ -196,6 +199,7 @@
   font-weight: normal;
   font-size: 15px;
 }
+
 @media only screen and (min-width: 576px) {
   .nonIntroduction {
     display: block;
@@ -214,8 +218,8 @@
 @media only screen and (min-width: 992px) {
   .nonIntroduction {
     display: block;
-    flex: 0 0 23%;
-    max-width: 23%;
+    flex: 0 0 30%;
+    max-width: 30%;
     margin: 0 7.5px;
   }
 }
