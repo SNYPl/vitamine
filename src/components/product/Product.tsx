@@ -33,21 +33,25 @@ const Product: React.FC<product> = ({
       }`}
     >
       <div className={`${style.countryFlag}`}>
-        <Image
-          src={"/images/product/usa.jfif"}
-          alt="flag"
-          width={32}
-          height={32}
-        />
+        {country === "usa" && (
+          <Image
+            src={"/images/product/usa.jfif"}
+            alt="flag"
+            width={32}
+            height={32}
+          />
+        )}
       </div>
       <div className={`${style.productImg}`}>
-        <Image
-          src={"/images/product/usa.jfif"}
-          alt="flag"
-          width={15}
-          height={15}
-          className={style.introductionCountryFlag}
-        />
+        {country === "usa" && (
+          <Image
+            src={"/images/product/usa.jfif"}
+            alt="flag"
+            width={15}
+            height={15}
+            className={style.introductionCountryFlag}
+          />
+        )}
 
         <Link href={`/shop/product?id=${_id}`} className={`${style.imgLink}`}>
           <Image

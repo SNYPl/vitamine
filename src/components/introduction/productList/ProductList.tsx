@@ -16,6 +16,7 @@ interface props {
     discount?: number;
     introduction?: boolean;
     _id: number;
+    country: string;
   }>;
 }
 
