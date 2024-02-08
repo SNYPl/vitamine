@@ -4,10 +4,10 @@ import Companies from "@/components/companies/Companies";
 import BurgerMenu from "@/components/productMenu/burgerMenu/BurgerMenu";
 import Search from "@/components/productMenu/productSearch/search/Search";
 
-export default function ProductPage({
+export default async function ProductPage({
   params,
 }: {
-  params: { product: string };
+  params: { product: number | string };
 }) {
   return (
     <main className={styles.product}>

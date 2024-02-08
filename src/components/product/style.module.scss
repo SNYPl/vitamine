@@ -78,12 +78,26 @@
   max-width: 100%;
   width: 100%;
 
+  .countryFlag {
+    display: none;
+  }
+
   .productImg {
     border: 1px solid #ebebeb;
     transition: border 0.2s ease-in-out;
     margin-right: 1.5625em;
     z-index: 9999;
-    position: static;
+    position: relative;
+
+    .introductionCountryFlag {
+      position: absolute;
+      top: 10px;
+      left: auto;
+      right: 10px;
+      object-fit: contain;
+      border-radius: 9999px;
+      z-index: 222222;
+    }
 
     &:hover {
       border-color: var(--green-color);
@@ -111,6 +125,28 @@
 
     .productNameLink:hover {
       color: #fd5f5c;
+    }
+  }
+}
+
+.nonIntroduction {
+  position: relative;
+
+  .introductionCountryFlag {
+    display: none;
+  }
+
+  .countryFlag {
+    position: absolute;
+    top: 10px;
+    left: auto;
+    right: 10px;
+    object-fit: contain;
+    border-radius: 9999px;
+    z-index: 222222;
+
+    &:hover {
+      transform: scale(1.15);
     }
   }
 }

@@ -11,6 +11,7 @@ const vitamineSchema = new mongoose.Schema({
   packageQuantity: Number,
   tabletSize: Number,
   sold: Number,
+  country: String,
   mainDaleOfWeek: Boolean,
   daleOfWeek: Boolean,
   isFeatured: Boolean,
