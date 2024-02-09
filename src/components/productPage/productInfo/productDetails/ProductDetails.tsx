@@ -4,6 +4,7 @@ import { Rate } from "antd";
 import Button from "@/components/button/Button";
 import Quantity from "./quantityInput/Quantity";
 import { formatCurrency } from "@/common/utils";
+import Image from "next/image";
 
 interface detailProps {
   category: string;
@@ -13,6 +14,7 @@ interface detailProps {
   discount: number;
   rating: number;
   productQuantity: number;
+  packageQuantity: number;
 }
 
 const ProductDetails: React.FC<detailProps> = ({
@@ -23,13 +25,19 @@ const ProductDetails: React.FC<detailProps> = ({
   discount,
   rating,
   productQuantity,
+  packageQuantity,
 }) => {
   return (
     <article className={`${style.details}`}>
       <h4 className={style.category}>{category}</h4>
       <h3 className={style.title}>{name}</h3>
       <p className={style.info}>{infoTitle}</p>
-      <div className={style.deliveryInfo}>უფასო მიტანა თბილისში</div>
+      <p className={style.packageQuantity}>
+        <span>რაოდენობა:</span> {packageQuantity} აბი
+      </p>
+      <div className={style.deliveryInfo}>
+        უფასო მიტანა თბილისში - 100 ლარის ზემოთ
+      </div>
       <div className={style.priceInfo}>
         <del>{discount ? formatCurrency(price) : null}</del>
         <div className={style.Star}>

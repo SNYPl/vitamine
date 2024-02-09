@@ -11,11 +11,12 @@ import "swiper/css/zoom";
 
 interface imageProps {
   images: string[];
+  country: string;
 }
 
 import { FreeMode, Thumbs, Zoom } from "swiper/modules";
 
-const ProductImageGallery: React.FC<imageProps> = ({ images }) => {
+const ProductImageGallery: React.FC<imageProps> = ({ images, country }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const handleThumbsSwiper = (swiper: any) => {
@@ -24,6 +25,16 @@ const ProductImageGallery: React.FC<imageProps> = ({ images }) => {
 
   return (
     <div className={`${style.gallery} `}>
+      {country === "usa" && (
+        <Image
+          src={"/images/product/usa1.jfif"}
+          alt="flag"
+          width={55}
+          height={55}
+          className={style.detailsCountryFlag}
+        />
+      )}
+
       <Swiper
         // style={}
         spaceBetween={10}

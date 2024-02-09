@@ -35,20 +35,20 @@ const Product: React.FC<product> = ({
       <div className={`${style.countryFlag}`}>
         {country === "usa" && (
           <Image
-            src={"/images/product/usa.jfif"}
+            src={"/images/product/usa1.jfif"}
             alt="flag"
-            width={32}
-            height={32}
+            width={55}
+            height={55}
           />
         )}
       </div>
       <div className={`${style.productImg}`}>
         {country === "usa" && (
           <Image
-            src={"/images/product/usa.jfif"}
+            src={"/images/product/usa1.jfif"}
             alt="flag"
-            width={15}
-            height={15}
+            width={17}
+            height={17}
             className={style.introductionCountryFlag}
           />
         )}

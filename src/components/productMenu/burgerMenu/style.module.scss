@@ -90,13 +90,17 @@
 }
 
 .open {
-  display: flex;
+  display: flex !important;
 }
 
 .arrowTransform {
   svg {
     transform: rotate(180deg);
   }
+}
+
+.homePageMenu {
+  display: flex;
 }
 
 @media only screen and (max-width: 768px) {
@@ -114,5 +118,12 @@
     ul {
       width: 100%;
     }
+  }
+
+  .homePageMenu {
+    display: none;
+  }
+  .homePageMenuMobile {
+    display: flex;
   }
 }

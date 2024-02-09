@@ -3,6 +3,7 @@
   flex: 0 0 47%;
   max-width: 47%;
 }
+
 .category {
   color: var(--green-color);
   font-size: 0.75em;
@@ -73,6 +74,19 @@
   display: flex;
   align-items: center;
   column-gap: 15px;
+}
+
+.packageQuantity {
+  color: #636363;
+  font-size: 1rem;
+  font-family: geoMr;
+  line-height: 1.625em;
+  margin-bottom: 0.625em;
+
+  span {
+    color: #252525;
+    font-weight: bold;
+  }
 }
 
 .button {

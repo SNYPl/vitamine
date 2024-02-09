@@ -1,0 +1,124 @@
+.contact {
+}
+
+.contactText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  flex-direction: column;
+
+  h3 {
+    font-size: 2.25em;
+    color: #252525;
+    font-family: geoMr;
+    line-height: 1;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-weight: normal;
+    font-size: 16px;
+    font-family: geoMr;
+    color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+}
+.mailInputs {
+  display: flex;
+  width: 100%;
+  column-gap: 30px;
+  margin-bottom: 30px;
+
+  div {
+    width: 100%;
+  }
+  input {
+    padding: 0 15px;
+    height: 2.8125em;
+    border-color: #ebebeb;
+    width: 100%;
+    min-width: 0;
+    padding: 3px 11px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    line-height: 1.5715;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    transition: all 0.3s;
+    outline: none;
+  }
+}
+
+.textAreaInput {
+  margin-bottom: 30px;
+  border-color: #ebebeb;
+  width: 100%;
+  min-width: 0;
+  padding: 3px 11px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  line-height: 1.5715;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all 0.3s;
+  outline: none;
+  resize: none;
+}
+
+.submitBtn {
+  height: 2.8125em;
+  padding: 0 1.875em;
+  text-transform: uppercase;
+  font-family: geoMr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  font-size: 16px;
+  background-color: var(--green-color);
+  color: #fff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  user-select: none;
+  touch-action: manipulation;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@media only screen and (max-width: 805px) {
+  .mailInputs {
+    flex-direction: column;
+    row-gap: 30px;
+  }
+
+  .contactText {
+    h3 {
+      font-size: 2em;
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .contactText {
+    align-items: flex-start;
+    h3 {
+      font-size: 1.4em;
+    }
+  }
+}

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
 import Button from "@/components/button/Button";
 import { arrowUp } from "../../../common/svg";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { categories } from "@/data/categories.js";
 
 interface BurgerMenu {
@@ -13,12 +12,18 @@ interface BurgerMenu {
 }
 
 const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
-  const path = usePathname();
-  const homePage = path === "/" ? true : false;
-  const [isOpen, setIsOpen] = useState(activeMenu);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenHome, setIsOpenHome] = useState(activeMenu);
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) {
+      setIsOpenHome(false);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    setIsOpenHome(!isOpenHome);
   };
 
   return (
@@ -36,9 +41,10 @@ const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
         </div>
       </article>
       <div
-        className={`${styles.menu} ${isOpen ? styles.open : ""} ${
-          homePage ? styles.homePageMenu : styles.differentPages
-        } `}
+        className={`${styles.menu} 
+        ${isOpen && !activeMenu ? styles.open : ""} 
+        ${isOpenHome && activeMenu ? `${styles.homePageMenu} ` : ""} 
+        ${isOpenHome && styles.homePageMenuMobile} `}
       >
         <ul>
           <li>

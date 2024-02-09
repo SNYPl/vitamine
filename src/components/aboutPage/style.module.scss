@@ -1,0 +1,159 @@
+.about {
+  margin: 60px 0;
+}
+
+.aboutStory {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    color: #636363;
+    font-size: 1rem;
+    font-family: geoMr;
+    line-height: 1.3em;
+    margin-bottom: 1.25em;
+    margin-bottom: 20px;
+    width: 80%;
+    font-weight: bold;
+  }
+}
+
+.whyUs {
+  margin-bottom: 3.75rem;
+  padding: 2.5em 0;
+  background-size: contain;
+}
+
+.about {
+  h2 {
+    font-size: 2.25em;
+    color: #252525;
+    font-family: geoMr;
+    line-height: 1;
+    display: flex;
+    margin-bottom: 40px;
+    font-weight: bold;
+
+    span {
+      position: relative;
+      padding-right: 5px;
+
+      &::after {
+        position: absolute;
+        content: "";
+        width: 80px;
+        height: 3px;
+        bottom: -15px;
+        left: 0;
+        background-color: var(--green-color);
+      }
+    }
+  }
+}
+
+.whyUs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  row-gap: 30px;
+  padding: 0 20%;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+}
+
+.listImg {
+  margin-right: 15px;
+  border-radius: 999px;
+  background-color: #eaeff4;
+  height: 3.4375em;
+  width: 3.4375em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    object-fit: contain;
+  }
+}
+
+.listInfo {
+  h5 {
+    color: #252525;
+    font-size: 1.125em;
+    font-family: geoMr;
+    line-height: 1;
+    margin-bottom: 0.6em;
+    font-weight: bold;
+  }
+
+  p {
+    color: #636363;
+    font-size: 1rem;
+    font-family: geoMr;
+    line-height: 1.5em;
+    font-weight: normal;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .list {
+    padding: 0 10%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .aboutStory {
+    padding: 0 15px;
+    p {
+      width: 100%;
+    }
+  }
+  .whyUs {
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .list {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .listItem {
+    width: 100%;
+  }
+
+  .about {
+    h2 {
+      font-size: 1.9em;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .about {
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+}
+
+@media only screen and (max-width: 316px) {
+  .about {
+    h2 {
+      font-size: 1.3em;
+    }
+  }
+}

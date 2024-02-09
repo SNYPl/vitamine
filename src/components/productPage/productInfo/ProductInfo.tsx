@@ -30,7 +30,7 @@ const ProductInfo: React.FC = ({}) => {
 
   if (isLoading) {
     return (
-      <article className={`${style.skeletion}`}>
+      <article className={`${style.skeletion} container`}>
         <Skeleton active />
       </article>
     );
@@ -58,12 +58,14 @@ const ProductInfo: React.FC = ({}) => {
     supplementFacts,
     use,
     warning,
+    packageQuantity,
+    country,
   } = dataObj;
 
   return (
     <div className={`${style.productInfoContainer}`}>
       <section className={`${style.productInfo}`}>
-        <ImageGallery images={images} />
+        <ImageGallery images={images} country={country} />
         <ProductDetails
           category={category}
           name={name}
@@ -72,6 +74,7 @@ const ProductInfo: React.FC = ({}) => {
           rating={rating}
           productQuantity={productQuantity}
           infoTitle={infoTitle}
+          packageQuantity={packageQuantity}
         />
       </section>
       <ProductDescription

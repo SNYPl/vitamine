@@ -1,0 +1,11 @@
+.searchMenu {
+  display: flex;
+  column-gap: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+  .searchMenu {
+    flex-direction: column-reverse;
+    row-gap: 16px;
+  }
+}
