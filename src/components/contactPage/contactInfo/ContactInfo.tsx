@@ -8,7 +8,14 @@ const ContactInfo: React.FC = ({}) => {
       <article className={style.infoItem}>
         <i className="fa-solid fa-location-dot"></i>
         <p className={style.infoItemMessage}>
-          მოგვწერეთ <Link href={"#"}>Facebook</Link>-ზე
+          მოგვწერეთ{" "}
+          <Link
+            href={"https://www.facebook.com/profile.php?id=61555898082492"}
+            target="_blank"
+          >
+            Facebook
+          </Link>
+          -ზე
         </p>
       </article>
       <article className={style.infoItem}>

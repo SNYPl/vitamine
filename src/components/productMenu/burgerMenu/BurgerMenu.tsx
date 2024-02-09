@@ -16,9 +16,7 @@ const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
   const [isOpenHome, setIsOpenHome] = useState(activeMenu);
 
   useEffect(() => {
-    if (window.innerWidth >= 768) {
-      setIsOpenHome(false);
-    }
+    setIsOpenHome(window.innerWidth >= 768);
   }, []);
 
   const toggleMenu = () => {
