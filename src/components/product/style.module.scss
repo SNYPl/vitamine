@@ -100,7 +100,7 @@
       right: 10px;
       object-fit: contain;
       border-radius: 9999px;
-      z-index: 222222;
+      z-index: 12;
     }
 
     &:hover {
@@ -147,7 +147,7 @@
     right: 10px;
     object-fit: contain;
     border-radius: 9999px;
-    z-index: 222222;
+    z-index: 12;
 
     &:hover {
       transform: scale(1.15);
@@ -258,8 +258,8 @@
 @media only screen and (min-width: 992px) {
   .nonIntroduction {
     display: block;
-    flex: 0 0 30%;
-    max-width: 30%;
+    flex: 0 0 31%;
+    max-width: 31%;
     margin: 0 7.5px;
   }
 }

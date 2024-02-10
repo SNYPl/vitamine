@@ -13,6 +13,11 @@
   height: 50px;
   display: flex;
 
+  .contactForm {
+    width: 100%;
+    display: flex;
+  }
+
   input {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;

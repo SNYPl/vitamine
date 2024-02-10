@@ -30,6 +30,7 @@ const vitamineSchema = new mongoose.Schema({
       info: String,
     },
   ],
+  tags: [String],
 });
 
 const Vitamine =

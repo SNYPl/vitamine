@@ -15,6 +15,7 @@ const Categories: React.FC = ({}) => {
   const param = useSearchParams();
   const category = param.get("category");
   const activeCategory = category ? category : "all";
+  const searchParam = param.get("search");
 
   const [activeProduct, setActiveProduct] = useState<string>(activeCategory);
 
@@ -27,7 +28,9 @@ const Categories: React.FC = ({}) => {
           <Link
             href={`/shop`}
             onClick={() => setActiveProduct("all")}
-            className={activeProduct === "all" ? style.active : ""}
+            className={
+              activeProduct === "all" && !searchParam ? style.active : ""
+            }
           >
             ყველა
           </Link>
@@ -37,7 +40,9 @@ const Categories: React.FC = ({}) => {
             <Link
               href={`/shop?category=${el.value}`}
               onClick={() => setActiveProduct(el.value)}
-              className={activeProduct === el.value ? style.active : ""}
+              className={
+                activeProduct === el.value && !searchParam ? style.active : ""
+              }
             >
               {el.name}
             </Link>

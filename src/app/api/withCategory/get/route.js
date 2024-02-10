@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 export const GET = async (req, res) => {
   const category = req.nextUrl.searchParams.get("category");
   const page = parseInt(req.nextUrl.searchParams.get("page")) || 1;
+  const search = req.nextUrl.searchParams.get("search");
 
   const path = req.nextUrl.pathname;
 
@@ -17,7 +18,16 @@ export const GET = async (req, res) => {
 
     let allVitamines;
 
-    if (category) {
+    if (search) {
+      const searchWords = search.split(/\s+/).map(escapeRegExp);
+      const regexSearch = new RegExp(searchWords.join("|"), "i");
+
+      allVitamines = await Vitamine.find({
+        tags: { $regex: regexSearch },
+      })
+        .skip(skip)
+        .limit(itemsPerPage);
+    } else if (category) {
       allVitamines = await Vitamine.find({ category })
         .skip(skip)
         .limit(itemsPerPage);
@@ -36,3 +46,6 @@ export const GET = async (req, res) => {
     return new NextResponse("error in fetching " + error);
   }
 };
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}

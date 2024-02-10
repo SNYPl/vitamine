@@ -2,7 +2,6 @@
 import React from "react";
 import style from "./style.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Button from "@/components/button/Button";
 
 type Inputs = {
   username: string;

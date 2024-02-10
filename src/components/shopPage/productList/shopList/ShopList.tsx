@@ -13,15 +13,20 @@ const ShopList: React.FC = ({}) => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const pageCount = useSelector((state: any) => state.products.shopPageValue);
+  const searchValue = searchParams.get("search");
 
   const categoryList = searchParams.get("category");
 
   const { data, isLoading, isError } = useQuery(
-    ["getSupplementByCategory", categoryList, pageCount],
+    ["getSupplementByCategory", categoryList, pageCount, searchValue],
     async () => {
       try {
         const response = await axios.get("/api/withCategory/get", {
-          params: { category: categoryList, page: pageCount },
+          params: {
+            category: categoryList,
+            page: pageCount,
+            search: searchValue,
+          },
         });
         return response.data;
       } catch (error) {
