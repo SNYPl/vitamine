@@ -173,7 +173,7 @@
 
 .nonIntroduction::before {
   height: calc(100% + 40px);
-  bottom: -40px;
+  bottom: -10px;
   border: 0;
   visibility: hidden;
   box-shadow: 0px 20px 32px 0 rgba(53, 78, 84, 0.15);
@@ -190,6 +190,10 @@
 .nonIntroduction:hover {
   border: 0 rgba(0, 0, 0, 0);
   z-index: 20;
+
+  .productNameLink {
+    height: 15px;
+  }
 
   img {
     transform: scale(1.05);
@@ -216,7 +220,7 @@
 .cartButtons {
   position: absolute;
   transition: 0.3s ease;
-  top: 96%;
+  top: 87%;
   z-index: 5;
   bottom: 0;
   left: 25%;

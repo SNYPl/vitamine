@@ -17,8 +17,17 @@ const ShopList: React.FC = ({}) => {
 
   const categoryList = searchParams.get("category");
 
+  const priceRange = useSelector((state: any) => state.priceFilter.priceFilter);
+  const [min, max] = priceRange;
+
   const { data, isLoading, isError } = useQuery(
-    ["getSupplementByCategory", categoryList, pageCount, searchValue],
+    [
+      "getSupplementByCategory",
+      categoryList,
+      pageCount,
+      searchValue,
+      priceRange,
+    ],
     async () => {
       try {
         const response = await axios.get("/api/withCategory/get", {
@@ -28,7 +37,11 @@ const ShopList: React.FC = ({}) => {
             search: searchValue,
           },
         });
-        return response.data;
+
+        const filteredData = response.data?.filter(
+          (item: any) => item.price >= min && item.price <= max
+        );
+        return filteredData;
       } catch (error) {
         console.error("Error fetching featured products", error);
         throw new Error("Error fetching featured products");
