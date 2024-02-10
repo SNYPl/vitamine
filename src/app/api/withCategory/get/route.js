@@ -7,6 +7,8 @@ export const GET = async (req, res) => {
   const category = req.nextUrl.searchParams.get("category");
   const page = parseInt(req.nextUrl.searchParams.get("page")) || 1;
   const search = req.nextUrl.searchParams.get("search");
+  const min = req.nextUrl.searchParams.get("min") || 0;
+  const max = req.nextUrl.searchParams.get("max") || 500;
 
   const path = req.nextUrl.pathname;
 
@@ -24,15 +26,21 @@ export const GET = async (req, res) => {
 
       allVitamines = await Vitamine.find({
         tags: { $regex: regexSearch },
+        price: { $gte: min, $lte: max },
       })
         .skip(skip)
         .limit(itemsPerPage);
     } else if (category) {
-      allVitamines = await Vitamine.find({ category })
+      allVitamines = await Vitamine.find({
+        category,
+        price: { $gte: min, $lte: max },
+      })
         .skip(skip)
         .limit(itemsPerPage);
     } else {
-      allVitamines = await Vitamine.find().skip(skip).limit(itemsPerPage);
+      allVitamines = await Vitamine.find({ price: { $gte: min, $lte: max } })
+        .skip(skip)
+        .limit(itemsPerPage);
     }
 
     revalidatePath(path);

@@ -35,13 +35,12 @@ const ShopList: React.FC = ({}) => {
             category: categoryList,
             page: pageCount,
             search: searchValue,
+            min: min,
+            max: max,
           },
         });
 
-        const filteredData = response.data?.filter(
-          (item: any) => item.price >= min && item.price <= max
-        );
-        return filteredData;
+        return response.data;
       } catch (error) {
         console.error("Error fetching featured products", error);
         throw new Error("Error fetching featured products");
