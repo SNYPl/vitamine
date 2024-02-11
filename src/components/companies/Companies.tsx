@@ -13,7 +13,12 @@ const Companies: React.FC = ({}) => {
     <section className={`${style.companies}`}>
       {company.map((el: any, id: any) => (
         <div key={id}>
-          <Image src={el} alt="img" width={65} height={55} />
+          <Image
+            src={el}
+            alt={`Company Logo ${id + 1}`}
+            width={65}
+            height={55}
+          />
         </div>
       ))}
     </section>

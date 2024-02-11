@@ -33,7 +33,7 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    // -webkit-box-orient: vertical;
+    -webkit-box-orient: vertical;
     margin-bottom: 0.2777777778em;
     transition: 0.4s;
     visibility: visible;
@@ -180,6 +180,8 @@
 }
 .nonIntroduction .imgLink {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .nonIntroduction:hover::before {
@@ -192,7 +194,7 @@
   z-index: 20;
 
   .productNameLink {
-    height: 15px;
+    height: 22px;
   }
 
   img {
@@ -209,34 +211,34 @@
     transform: translateY(-20px);
   }
 
-  .productBtn {
+  button {
     transform: scale(1) translateY(-20px);
 
     &:hover {
-      background-color: var(--green-color);
+      background-color: var(--green-color) !important;
     }
   }
 }
 .cartButtons {
   position: absolute;
   transition: 0.3s ease;
-  top: 87%;
+  top: 93%;
   z-index: 5;
   bottom: 0;
-  left: 25%;
-}
+  left: 28%;
 
-.productBtn {
-  transform: scale(0) translateY(0px);
-  height: 2.5em;
-  width: 2.5em;
-  padding: 0;
-  transition: 0.2s ease-in-out;
-  background-color: #eaeff4;
-  color: #252525;
-  border: 0;
-  font-size: 16px;
-  margin-right: 0.3125em;
+  button {
+    transform: scale(0) translateY(0px);
+    height: 2.5em;
+    width: 2.5em;
+    padding: 0;
+    transition: 0.2s ease-in-out;
+    background-color: #eaeff4;
+    color: #252525;
+    border: 0;
+    font-size: 16px;
+    margin-right: 0.3125em;
+  }
 }
 .currenct {
   color: var(--green-color);
@@ -249,7 +251,6 @@
     display: block;
     flex: 0 0 33.33333333%;
     max-width: 33.33333333%;
-    // margin: 0 7.5px;
 
     img {
       width: auto;

@@ -4,6 +4,7 @@ import style from "./style.module.scss";
 import Link from "next/link";
 import { Button } from "antd";
 import { formatCurrency } from "@/common/utils";
+import ProductButtons from "./productButtons/ProductButtons";
 
 interface product {
   category?: string;
@@ -76,34 +77,7 @@ const Product: React.FC<product> = ({
         </h4>
       </div>
       <div className={`${style.cartButtons}`}>
-        <Button
-          // onClick={() => onAddWishlist(data)}
-          className={`product-btn ${style.productBtn} `}
-          type="primary"
-          shape="round"
-          icon={<i className="far fa-heart" />}
-        />
-        <Button
-          // onClick={() => onAddToCart(data)}
-          className={`product-btn ${style.productBtn} `}
-          type="primary"
-          shape="round"
-          icon={
-            // addToCartLoading ? (
-            //   <LoadingOutlined spin />
-            // ) : (
-            <i className="fa-solid fa-bag-shopping" />
-            // )
-          }
-        />
-
-        <Button
-          // onClick={showModal}
-          className={`product-btn ${style.productBtn} `}
-          type="primary"
-          shape="round"
-          icon={<i className="far fa-eye" />}
-        />
+        <ProductButtons id={_id} key={_id} />
       </div>
     </article>
   );

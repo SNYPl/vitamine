@@ -7,6 +7,7 @@ import BackTop from "antd/es/float-button/BackTop";
 import { QueryClientProviderHelper } from "@/components/helper/queryClient";
 import { ReduxToolkitProvider } from "@/components/helper/reduxProvider";
 import React from "react";
+import ProductInfoModal from "@/components/productInfoModal/ProductInfoModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,10 @@ export default function RootLayout({
         <body className={inter.className}>
           <ReduxToolkitProvider>
             <Header />
-            <QueryClientProviderHelper>{children}</QueryClientProviderHelper>
+            <QueryClientProviderHelper>
+              <ProductInfoModal />
+              {children}
+            </QueryClientProviderHelper>
             <footer className={"container"}>
               <Footer />{" "}
             </footer>

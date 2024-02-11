@@ -7,6 +7,7 @@ import Product from "../product/Product";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { Skeleton } from "antd";
+import NoProduct from "../emptyProduct/noProduct";
 
 const FeaturedProducts: React.FC = ({}) => {
   const [activeMenu, setActiveMenu] = useState("all");
@@ -46,6 +47,8 @@ const FeaturedProducts: React.FC = ({}) => {
             <Skeleton active />
           </article>
         )}
+        {!filteredData?.length && <NoProduct title={"პროდუქტი არ არის"} />}
+
         {filteredData?.slice(0, 8).map((el: any, id: any) => (
           <Product {...el} key={el._id} />
         ))}

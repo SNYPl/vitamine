@@ -4,7 +4,6 @@ import { Rate } from "antd";
 import Button from "@/components/button/Button";
 import Quantity from "./quantityInput/Quantity";
 import { formatCurrency } from "@/common/utils";
-import Image from "next/image";
 
 interface detailProps {
   category: string;

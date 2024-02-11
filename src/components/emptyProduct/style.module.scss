@@ -1,0 +1,23 @@
+.noProduct {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 60px 0;
+  width: 100%;
+
+  i {
+    font-size: 2.4em;
+    margin-bottom: 20px;
+    color: rgba(0, 0, 0, 0.25);
+  }
+
+  p {
+    font-family: geoMr;
+    font-size: 1.3em;
+    color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+}

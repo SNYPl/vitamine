@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./style.module.scss";
 import { useQuery } from "react-query";
 import { useSearchParams } from "next/navigation";
@@ -8,17 +8,40 @@ import ProductDetails from "./productDetails/ProductDetails";
 import ProductDescription from "./productDescription/ProductDescription";
 import ImageGallery from "./produtImagegallery/ProductImageGallery";
 import { Skeleton } from "antd";
+import { useSelector, useDispatch } from "react-redux";
+import { setProductId } from "@/store/slices/productButtonsSlice";
 
-const ProductInfo: React.FC = ({}) => {
+interface InfoProps {
+  modal: boolean;
+  className?: any;
+}
+
+const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
+  const dispatch = useDispatch();
+  const productGlobalId = useSelector((state: any) => state.productButtons.id);
   const searchParams = useSearchParams();
-  const productId = searchParams.get("id");
+  const urlId = searchParams.get("id");
+  const [productIdState, setProductIdState] = useState(
+    productGlobalId || urlId
+  );
 
-  const { data, isLoading, isError } = useQuery(
-    ["getSupplementByCategory"],
+  useEffect(() => {
+    if (urlId) {
+      dispatch(setProductId(null));
+      setProductIdState(urlId);
+    } else {
+      const id = productGlobalId;
+
+      setProductIdState(() => id);
+    }
+  }, [productGlobalId, urlId]);
+
+  const { data, isLoading, isError, isFetched } = useQuery(
+    ["getSupplementByCategory", productIdState],
     async () => {
       try {
         const response = await axios.get("/api/product/get", {
-          params: { productId },
+          params: { productId: productIdState },
         });
         return response.data;
       } catch (error) {
@@ -63,7 +86,7 @@ const ProductInfo: React.FC = ({}) => {
   } = dataObj;
 
   return (
-    <div className={`${style.productInfoContainer}`}>
+    <div className={`${style.productInfoContainer} ${className}`}>
       <section className={`${style.productInfo}`}>
         <ImageGallery images={images} country={country} />
         <ProductDetails
@@ -77,18 +100,23 @@ const ProductInfo: React.FC = ({}) => {
           packageQuantity={packageQuantity}
         />
       </section>
-      <ProductDescription
-        about={about}
-        description={description}
-        otherIngredients={otherIngredients}
-        review={review}
-        supplementFacts={supplementFacts}
-        use={use}
-        warning={warning}
-        name={name}
-      />
+      {!modal && (
+        <ProductDescription
+          about={about}
+          description={description}
+          otherIngredients={otherIngredients}
+          review={review}
+          supplementFacts={supplementFacts}
+          use={use}
+          warning={warning}
+          name={name}
+        />
+      )}
     </div>
   );
 };
 
 export default ProductInfo;
+function dispatch(arg0: void) {
+  throw new Error("Function not implemented.");
+}

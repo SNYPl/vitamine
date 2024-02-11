@@ -9,7 +9,7 @@ const ProductPage: React.FC = ({}) => {
       <div className={`${style.categoriesContainer}`}>
         <Categories />
       </div>
-      <ProductInfo />
+      <ProductInfo modal={false} />
     </section>
   );
 };

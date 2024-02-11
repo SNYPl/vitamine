@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductList } from "@/store/slices/paginationSlice";
 import { Skeleton } from "antd";
+import NoProduct from "@/components/emptyProduct/noProduct";
 
 const ShopList: React.FC = ({}) => {
   const searchParams = useSearchParams();
@@ -60,6 +61,10 @@ const ShopList: React.FC = ({}) => {
         <Skeleton active />
       </article>
     );
+
+  if (!data.length) {
+    return <NoProduct title={"პროდუქტი ვერ მოიძებნა"} />;
+  }
 
   return (
     <section className={`${style.shopList}`}>
