@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import style from "./style.module.scss";
 import Link from "next/link";
-import { Button } from "antd";
 import { formatCurrency } from "@/common/utils";
 import ProductButtons from "./productButtons/ProductButtons";
 
@@ -15,6 +14,7 @@ interface product {
   introduction?: boolean;
   _id: number;
   country: string;
+  productQuantity?: number | undefined | any;
 }
 
 const Product: React.FC<product> = ({
@@ -26,6 +26,7 @@ const Product: React.FC<product> = ({
   introduction,
   _id,
   country,
+  productQuantity,
 }) => {
   return (
     <article
@@ -76,9 +77,16 @@ const Product: React.FC<product> = ({
           <del>{discount ? formatCurrency(price) : null}</del>
         </h4>
       </div>
-      <div className={`${style.cartButtons}`}>
-        <ProductButtons id={_id} key={_id} />
-      </div>
+
+      {!introduction && (
+        <div className={`${style.cartButtons}`}>
+          <ProductButtons
+            id={_id}
+            key={_id}
+            productQuantity={productQuantity}
+          />
+        </div>
+      )}
     </article>
   );
 };

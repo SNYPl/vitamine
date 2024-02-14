@@ -83,6 +83,7 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
     warning,
     packageQuantity,
     country,
+    _id,
   } = dataObj;
 
   return (
@@ -98,6 +99,7 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
           productQuantity={productQuantity}
           infoTitle={infoTitle}
           packageQuantity={packageQuantity}
+          id={_id}
         />
       </section>
       {!modal && (

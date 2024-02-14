@@ -69,13 +69,6 @@
   }
 }
 
-.quanty {
-  margin-bottom: 50px;
-  display: flex;
-  align-items: center;
-  column-gap: 15px;
-}
-
 .packageQuantity {
   color: #636363;
   font-size: 1rem;
@@ -86,25 +79,6 @@
   span {
     color: #252525;
     font-weight: bold;
-  }
-}
-
-.button {
-  margin-bottom: 0.7692307692em;
-  color: var(--green-color);
-  border: 2px solid var(--green-color) !important;
-  width: 100%;
-  font-size: 0.8125em;
-  height: 3.4615384615em;
-  text-transform: uppercase;
-  font-family: ceraBold;
-  padding: 2.4px 16px;
-  border-radius: 32px;
-  background-color: #fff;
-
-  &:hover {
-    background-color: var(--green-color);
-    color: #fff;
   }
 }
 

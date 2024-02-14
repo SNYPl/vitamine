@@ -20,25 +20,34 @@ export const GET = async (req, res) => {
 
     let allVitamines;
 
+    const priceFilter = {
+      $or: [
+        { discount: { $gte: min, $lte: max } },
+        { price: { $gte: min, $lte: max } },
+      ],
+    };
+
     if (search) {
       const searchWords = search.split(/\s+/).map(escapeRegExp);
       const regexSearch = new RegExp(searchWords.join("|"), "i");
 
       allVitamines = await Vitamine.find({
         tags: { $regex: regexSearch },
-        price: { $gte: min, $lte: max },
+        ...priceFilter,
       })
         .skip(skip)
         .limit(itemsPerPage);
     } else if (category) {
       allVitamines = await Vitamine.find({
         category,
-        price: { $gte: min, $lte: max },
+        ...priceFilter,
       })
         .skip(skip)
         .limit(itemsPerPage);
     } else {
-      allVitamines = await Vitamine.find({ price: { $gte: min, $lte: max } })
+      allVitamines = await Vitamine.find({
+        ...priceFilter,
+      })
         .skip(skip)
         .limit(itemsPerPage);
     }

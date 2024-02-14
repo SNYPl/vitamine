@@ -1,0 +1,117 @@
+.shipOrder {
+  margin-bottom: 3.75rem;
+}
+
+.active {
+  background-color: var(--green-color) !important;
+
+  .step::before {
+    background-color: var(--green-color) !important;
+  }
+
+  h2 {
+    color: #fff !important;
+  }
+
+  span {
+    color: rgba(255, 255, 255, 0.25) !important;
+  }
+}
+
+.stepBlock {
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  background: #fff;
+  line-height: 1.5715;
+  font-weight: normal;
+  font-size: 16px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: #ededed;
+    width: calc(100% - 30px);
+    height: 97%;
+    z-index: 5;
+    left: 0;
+    top: 0;
+  }
+
+  &::before {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: -43px;
+    border: 1px solid #ebebeb;
+    width: 60px;
+    height: 60px;
+    transform: rotate(45deg);
+    background: #fff;
+  }
+}
+
+.step {
+  height: 60px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    color: #252525;
+    font-size: 1.25em;
+    font-family: geoMr;
+    line-height: 1;
+    display: block;
+    text-transform: uppercase;
+    position: unset;
+    z-index: 2;
+  }
+
+  span {
+    color: rgba(45, 44, 64, 0.1);
+    font-size: 3em;
+    font-family: ceraBold;
+    line-height: 1;
+    position: absolute;
+    display: block;
+    right: 35px;
+    user-select: none;
+    z-index: 5;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 22px;
+    border: 1px solid #ebebeb;
+    border-width: 1px 1px 0 0;
+    width: 80px;
+    height: 80px;
+    transform: rotate(45deg);
+    background-color: #fff;
+    z-index: 2;
+  }
+
+  &::after {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: -30px;
+    border-style: solid;
+    border-color: #fff #fff #fff rgba(0, 0, 0, 0);
+    border-width: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+  }
+}
+@media only screen and (max-width: 768px) {
+}

@@ -1,0 +1,59 @@
+.stepOneTotal {
+  margin-top: 50px;
+  width: 22.5em;
+  margin-left: auto;
+  .title {
+    color: #252525;
+    font-size: 1.125em;
+    font-family: ceraBold;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 1.6666666667em;
+  }
+}
+
+.info {
+}
+
+.infoItem {
+  padding: 20px 10px;
+  border: 1px solid #ebebeb;
+  display: flex;
+  column-gap: 20px;
+  h3 {
+    color: #636363;
+    font-size: 1rem;
+    font-family: ceraBold;
+    line-height: 1;
+    width: 138px;
+    text-align: center;
+  }
+
+  span {
+    color: #252525;
+    font-size: 1rem;
+    font-family: ceraBold;
+    line-height: 1;
+  }
+}
+
+.btnInf {
+  height: 2.8125em;
+  width: 100%;
+  background-color: var(--green-color);
+  border-color: var(--green-color);
+  padding: 2.4px 16px;
+  font-size: 16px;
+  border-radius: 32px;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  outline: none;
+  margin-top: 30px;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+}

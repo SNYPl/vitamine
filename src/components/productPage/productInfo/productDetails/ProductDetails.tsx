@@ -1,7 +1,6 @@
 import React from "react";
 import style from "./style.module.scss";
 import { Rate } from "antd";
-import Button from "@/components/button/Button";
 import Quantity from "./quantityInput/Quantity";
 import { formatCurrency } from "@/common/utils";
 
@@ -14,6 +13,7 @@ interface detailProps {
   rating: number;
   productQuantity: number;
   packageQuantity: number;
+  id: string;
 }
 
 const ProductDetails: React.FC<detailProps> = ({
@@ -25,6 +25,7 @@ const ProductDetails: React.FC<detailProps> = ({
   rating,
   productQuantity,
   packageQuantity,
+  id,
 }) => {
   return (
     <article className={`${style.details}`}>
@@ -46,24 +47,8 @@ const ProductDetails: React.FC<detailProps> = ({
           <Rate allowHalf defaultValue={rating} />
         </div>
       </div>
-      <div className={style.quanty}>
-        <Quantity productQuantity={productQuantity} />
-        <p
-          style={{ color: productQuantity ? "#4eb016" : "#B50808" }}
-          className={style.stockParagraph}
-        >
-          {productQuantity ? (
-            <span>
-              <i className="fa-solid fa-check"></i> მარაგში
-            </span>
-          ) : (
-            "მარაგი ამოიწურა"
-          )}
-        </p>
-      </div>
-      <Button className={style.button} disabled={true}>
-        კალათაში დამატება
-      </Button>
+
+      <Quantity productQuantity={productQuantity} id={id} />
     </article>
   );
 };

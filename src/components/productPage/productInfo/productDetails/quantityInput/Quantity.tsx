@@ -1,39 +1,77 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import style from "./style.module.scss";
 import { ConfigProvider, InputNumber, Space } from "antd";
+import Button from "@/components/button/Button";
+import { addToCart } from "@/components/api/addToCart";
+import { useDispatch, useSelector } from "react-redux";
+import { setCartUpdated } from "@/store/slices/cartSlice";
 
 interface quantity {
   productQuantity: number;
+  id: string;
 }
 
-const Quantity: React.FC<quantity> = ({ productQuantity }) => {
-  const onChange = (value: number | null) => {
-    console.log("changed", value);
+const Quantity: React.FC<quantity> = ({ productQuantity, id }) => {
+  const defaultValue = 1;
+  const [quantityHandler, setQuantityHandler] = useState(defaultValue);
+  const cartUpdatedRender = useSelector(
+    (state: any) => state.cartReducer.cartUpdated
+  );
+  const dispatch = useDispatch();
+
+  const onChange = (value: any) => {
+    setQuantityHandler(value);
   };
 
   return (
-    <div className={`${style.quantity}`}>
-      <ConfigProvider
-        theme={{
-          components: {
-            InputNumber: {
-              hoverBorderColor: "#f79823",
-              activeBorderColor: "#f79823",
-            },
-          },
+    <>
+      <div className={style.quanty}>
+        <div className={`${style.quantity}`}>
+          <ConfigProvider
+            theme={{
+              components: {
+                InputNumber: {
+                  hoverBorderColor: "#f79823",
+                  activeBorderColor: "#f79823",
+                },
+              },
+            }}
+          >
+            <Space>
+              <InputNumber
+                min={defaultValue}
+                max={productQuantity}
+                defaultValue={defaultValue}
+                onChange={onChange}
+              />
+            </Space>
+          </ConfigProvider>
+        </div>
+        <p
+          style={{ color: productQuantity ? "#4eb016" : "#B50808" }}
+          className={style.stockParagraph}
+        >
+          {productQuantity ? (
+            <span>
+              <i className="fa-solid fa-check"></i> მარაგში
+            </span>
+          ) : (
+            "მარაგი ამოიწურა"
+          )}
+        </p>
+      </div>
+      <Button
+        className={style.button}
+        onSubmitButton={() => {
+          addToCart(id, quantityHandler, productQuantity);
+          dispatch(setCartUpdated(!cartUpdatedRender));
         }}
+        disabled={!productQuantity}
       >
-        <Space>
-          <InputNumber
-            min={1}
-            max={productQuantity}
-            defaultValue={1}
-            onChange={onChange}
-          />
-        </Space>
-      </ConfigProvider>
-    </div>
+        კალათაში დამატება
+      </Button>
+    </>
   );
 };
 

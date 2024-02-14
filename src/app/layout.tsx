@@ -26,8 +26,8 @@ export default function RootLayout({
       <React.StrictMode>
         <body className={inter.className}>
           <ReduxToolkitProvider>
-            <Header />
             <QueryClientProviderHelper>
+              <Header />
               <ProductInfoModal />
               {children}
             </QueryClientProviderHelper>

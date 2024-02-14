@@ -6,18 +6,19 @@ import { usePathname } from "next/navigation";
 
 const ParamInfo: React.FC = () => {
   const path = usePathname();
-  const pathArray = path.split("/").filter((el: any) => el);
-  const pathString = pathArray.join();
+  const pathArray = path.split("/").filter((el) => el);
 
   const paths = [
     { eng: "shop", geo: "მაღაზია" },
     { eng: "about", geo: "ჩვენს შესახებ" },
     { eng: "contact", geo: "კონტაქტი" },
+    { eng: "cart", geo: "კალათა" },
   ];
 
-  const geopath = paths.filter((el: any) => el.eng === pathString);
-
-  const { geo } = geopath[0];
+  const translatePath = (engPath: any) => {
+    const geopath = paths.find((el) => el.eng === engPath);
+    return geopath ? geopath.geo : engPath;
+  };
 
   return (
     <section className={`${style.info}`}>
@@ -25,8 +26,12 @@ const ParamInfo: React.FC = () => {
       <p className={`${style.params}`}>მთავარი </p>
 
       <p className={`${style.addedParams}`}>
-        <span className={`${style.paramArrow}`}>{">"}</span>
-        {geo}
+        {pathArray.map((el: any) => (
+          <React.Fragment key={el}>
+            <span className={`${style.paramArrow}`}>{">"}</span>
+            <span>{translatePath(el)}</span>
+          </React.Fragment>
+        ))}
       </p>
     </section>
   );

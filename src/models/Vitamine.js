@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const vitamineSchema = new mongoose.Schema({
-  id: String,
+  _id: mongoose.Schema.Types.ObjectId,
   name: String,
   category: String,
   infoTitle: String,
