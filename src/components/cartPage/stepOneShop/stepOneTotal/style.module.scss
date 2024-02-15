@@ -8,11 +8,9 @@
     font-family: ceraBold;
     line-height: 1;
     text-transform: uppercase;
-    margin-bottom: 1.6666666667em;
+    margin-bottom: 1.7em;
+    font-weight: bold;
   }
-}
-
-.info {
 }
 
 .infoItem {
@@ -34,6 +32,11 @@
     font-size: 1rem;
     font-family: ceraBold;
     line-height: 1;
+    font-weight: bold;
+  }
+
+  .num {
+    color: #88c74a;
   }
 }
 
@@ -52,6 +55,8 @@
   margin-top: 30px;
   &:hover {
     opacity: 0.8;
+    color: #fff !important;
+    border-color: var(--green-color) !important;
   }
 }
 

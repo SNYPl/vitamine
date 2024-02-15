@@ -1,14 +1,13 @@
 import React from "react";
 import style from "./style.module.scss";
-import Button from "@/components/button/Button";
 import { formatCurrencyWithSymbol } from "@/common/utils";
 
 interface stepOneTotal {
-  setStepCart: any;
   totalPrice: number;
+  children?: any;
 }
 
-const StepOneTotal: React.FC<stepOneTotal> = ({ setStepCart, totalPrice }) => {
+const StepOneTotal: React.FC<stepOneTotal> = ({ totalPrice, children }) => {
   const shipping = 5;
   const shippingPrice =
     totalPrice >= 100 ? "უფასო" : formatCurrencyWithSymbol(shipping);
@@ -23,7 +22,9 @@ const StepOneTotal: React.FC<stepOneTotal> = ({ setStepCart, totalPrice }) => {
       <article className={style.info}>
         <div className={style.infoItem}>
           <h3>ჯამი</h3>
-          <span>{formatCurrencyWithSymbol(totalPrice)}</span>
+          <span className={style.num}>
+            {formatCurrencyWithSymbol(totalPrice)}
+          </span>
         </div>
         <div className={style.infoItem}>
           <h3>მიწოდება</h3>
@@ -31,15 +32,11 @@ const StepOneTotal: React.FC<stepOneTotal> = ({ setStepCart, totalPrice }) => {
         </div>
         <div className={style.infoItem}>
           <h3>მთლიანი ჯამი</h3>
-          <span>{totalPriceHandler}</span>
+          <span className={style.num}>{totalPriceHandler}</span>
         </div>
       </article>
-      <Button
-        className={style.btnInf}
-        onSubmitButton={() => setStepCart("step-2")}
-      >
-        შეკვეთის გაფორმება
-      </Button>
+
+      {children}
     </section>
   );
 };

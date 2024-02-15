@@ -111,7 +111,11 @@ const StepOneProductList: React.FC<ProductListProps> = ({ setStepCart }) => {
         <Button onClick={updateCartHandler}>კალათის განახლება</Button>{" "}
       </div>
 
-      <StepOneTotal setStepCart={setStepCart} totalPrice={data?.totalPrice} />
+      <StepOneTotal totalPrice={data?.totalPrice}>
+        <Button className={style.btnInf} onClick={() => setStepCart("step-2")}>
+          შეკვეთის გაფორმება
+        </Button>
+      </StepOneTotal>
     </>
   );
 };

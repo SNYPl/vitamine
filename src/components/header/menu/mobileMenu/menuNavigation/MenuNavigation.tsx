@@ -11,7 +11,6 @@ import SocialIcons from "../../../topNav/socials/Socials";
 function MobileNavigator() {
   const [current, setCurrent] = useState("mail");
   const handleClick = (e: any) => {
-    // console.log("click ", e);
     setCurrent(e.key);
   };
   return (

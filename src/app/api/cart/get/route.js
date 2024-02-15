@@ -36,7 +36,7 @@ export const GET = async (req, res) => {
         ...product.toObject(),
         totalPrice: productTotalPrice,
         choosedQuantity: cartItem.quantity,
-        price: productPrice, // Add the calculated price to the response
+        price: productPrice,
       };
     });
 
