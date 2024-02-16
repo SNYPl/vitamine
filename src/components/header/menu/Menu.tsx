@@ -13,10 +13,10 @@ const Menu = () => {
           <MobileMenuOpener />
           <Link href={"/"} className={styles.menuLogo}>
             <Image
-              src={"/images/logo.png"}
+              src={"/images/vitvitLogo.png"}
               alt="logo"
               width={139}
-              height={37}
+              height={80}
             />
           </Link>
           <Navigation />

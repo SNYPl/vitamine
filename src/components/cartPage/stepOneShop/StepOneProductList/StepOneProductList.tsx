@@ -80,7 +80,7 @@ const StepOneProductList: React.FC<ProductListProps> = ({ setStepCart }) => {
                   height={110}
                 />
               </div>
-              <p>{product.name}</p>
+              <p className={style.productName}>{product.name}</p>
               <p>{product.discount ? product.discount : product.price}</p>
               <div className={style.productQuantity}>
                 <InputNumber
@@ -107,8 +107,7 @@ const StepOneProductList: React.FC<ProductListProps> = ({ setStepCart }) => {
         })}
       </section>
       <div className={style.updateBtn}>
-        <Button onClick={() => setStepCart("step-1")}>უკან დაბრუნება</Button>{" "}
-        <Button onClick={updateCartHandler}>კალათის განახლება</Button>{" "}
+        <Button onClick={updateCartHandler}>კალათის განახლება</Button>
       </div>
 
       <StepOneTotal totalPrice={data?.totalPrice}>

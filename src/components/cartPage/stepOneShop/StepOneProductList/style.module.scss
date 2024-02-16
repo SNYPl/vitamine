@@ -85,5 +85,26 @@
   }
 }
 
+@media only screen and (max-width: 915px) {
+  .quantityInfo {
+    margin-top: 4px;
+  }
+}
+
 @media only screen and (max-width: 768px) {
+  .quantityInfo {
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .product {
+    overflow-y: scroll;
+  }
+
+  .updateBtn {
+    button {
+      font-size: 0.7em;
+      padding: 0 2em;
+    }
+  }
 }

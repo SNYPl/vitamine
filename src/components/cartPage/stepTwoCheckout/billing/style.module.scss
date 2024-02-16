@@ -111,4 +111,34 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .billing {
+    padding-right: 0;
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  .nameInputs {
+    flex-direction: column;
+  }
+
+  .input {
+    margin-bottom: 20px;
+  }
+
+  .btnContainers {
+    column-gap: 10%;
+    position: absolute;
+    bottom: -10px;
+    width: 100%;
+
+    button {
+      margin-top: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .btnContainers {
+    column-gap: 5%;
+  }
 }

@@ -12,4 +12,13 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .stepTwoCheckout {
+    grid-template-columns: 1fr;
+    position: relative;
+  }
+
+  .details {
+    margin-bottom: 60px;
+    padding-left: 0;
+  }
 }
