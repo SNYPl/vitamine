@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import Vitamine from "@/models/Vitamine";
 import sgMail from "@sendgrid/mail";
 
-const sendgridApiKey = process.env.SENDGRID_API_KEY || "defaultApiKey";
+const sendgridApiKey = process.env.SENDGRID_API_KEY;
 
-sgMail.setApiKey(sendgridApiKey);
+if (sendgridApiKey) {
+  sgMail.setApiKey(sendgridApiKey);
+}
 
 export const POST = async (request: Request) => {
   try {
