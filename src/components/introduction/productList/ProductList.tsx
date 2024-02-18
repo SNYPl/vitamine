@@ -9,7 +9,7 @@ import Slider from "react-slick";
 interface props {
   title: string;
   products: Array<{
-    category?: string;
+    category?: string[];
     name: string;
     mainImage: string;
     price: string;

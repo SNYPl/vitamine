@@ -51,12 +51,16 @@ const ShopList: React.FC = ({}) => {
 
   React.useEffect(() => {
     if (data) {
-      dispatch(setProductList(data));
+      dispatch(setProductList(data?.total));
     }
   }, [data]);
 
-  const quantityTrue = data?.filter((el: any) => el.productQuantity);
-  const quantityFalse = data?.filter((el: any) => el.productQuantity === 0);
+  const quantityTrue = data?.allVitamines.filter(
+    (el: any) => el.productQuantity
+  );
+  const quantityFalse = data?.allVitamines.filter(
+    (el: any) => el.productQuantity === 0
+  );
 
   const allVitamines = quantityTrue?.concat(quantityFalse);
 

@@ -18,8 +18,6 @@ export const GET = async (req, res) => {
     const itemsPerPage = 12;
     const skip = (page - 1) * itemsPerPage;
 
-    let allVitamines;
-
     const priceFilter = {
       $or: [
         { discount: { $gte: min, $lte: max } },
@@ -27,38 +25,49 @@ export const GET = async (req, res) => {
       ],
     };
 
+    let query;
+    let totalDocuments;
+
     if (search) {
       const searchWords = search.split(/\s+/).map(escapeRegExp);
       const regexSearch = new RegExp(searchWords.join("|"), "i");
 
-      allVitamines = await Vitamine.find({
+      query = {
         tags: { $regex: regexSearch },
         ...priceFilter,
-      })
-        .skip(skip)
-        .limit(itemsPerPage);
+      };
+
+      totalDocuments = await Vitamine.countDocuments(query);
     } else if (category) {
-      allVitamines = await Vitamine.find({
+      query = {
         category,
         ...priceFilter,
-      })
-        .skip(skip)
-        .limit(itemsPerPage);
+      };
+
+      totalDocuments = await Vitamine.countDocuments(query);
     } else {
-      allVitamines = await Vitamine.find({
+      query = {
         ...priceFilter,
-      })
-        .skip(skip)
-        .limit(itemsPerPage);
+      };
+
+      totalDocuments = await Vitamine.countDocuments(query);
     }
+
+    // Fetch the actual data using skip and limit
+    const allVitamines = await Vitamine.find(query)
+      .skip(skip)
+      .limit(itemsPerPage);
 
     revalidatePath(path);
 
-    return new NextResponse(JSON.stringify(allVitamines), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return new NextResponse(
+      JSON.stringify({ allVitamines, total: totalDocuments }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
     return new NextResponse("error in fetching " + error);
   }

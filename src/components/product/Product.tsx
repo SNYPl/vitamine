@@ -6,7 +6,7 @@ import { formatCurrency } from "@/common/utils";
 import ProductButtons from "./productButtons/ProductButtons";
 
 interface product {
-  category?: string;
+  category?: string[];
   name: string;
   mainImage: string;
   price: string;
@@ -31,6 +31,8 @@ const Product: React.FC<product> = ({
   sold,
 }) => {
   const solded = sold < productQuantity && sold !== productQuantity;
+
+  const categoryString = category?.join("/");
 
   return (
     <article
@@ -69,7 +71,7 @@ const Product: React.FC<product> = ({
         </Link>
       </div>
       <div className={`${style.productInfo}`}>
-        <h3>{category}</h3>
+        <h3>{categoryString}</h3>
         <Link
           href={`/shop/product?id=${_id}`}
           className={`${style.productNameLink}`}

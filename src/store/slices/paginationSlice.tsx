@@ -11,8 +11,7 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     setProductList: (state, action) => {
-      state.productList = action.payload;
-      state.productListLength = action.payload.length;
+      state.productListLength = action.payload;
     },
     setShopPage: (state, action) => {
       state.shopPageValue = action.payload;

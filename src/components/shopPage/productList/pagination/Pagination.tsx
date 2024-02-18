@@ -1,26 +1,48 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Pagination, ConfigProvider } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setShopPage } from "@/store/slices/paginationSlice";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const PaginationComponent: React.FC = ({}) => {
+  const searchParam = useSearchParams();
+  const categoryValue = searchParam.get("category");
+  const pageValue = searchParam.get("page");
+  const firstPage = 1;
+  const router = useRouter();
+  const path = usePathname();
+
   const productListLength = useSelector(
     (state: any) => state.products.productListLength
   );
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const productPage = useSelector((state: any) => state.products.shopPageValue);
+
   const dispatch = useDispatch();
 
   const pageSize = 12;
 
   useEffect(() => {
-    setCurrentPage(1);
-    dispatch(setShopPage(1));
-  }, [productListLength, dispatch]);
+    if (pageValue) {
+      dispatch(setShopPage(Number(pageValue)));
+    } else {
+      dispatch(setShopPage(firstPage));
+    }
+  }, [pageValue]);
 
   const onPaginationChange = (page: number) => {
-    dispatch(setShopPage(page));
-    setCurrentPage(page);
+    if (categoryValue && page !== 1) {
+      router.push(`${path}?category=${categoryValue}&page=${page}`);
+    } else if (categoryValue && page === 1) {
+      router.push(`${path}?category=${categoryValue}`);
+    }
+
+    if (!categoryValue && page !== 1) {
+      router.push(`${path}?page=${page}`);
+    } else if (!categoryValue && page === 1) {
+      router.push(`${path}`);
+    }
   };
 
   return (
@@ -42,8 +64,8 @@ const PaginationComponent: React.FC = ({}) => {
     >
       <Pagination
         onChange={onPaginationChange}
-        current={currentPage}
-        defaultCurrent={productListLength}
+        current={productPage}
+        defaultCurrent={1}
         pageSize={pageSize}
         total={productListLength}
         hideOnSinglePage

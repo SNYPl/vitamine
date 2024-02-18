@@ -10,12 +10,12 @@ const servicesList = [
   },
   {
     title: "სწრაფი მიტანის სერვისი",
-    info: "ხარისხიანად",
+    info: "",
     img: "/images/services/2.png",
   },
   {
     title: "თანხის გადახდა ადგილზე",
-    info: "უსაფრთხოდ და სწრაფად",
+    info: "მარტივად და სწრაფად",
     img: "/images/services/3.png",
   },
   {

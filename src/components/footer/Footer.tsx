@@ -9,10 +9,10 @@ const Footer: React.FC = ({}) => {
     <section className={`${style.footer}`}>
       <article className={`${style.footerInfoItem}`}>
         <Image
-          src={"/images/vitvitLogo.png"}
+          src={"/images/vitvitLogo.jpg"}
           alt="logo"
-          width={139}
-          height={80}
+          width={110}
+          height={70}
         />
         <ul className={`${style.footerList}`}>
           <li>მისამართი: თბილისი,</li>

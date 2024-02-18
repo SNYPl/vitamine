@@ -5,7 +5,7 @@ import Quantity from "./quantityInput/Quantity";
 import { formatCurrency } from "@/common/utils";
 
 interface detailProps {
-  category: string;
+  category: string[];
   name: string;
   infoTitle: string;
   price: number;
@@ -29,9 +29,10 @@ const ProductDetails: React.FC<detailProps> = ({
   id,
   sold,
 }) => {
+  const categoryString = category?.join("/");
   return (
     <article className={`${style.details}`}>
-      <h4 className={style.category}>{category}</h4>
+      <h4 className={style.category}>{categoryString}</h4>
       <h3 className={style.title}>{name}</h3>
       <p className={style.info}>{infoTitle}</p>
       <p className={style.packageQuantity}>
