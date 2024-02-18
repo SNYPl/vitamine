@@ -29,9 +29,11 @@ const FeaturedProducts: React.FC = ({}) => {
   const filteredData = data?.filter((product: any) => {
     if (activeMenu === "all") {
       return product;
-    } else if (activeMenu === product.category) {
+    } else if (product.category.includes(activeMenu)) {
       return product;
     }
+
+    return false;
   });
 
   return (
@@ -49,7 +51,7 @@ const FeaturedProducts: React.FC = ({}) => {
         )}
         {!filteredData?.length && <NoProduct title={"პროდუქტი არ არის"} />}
 
-        {filteredData?.slice(0, 8).map((el: any, id: any) => (
+        {filteredData?.slice(0, 8).map((el: any) => (
           <Product {...el} key={el._id} />
         ))}
       </section>

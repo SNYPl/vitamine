@@ -209,7 +209,7 @@
 .cartButtons {
   position: absolute;
   transition: 0.3s ease;
-  top: 95.3%;
+  top: 91.3%;
   z-index: 5;
   bottom: 0;
   left: 28%;
@@ -268,6 +268,25 @@
 @media only screen and (max-width: 770px) {
   .nonIntroduction {
     margin: 0 !important;
+
+    &:hover {
+      h4 {
+        transform: none;
+      }
+    }
+  }
+
+  .cartButtons {
+    display: none;
+  }
+
+  .productInfo a {
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    h4 {
+      transform: none;
+    }
   }
 }
 
