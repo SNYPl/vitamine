@@ -28,7 +28,12 @@ const Introduction: React.FC = ({}) => {
     );
 
   const weekDaleProductFilter = data?.filter(
-    (el: { daleOfWeek: boolean }) => el.daleOfWeek
+    (el: { daleOfWeek: boolean; sold: number; productQuantity: number }) => {
+      const solded =
+        el.sold < el.productQuantity && el.sold !== el.productQuantity;
+
+      if (el.daleOfWeek && solded) return el.daleOfWeek;
+    }
   );
 
   const bestSoldProducts = data

@@ -12,16 +12,25 @@ import "swiper/css/zoom";
 interface imageProps {
   images: string[];
   country: string;
+  sold: number;
+  productQuantity: number;
 }
 
 import { FreeMode, Thumbs, Zoom } from "swiper/modules";
 
-const ProductImageGallery: React.FC<imageProps> = ({ images, country }) => {
+const ProductImageGallery: React.FC<imageProps> = ({
+  images,
+  country,
+  sold,
+  productQuantity,
+}) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const handleThumbsSwiper = (swiper: any) => {
     setThumbsSwiper(swiper);
   };
+
+  const solded = sold < productQuantity && sold !== productQuantity;
 
   return (
     <div className={`${style.gallery} `}>
@@ -33,6 +42,18 @@ const ProductImageGallery: React.FC<imageProps> = ({ images, country }) => {
           height={55}
           className={style.detailsCountryFlag}
         />
+      )}
+
+      {!productQuantity || !solded ? (
+        <Image
+          src={"/images/product/soldOut.png"}
+          alt="flag"
+          width={100}
+          height={100}
+          className={style.soldOutImg}
+        />
+      ) : (
+        ""
       )}
 
       <Swiper

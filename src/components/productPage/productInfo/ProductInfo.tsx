@@ -84,6 +84,7 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
     packageQuantity,
     country,
     _id,
+    sold,
   } = dataObj;
 
   return (
@@ -100,6 +101,7 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
           infoTitle={infoTitle}
           packageQuantity={packageQuantity}
           id={_id}
+          sold={sold}
         />
       </section>
       {!modal && (
@@ -119,6 +121,3 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
 };
 
 export default ProductInfo;
-function dispatch(arg0: void) {
-  throw new Error("Function not implemented.");
-}

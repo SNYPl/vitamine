@@ -6,7 +6,15 @@ export async function GET(req, res) {
   try {
     await connectDB();
 
-    const featuredProducts = await Vitamine.find({ isFeatured: true });
+    const featuredProducts = await Vitamine.find({
+      isFeatured: true,
+      $expr: {
+        $and: [
+          { $ne: ["$sold", "$productQuantity"] },
+          { $lte: ["$sold", "$productQuantity"] },
+        ],
+      },
+    });
 
     return new NextResponse(JSON.stringify(featuredProducts), {
       headers: {

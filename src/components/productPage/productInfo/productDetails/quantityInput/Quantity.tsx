@@ -10,9 +10,10 @@ import { setCartUpdated } from "@/store/slices/cartSlice";
 interface quantity {
   productQuantity: number;
   id: string;
+  sold: number;
 }
 
-const Quantity: React.FC<quantity> = ({ productQuantity, id }) => {
+const Quantity: React.FC<quantity> = ({ productQuantity, id, sold }) => {
   const defaultValue = 1;
   const [quantityHandler, setQuantityHandler] = useState(defaultValue);
   const cartUpdatedRender = useSelector(
@@ -23,6 +24,8 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id }) => {
   const onChange = (value: any) => {
     setQuantityHandler(value);
   };
+
+  const solded = sold < productQuantity && sold !== productQuantity;
 
   return (
     <>
@@ -44,15 +47,19 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id }) => {
                 max={productQuantity}
                 defaultValue={defaultValue}
                 onChange={onChange}
+                disabled={!productQuantity || solded}
               />
             </Space>
           </ConfigProvider>
         </div>
         <p
-          style={{ color: productQuantity ? "#4eb016" : "#B50808" }}
+          style={{
+            color: productQuantity && solded ? "#4eb016" : "#B50808",
+            fontWeight: "bold",
+          }}
           className={style.stockParagraph}
         >
-          {productQuantity ? (
+          {productQuantity && solded ? (
             <span>
               <i className="fa-solid fa-check"></i> მარაგში
             </span>
@@ -67,7 +74,7 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id }) => {
           addToCart(id, quantityHandler, productQuantity);
           dispatch(setCartUpdated(!cartUpdatedRender));
         }}
-        disabled={!productQuantity}
+        disabled={!productQuantity || solded}
       >
         კალათაში დამატება
       </Button>

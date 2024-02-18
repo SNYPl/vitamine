@@ -5,10 +5,17 @@ import Vitamine from "@/models/Vitamine";
 export const GET = async (req, res) => {
   try {
     await connectDB();
+    const allVitamines = await Vitamine.find({
+      productQuantity: { $ne: 0, $exists: true },
+    });
 
-    const allVitamines = await Vitamine.find();
+    const vitaminesWithZeroQuantity = await Vitamine.find({
+      productQuantity: 0,
+    });
 
-    return new NextResponse(JSON.stringify(allVitamines), {
+    const finalResult = allVitamines.concat(vitaminesWithZeroQuantity);
+
+    return new NextResponse(JSON.stringify(finalResult), {
       headers: {
         "Content-Type": "application/json",
       },

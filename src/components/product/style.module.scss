@@ -82,26 +82,12 @@
   max-width: 100%;
   width: 100%;
 
-  .countryFlag {
-    display: none;
-  }
-
   .productImg {
     border: 1px solid #ebebeb;
     transition: border 0.2s ease-in-out;
     margin-right: 1.5625em;
     z-index: 9999;
     position: relative;
-
-    .introductionCountryFlag {
-      position: absolute;
-      top: 10px;
-      left: auto;
-      right: 10px;
-      object-fit: contain;
-      border-radius: 9999px;
-      z-index: 12;
-    }
 
     &:hover {
       border-color: var(--green-color);
@@ -131,28 +117,29 @@
       color: #fd5f5c;
     }
   }
+  .soldOutImg {
+    left: 10px;
+    right: inherit;
+    z-index: 222222;
+  }
+}
+
+.CountryFlag {
+  position: absolute;
+  top: 10px;
+  left: auto;
+  right: 10px;
+  object-fit: contain;
+  border-radius: 9999px;
+  z-index: 12;
+
+  &:hover {
+    transform: scale(1.15);
+  }
 }
 
 .nonIntroduction {
   position: relative;
-
-  .introductionCountryFlag {
-    display: none;
-  }
-
-  .countryFlag {
-    position: absolute;
-    top: 10px;
-    left: auto;
-    right: 10px;
-    object-fit: contain;
-    border-radius: 9999px;
-    z-index: 12;
-
-    &:hover {
-      transform: scale(1.15);
-    }
-  }
 }
 
 .nonIntroduction::after,
@@ -246,6 +233,15 @@
   font-size: 15px;
 }
 
+.soldOutImg {
+  position: absolute;
+  right: 80px;
+  top: 5px;
+  transform: rotate(19deg);
+  z-index: 100;
+  object-fit: contain;
+}
+
 @media only screen and (min-width: 576px) {
   .nonIntroduction {
     display: block;
@@ -283,9 +279,6 @@
     margin: 0 7.5px;
     padding: 1.475em 0;
 
-    img {
-      width: 100%;
-    }
     a {
       text-align: center;
     }

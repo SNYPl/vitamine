@@ -38,6 +38,15 @@
   }
 }
 
+.soldOutImg {
+  position: absolute;
+  right: 100px;
+  top: 13%;
+  transform: rotate(30deg);
+  z-index: 100;
+  object-fit: contain;
+}
+
 @media only screen and (max-width: 768px) {
   .gallery {
     flex: 0 0 100%;

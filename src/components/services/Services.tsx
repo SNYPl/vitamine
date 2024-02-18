@@ -5,7 +5,7 @@ import Image from "next/image";
 const servicesList = [
   {
     title: "უფასო მიტანა",
-    info: "თბილისის მაშტაბით",
+    info: " უფასო მიტანა თბილისში - 100 ლარის ზემოთ",
     img: "/images/services/1.png",
   },
   {

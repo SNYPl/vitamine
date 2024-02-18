@@ -55,6 +55,11 @@ const ShopList: React.FC = ({}) => {
     }
   }, [data]);
 
+  const quantityTrue = data?.filter((el: any) => el.productQuantity);
+  const quantityFalse = data?.filter((el: any) => el.productQuantity === 0);
+
+  const allVitamines = quantityTrue?.concat(quantityFalse);
+
   if (isLoading)
     return (
       <article className={`${style.skeletion} `}>
@@ -62,13 +67,13 @@ const ShopList: React.FC = ({}) => {
       </article>
     );
 
-  if (!data.length) {
+  if (!allVitamines.length) {
     return <NoProduct title={"პროდუქტი ვერ მოიძებნა"} />;
   }
 
   return (
     <section className={`${style.shopList}`}>
-      {data?.map((item: any) => (
+      {allVitamines?.map((item: any) => (
         <Product {...item} key={item._id} />
       ))}
     </section>

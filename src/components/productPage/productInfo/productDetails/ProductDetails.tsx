@@ -14,6 +14,7 @@ interface detailProps {
   productQuantity: number;
   packageQuantity: number;
   id: string;
+  sold: number;
 }
 
 const ProductDetails: React.FC<detailProps> = ({
@@ -26,6 +27,7 @@ const ProductDetails: React.FC<detailProps> = ({
   productQuantity,
   packageQuantity,
   id,
+  sold,
 }) => {
   return (
     <article className={`${style.details}`}>
@@ -48,7 +50,7 @@ const ProductDetails: React.FC<detailProps> = ({
         </div>
       </div>
 
-      <Quantity productQuantity={productQuantity} id={id} />
+      <Quantity productQuantity={productQuantity} id={id} sold={sold} />
     </article>
   );
 };

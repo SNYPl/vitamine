@@ -15,6 +15,7 @@ interface product {
   _id: number;
   country: string;
   productQuantity?: number | undefined | any;
+  sold: number;
 }
 
 const Product: React.FC<product> = ({
@@ -27,34 +28,28 @@ const Product: React.FC<product> = ({
   _id,
   country,
   productQuantity,
+  sold,
 }) => {
+  const solded = sold < productQuantity && sold !== productQuantity;
+
   return (
     <article
       className={`${style.product} ${
         introduction ? style.introduction : style.nonIntroduction
       }`}
     >
-      <div className={`${style.countryFlag}`}>
-        {country === "usa" && (
-          <Image
-            src={"/images/product/usa1.jfif"}
-            alt="flag"
-            width={55}
-            height={55}
-          />
-        )}
-      </div>
+      {!productQuantity || !solded ? (
+        <Image
+          src={"/images/product/soldOut.png"}
+          alt="flag"
+          width={introduction ? 35 : 55}
+          height={introduction ? 35 : 55}
+          className={style.soldOutImg}
+        />
+      ) : (
+        ""
+      )}
       <div className={`${style.productImg}`}>
-        {country === "usa" && (
-          <Image
-            src={"/images/product/usa1.jfif"}
-            alt="flag"
-            width={17}
-            height={17}
-            className={style.introductionCountryFlag}
-          />
-        )}
-
         <Link href={`/shop/product?id=${_id}`} className={`${style.imgLink}`}>
           <Image
             src={mainImage}
@@ -62,6 +57,15 @@ const Product: React.FC<product> = ({
             width={introduction ? 70 : 210}
             height={introduction ? 70 : 138}
           />
+          {country === "usa" && (
+            <Image
+              src={"/images/product/usa1.jfif"}
+              alt="flag"
+              width={introduction ? 17 : 55}
+              height={introduction ? 17 : 55}
+              className={style.CountryFlag}
+            />
+          )}
         </Link>
       </div>
       <div className={`${style.productInfo}`}>
