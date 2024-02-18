@@ -17,6 +17,7 @@ interface props {
     introduction?: boolean;
     _id: number;
     country: string;
+    sold: number;
   }>;
 }
 

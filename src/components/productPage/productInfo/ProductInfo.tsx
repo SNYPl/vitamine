@@ -90,7 +90,12 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
   return (
     <div className={`${style.productInfoContainer} ${className}`}>
       <section className={`${style.productInfo}`}>
-        <ImageGallery images={images} country={country} />
+        <ImageGallery
+          images={images}
+          country={country}
+          sold={sold}
+          productQuantity={productQuantity}
+        />
         <ProductDetails
           category={category}
           name={name}
