@@ -27,7 +27,7 @@ const TopNav = () => {
             </div>
 
             <div className={`${styles.right__item} ${styles.logo}`}>
-              <Link href="#">
+              <Link href="/login">
                 <i className="fas fa-user" />
                 შესვლა
               </Link>

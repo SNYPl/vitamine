@@ -74,7 +74,7 @@ const Billing: React.FC<billingProps> = ({ setStepCart }) => {
             />
           </div>
           <div className={`${style.input}`}>
-            <label htmlFor="username">გვარი</label>
+            <label htmlFor="familyName">გვარი</label>
             <input
               type="text"
               placeholder="გვარი"

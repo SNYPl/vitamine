@@ -6,12 +6,14 @@ interface buttonProps {
   className?: string;
   children?: any;
   disabled?: boolean;
+  type?: any;
 }
 
 const Button: React.FC<buttonProps> = ({
   onSubmitButton,
   className,
   children,
+  type,
   disabled = false,
   ...props
 }) => {
@@ -19,6 +21,7 @@ const Button: React.FC<buttonProps> = ({
     <button
       onClick={onSubmitButton}
       {...props}
+      type={type}
       className={`${className} ${style.button} `}
       disabled={disabled}
     >

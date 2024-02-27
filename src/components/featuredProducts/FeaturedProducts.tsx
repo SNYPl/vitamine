@@ -49,7 +49,9 @@ const FeaturedProducts: React.FC = ({}) => {
             <Skeleton active />
           </article>
         )}
-        {!filteredData?.length && <NoProduct title={"პროდუქტი არ არის"} />}
+        {!filteredData?.length && !isLoading && (
+          <NoProduct title={"პროდუქტი არ არის"} />
+        )}
 
         {filteredData?.slice(0, 8).map((el: any) => (
           <Product {...el} key={el._id} />

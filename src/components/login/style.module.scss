@@ -1,0 +1,122 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  h2 {
+    color: #252525;
+    font-size: 2.75em;
+    font-family: ceraBold;
+    line-height: 1;
+    margin-bottom: 0.9em;
+    font-weight: bold;
+  }
+
+  form {
+    width: 100%;
+    max-width: 50%;
+  }
+}
+
+.input {
+  margin-bottom: 30px;
+  width: 100%;
+
+  input {
+    height: 2.8125em;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-variant: tabular-nums;
+    list-style: none;
+    font-feature-settings: "tnum";
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 0;
+    padding: 3px 11px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    line-height: 1.5715;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    transition: all 0.3s;
+    outline: none;
+  }
+
+  label {
+    padding-bottom: 10px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    position: relative;
+
+    &::before {
+      display: inline-block;
+      margin-right: 4px;
+      color: #ff4d4f;
+      font-size: 16px;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: "*";
+    }
+  }
+}
+
+.forgot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  label {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    cursor: pointer;
+  }
+  input {
+    margin-right: 5px;
+  }
+
+  a {
+    color: #88c74a;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 16px;
+  }
+}
+
+.btn {
+  width: 100%;
+  margin-bottom: 1.25em;
+  width: 100%;
+  height: 2.8125em;
+  text-transform: uppercase;
+  font-family: ceraBold;
+  background-color: var(--green-color);
+  border-color: var(--green-color);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.createCont {
+  a {
+    font-size: 16px;
+    font-family: ceraBold;
+    color: var(--green-color);
+  }
+}

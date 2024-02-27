@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import style from "./style.module.scss";
 import Link from "next/link";
-import { formatCurrency } from "@/common/utils";
+import { formatCurrency, formatCurrencyWithSymbol } from "@/common/utils";
 import ProductButtons from "./productButtons/ProductButtons";
 
 interface product {
@@ -79,8 +79,10 @@ const Product: React.FC<product> = ({
           {name}
         </Link>
         <h4>
-          {discount ? formatCurrency(discount) : formatCurrency(price)}
-          <del>{discount ? formatCurrency(price) : null}</del>
+          {discount
+            ? formatCurrencyWithSymbol(discount)
+            : formatCurrencyWithSymbol(price)}
+          <del>{discount ? formatCurrencyWithSymbol(price) : null}</del>
         </h4>
       </div>
 

@@ -13,6 +13,9 @@ const ParamInfo: React.FC = () => {
     { eng: "about", geo: "ჩვენს შესახებ" },
     { eng: "contact", geo: "კონტაქტი" },
     { eng: "cart", geo: "კალათა" },
+    { eng: "login", geo: "ავტორიზაცია" },
+    { eng: "signup", geo: "რეგისტრაცია" },
+    { eng: "forgot", geo: "პაროლის აღდგენა" },
   ];
 
   const translatePath = (engPath: any) => {
