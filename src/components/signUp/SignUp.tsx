@@ -12,7 +12,7 @@ type Inputs = {
   repeatPassword: string;
 };
 
-const signUp: React.FC = ({}) => {
+const SignUp: React.FC = ({}) => {
   const {
     register,
     handleSubmit,
@@ -125,4 +125,4 @@ const signUp: React.FC = ({}) => {
   );
 };
 
-export default signUp;
+export default SignUp;
