@@ -1,7 +1,9 @@
 import connectDB from "@/lib/db";
 import Vitamine from "@/models/Vitamine";
+import axios from "axios";
+import { unstable_cache } from "next/cache";
 
-export const introductionBestSales = async () => {
+export const introductionBestSales = unstable_cache(async () => {
   await connectDB();
 
   const bestSellingVitamines = await Vitamine.find(
@@ -22,6 +24,16 @@ export const introductionBestSales = async () => {
   );
 
   return JSON.stringify(bestSellingVitamines);
+});
+
+export const introductionBestSalesReq = async () => {
+  const response = await axios.get(
+    `${process.env.API_REQUEST_URL}/api/bestSales`
+  );
+
+  const data = response.data;
+
+  return data;
 };
 
 export const introductionDaleOfWeek = async () => {

@@ -18,7 +18,9 @@ export default function Home() {
           <FeaturedProducts />
         </Suspense>
         {/* <Deal /> */}
-        <Introduction />
+        <Suspense fallback={<Skeleton active />}>
+          <Introduction />
+        </Suspense>
         <Companies />
       </div>
     </main>

@@ -47,7 +47,7 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id, sold }) => {
                 max={productQuantity}
                 defaultValue={defaultValue}
                 onChange={onChange}
-                disabled={!productQuantity || solded}
+                disabled={!productQuantity || !solded}
               />
             </Space>
           </ConfigProvider>
@@ -74,7 +74,7 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id, sold }) => {
           addToCart(id, quantityHandler, productQuantity);
           dispatch(setCartUpdated(!cartUpdatedRender));
         }}
-        disabled={!productQuantity || solded}
+        disabled={!productQuantity || !solded}
       >
         კალათაში დამატება
       </Button>

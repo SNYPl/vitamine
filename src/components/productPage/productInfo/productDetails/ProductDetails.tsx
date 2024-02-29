@@ -12,7 +12,7 @@ interface detailProps {
   discount: number;
   rating: number;
   productQuantity: number;
-  packageQuantity: number;
+  packageQuantity: string;
   id: string;
   sold: number;
 }
@@ -36,7 +36,7 @@ const ProductDetails: React.FC<detailProps> = ({
       <h3 className={style.title}>{name}</h3>
       <p className={style.info}>{infoTitle}</p>
       <p className={style.packageQuantity}>
-        <span>რაოდენობა:</span> {packageQuantity} აბი
+        <span>რაოდენობა:</span> {packageQuantity}
       </p>
       <div className={style.deliveryInfo}>
         უფასო მიტანა თბილისში - 100 ლარის ზემოთ
