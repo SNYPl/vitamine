@@ -53,7 +53,7 @@ const FeaturedProducts: React.FC = ({}) => {
           <NoProduct title={"პროდუქტი არ არის"} />
         )}
 
-        {filteredData?.slice(0, 8).map((el: any) => (
+        {filteredData?.slice(0, 9).map((el: any) => (
           <Product {...el} key={el._id} />
         ))}
       </section>
