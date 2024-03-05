@@ -1,0 +1,28 @@
+.profileCont {
+  display: flex;
+  align-items: center;
+
+  button:hover {
+    color: var(--green-color);
+  }
+}
+
+.profile {
+  border-right: 1px;
+  border-color: #9d9696;
+  border-style: solid;
+  padding-right: 8px;
+  margin-right: 2px;
+  display: flex;
+  align-items: center;
+
+  a {
+    font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    padding-left: 6px;
+  }
+}

@@ -16,6 +16,7 @@ const ParamInfo: React.FC = () => {
     { eng: "login", geo: "ავტორიზაცია" },
     { eng: "signup", geo: "რეგისტრაცია" },
     { eng: "forgot", geo: "პაროლის აღდგენა" },
+    { eng: "verify", geo: "ვერიფიკაცია" },
   ];
 
   const translatePath = (engPath: any) => {

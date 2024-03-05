@@ -47,7 +47,7 @@ export const POST = async (request: Request) => {
       to: "vitamine.vitvit@gmail.com",
       from: "snypisia@gmail.com",
       subject: "New Order",
-      text: "Welcome to moviequote!",
+      text: "Order Recieved",
       html: `<!doctype html>
         <html>
           <head>

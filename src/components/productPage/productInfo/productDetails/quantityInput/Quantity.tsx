@@ -25,8 +25,6 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id, sold }) => {
     setQuantityHandler(value);
   };
 
-  const solded = sold < productQuantity && sold !== productQuantity;
-
   return (
     <>
       <div className={style.quanty}>
@@ -47,19 +45,19 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id, sold }) => {
                 max={productQuantity}
                 defaultValue={defaultValue}
                 onChange={onChange}
-                disabled={!productQuantity || !solded}
+                disabled={!productQuantity}
               />
             </Space>
           </ConfigProvider>
         </div>
         <p
           style={{
-            color: productQuantity && solded ? "#4eb016" : "#B50808",
+            color: productQuantity ? "#4eb016" : "#B50808",
             fontWeight: "bold",
           }}
           className={style.stockParagraph}
         >
-          {productQuantity && solded ? (
+          {productQuantity ? (
             <span>
               <i className="fa-solid fa-check"></i> მარაგში
             </span>
@@ -74,7 +72,7 @@ const Quantity: React.FC<quantity> = ({ productQuantity, id, sold }) => {
           addToCart(id, quantityHandler, productQuantity);
           dispatch(setCartUpdated(!cartUpdatedRender));
         }}
-        disabled={!productQuantity || !solded}
+        disabled={!productQuantity}
       >
         კალათაში დამატება
       </Button>

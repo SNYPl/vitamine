@@ -1,0 +1,35 @@
+.verify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  h2 {
+    color: #252525;
+    font-size: 2.75em;
+    font-family: ceraBold;
+    line-height: 1;
+    margin-bottom: 0.9em;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  a {
+    font-size: 24px;
+    font-family: ceraBold;
+    color: var(--green-color);
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
+
+.error {
+  color: red;
+  margin-top: 4px;
+}

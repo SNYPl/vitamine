@@ -14,15 +14,15 @@ const Socials = () => {
       </li>
 
       <li>
-        <Link href="#">
+        <Link href="https://www.instagram.com/vitvit.ge/" target="_blank">
           <i className="fab fa-invision"></i>
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link href="#">
           <i className="fab fa-twitter"></i>
         </Link>
-      </li>
+      </li> */}
     </ul>
   );
 };

@@ -35,7 +35,7 @@ export default function RootLayout({
               {modal}
             </QueryClientProviderHelper>
             <footer className={"container"}>
-              <Footer />{" "}
+              <Footer />
             </footer>
             <BackTop />
           </ReduxToolkitProvider>

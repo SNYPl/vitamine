@@ -4,7 +4,7 @@ import Vitamine from "@/models/Vitamine";
 import mongoose from "mongoose";
 
 export const GET = async (req, res) => {
-  const cartItemsJson = req.nextUrl.searchParams.get("cartItems");
+  const cartItemsJson = await req.nextUrl.searchParams.get("cartItems");
 
   try {
     const cartItems = JSON.parse(cartItemsJson);

@@ -3,7 +3,7 @@ import connectDB from "@/lib/db";
 import Vitamine from "@/models/Vitamine";
 
 export const GET = async (req, res) => {
-  const id = req.nextUrl.searchParams.get("productId");
+  const id = await req.nextUrl.searchParams.get("productId");
 
   try {
     await connectDB();

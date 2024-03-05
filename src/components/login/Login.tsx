@@ -1,9 +1,16 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import style from "./style.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import Button from "../button/Button";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { setLoginModal } from "@/store/slices/modals";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { useFormStatus } from "react-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 type Inputs = {
   username: string;
@@ -11,7 +18,19 @@ type Inputs = {
   remember: boolean;
 };
 
+function LoginBtn() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" className={style.btn}>
+      {pending ? <LoadingOutlined spin /> : "შესვლა"}
+    </Button>
+  );
+}
+
 const Login: React.FC = ({}) => {
+  const [loginError, setLoginError] = useState("");
+  const dispatch = useDispatch();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -19,7 +38,27 @@ const Login: React.FC = ({}) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (data?.remember) {
+      Cookies.set("remember", "true", { expires: 1 / 1440 });
+    }
+
+    const response = await signIn("credentials", {
+      username: data.username,
+      password: data.password,
+      redirect: false,
+    });
+
+    if (response?.error) {
+      setLoginError(response.error);
+    }
+
+    if (!response?.error && response?.status === 200) {
+      router.replace("/");
+      router.refresh();
+      dispatch(setLoginModal(false));
+    }
+  };
 
   return (
     <section className={style.login}>
@@ -41,6 +80,9 @@ const Login: React.FC = ({}) => {
             })}
             style={{ border: errors.username ? "1px solid red" : "" }}
           />
+          {errors.username && (
+            <p className={style.error}>{errors.username.message}</p>
+          )}
         </div>
 
         <div className={`${style.input} ${style.password}`}>
@@ -55,8 +97,11 @@ const Login: React.FC = ({}) => {
               },
             })}
           />
-          {errors.password && <p>{errors.password.message}</p>}
+          {errors.password && (
+            <p className={style.error}>{errors.password.message}</p>
+          )}
         </div>
+        {loginError && <p className={style.mainErr}>{loginError}</p>}
 
         <div className={style.forgot}>
           <label>
@@ -64,16 +109,18 @@ const Login: React.FC = ({}) => {
             დამიმახსოვრე
           </label>
 
-          <Link href={"/forgot"}>დაგავიწყდა პაროლი?</Link>
+          <Link href={"/forgot"} onClick={() => dispatch(setLoginModal(false))}>
+            დაგავიწყდა პაროლი?
+          </Link>
         </div>
 
-        <Button type="submit" className={style.btn}>
-          შესვლა
-        </Button>
+        <LoginBtn />
       </form>
 
       <div className={style.createCont}>
-        <Link href="/signup">ან დარეგისტრირდი</Link>
+        <Link href="/signup" onClick={() => dispatch(setLoginModal(false))}>
+          ან დარეგისტრირდი
+        </Link>
       </div>
     </section>
   );

@@ -1,8 +1,14 @@
-import Link from "next/link";
 import styles from "./style.module.scss";
 import Socials from "./socials/Socials";
+import { getCurrentUser } from "@/components/helper/session";
+import LoginBtn from "./authBtns/LoginBtn";
+import SignOut from "./authBtns/SignOutBtn";
 
-const TopNav = () => {
+const TopNav = async () => {
+  const user = await getCurrentUser();
+
+  const linkComponent = !user ? <LoginBtn /> : <SignOut user={user} />;
+
   return (
     <section className={styles.topNav}>
       <div className={`container `}>
@@ -27,10 +33,7 @@ const TopNav = () => {
             </div>
 
             <div className={`${styles.right__item} ${styles.logo}`}>
-              <Link href="/login">
-                <i className="fas fa-user" />
-                შესვლა
-              </Link>
+              {linkComponent}
             </div>
           </div>
         </div>

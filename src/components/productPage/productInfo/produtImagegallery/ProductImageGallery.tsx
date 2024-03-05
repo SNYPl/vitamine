@@ -30,8 +30,6 @@ const ProductImageGallery: React.FC<imageProps> = ({
     setThumbsSwiper(swiper);
   };
 
-  const solded = sold < productQuantity && sold !== productQuantity;
-
   return (
     <div className={`${style.gallery} `}>
       {country === "usa" && (
@@ -44,7 +42,7 @@ const ProductImageGallery: React.FC<imageProps> = ({
         />
       )}
 
-      {!productQuantity || !solded ? (
+      {!productQuantity ? (
         <Image
           src={"/images/product/soldOut.png"}
           alt="flag"

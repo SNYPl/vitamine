@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
   wishlist: [String],
+  isVerified: Boolean,
+  verificationToken: String,
 });
 
 const User = mongoose.models.user || mongoose.model("user", userSchema);

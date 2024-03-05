@@ -1,4 +1,9 @@
-export const addToCart = (id, quantity, productQuantity) => {
+export const addToCart = (
+  id,
+  quantity,
+  productQuantity,
+  setAddToCartLoading
+) => {
   const existingCartItems = JSON.parse(
     localStorage.getItem("cartItems") || "[]"
   );
@@ -21,6 +26,7 @@ export const addToCart = (id, quantity, productQuantity) => {
     // Check if the updated quantity exceeds the productQuantity limit
     if (updatedQuantity > productQuantity) {
       console.error("Quantity exceeds productQuantity limit");
+      setAddToCartLoading(false);
       return;
     }
 

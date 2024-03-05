@@ -8,7 +8,7 @@ import Companies from "@/components/companies/Companies";
 import { Suspense } from "react";
 import { Skeleton } from "antd";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className={styles.main}>
       <div className={"container"}>

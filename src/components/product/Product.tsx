@@ -30,8 +30,6 @@ const Product: React.FC<product> = ({
   productQuantity,
   sold,
 }) => {
-  const solded = sold < productQuantity && sold !== productQuantity;
-
   const categoryString = category?.join("/");
 
   return (
@@ -40,7 +38,7 @@ const Product: React.FC<product> = ({
         introduction ? style.introduction : style.nonIntroduction
       }`}
     >
-      {!productQuantity || !solded ? (
+      {!productQuantity ? (
         <Image
           src={"/images/product/soldOut.png"}
           alt="flag"

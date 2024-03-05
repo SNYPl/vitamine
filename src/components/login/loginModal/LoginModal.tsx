@@ -1,26 +1,25 @@
 "use client";
-import React, { useState } from "react";
-import style from "./style.module.scss";
+import React from "react";
 import { Modal } from "antd";
-import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoginModal } from "@/store/slices/modals";
 
 interface LoginModalProps {
   Children: React.ReactNode;
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ Children }) => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const router = useRouter();
+  const dispatch = useDispatch();
+  const loginModal = useSelector((state: any) => state.modalReducer.loginModal);
 
   const handleCancel = () => {
-    setIsModalOpen(false);
-    // router.back();
+    dispatch(setLoginModal(false));
   };
 
   return (
     <>
       <Modal
-        open={isModalOpen}
+        open={loginModal}
         onCancel={handleCancel}
         footer={null}
         width={700}

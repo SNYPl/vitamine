@@ -7,7 +7,7 @@ export const introductionBestSales = unstable_cache(async () => {
   await connectDB();
 
   const bestSellingVitamines = await Vitamine.find(
-    {},
+    { sold: { $gt: 0 } },
     {
       name: 1,
       _id: 1,

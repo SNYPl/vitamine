@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import style from "./style.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Link from "next/link";
 import Button from "../button/Button";
-import { createUser } from "@/lib/auth";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { Spin } from "antd";
 
 type Inputs = {
   username: string;
@@ -15,7 +16,6 @@ type Inputs = {
 };
 
 const SignUp: React.FC = ({}) => {
-  const [signUpHandler, setSignUpHandler] = useState(null);
   const {
     register,
     handleSubmit,
@@ -23,23 +23,34 @@ const SignUp: React.FC = ({}) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // const create = await createUser(data);
-
-    // console.log(create);
-
-    try {
-      const response = await axios.post(`/api/auth/signup`, { ...data });
-    } catch (error) {
-      const err = error as AxiosError;
-
-      // Check if error has response property
-      if (err.response && err.response.data) {
-        console.log("Server error status:", err.response.status);
-        console.log("Server error data:", err.response.data);
-      }
+  // Define the mutation function
+  const signUpMutation = useMutation(
+    (data: Inputs) => axios.post(`/api/auth/signup`, { ...data }),
+    {
+      onSuccess: (data: any) => {
+        return data;
+      },
+      onError: (error: any) => {
+        console.error("Registration error:", error);
+        return error;
+      },
     }
+  );
+
+  const { error, data, isLoading, isError, isSuccess } = signUpMutation;
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    signUpMutation.mutate(data);
   };
+
+  if (data?.status === 200 && isSuccess) {
+    return (
+      <section className={`${style.signUp} ${style.succesSng}`}>
+        <p>რეგისტრაცია წარმატებით დასრულდა</p>
+        <p>ანგარიშის გასააქტიურებლად, შეამოწმეთ თქვენი ელ.ფოსტა</p>
+      </section>
+    );
+  }
 
   return (
     <section className={style.signUp}>
@@ -135,9 +146,14 @@ const SignUp: React.FC = ({}) => {
             <p className={style.error}>{errors.repeatPassword.message}</p>
           )}
         </div>
+        {isError && error && (
+          <p className={style.mainErr}>
+            ამ სახელით ან ელ.ფოსტით, უკვე არსებობს ანგარიში
+          </p>
+        )}
 
         <Button type="submit" className={style.btn}>
-          რეგისტრაცია
+          {isLoading ? <Spin /> : "რეგისტრაცია"}
         </Button>
       </form>
 

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import styles from "./style.module.scss";
 import { formatCurrency } from "../../../../common/utils";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { Spin } from "antd";
@@ -38,7 +38,12 @@ const Cart = () => {
     }
   );
 
-  const cartProductLength = data?.products?.length || (0).toFixed();
+  const productsListLength = data?.products?.reduce(
+    (accumulator: number, currentValue: any) => {
+      return accumulator + currentValue.choosedQuantity;
+    },
+    0
+  );
 
   const cartNumberValue = data?.totalPrice
     ? formatCurrency(data?.totalPrice)
@@ -46,14 +51,14 @@ const Cart = () => {
 
   return (
     <section className={styles.cart}>
-      <Link href={"#"} className="function-items-item">
+      <Link href={"/wishlist"} className="function-items-item">
         <i className="fa-regular fa-heart"></i>
       </Link>
 
       <Link href={"/shop/cart"} className="function-items-item">
         <i className="fa-solid fa-cart-shopping"></i>
-        {cartProductLength && (
-          <span className={styles.productLegtn}>{cartProductLength}</span>
+        {productsListLength && (
+          <span className={styles.productLegtn}>{productsListLength}</span>
         )}
         <span>{isLoading ? <Spin /> : cartNumberValue}</span>
       </Link>
