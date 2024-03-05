@@ -76,11 +76,14 @@ export const POST = async (request) => {
     });
   } catch (error) {
     console.log(error);
-    return new NextResponse(JSON.stringify({ error: "Error creating user" }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return new NextResponse(
+      JSON.stringify({ error: "Error creating user", error }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 };

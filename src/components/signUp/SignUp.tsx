@@ -52,6 +52,9 @@ const SignUp: React.FC = ({}) => {
     );
   }
 
+  console.log(isError);
+  console.log(error?.response.status);
+
   return (
     <section className={style.signUp}>
       <h2>რეგისტრაცია</h2>
@@ -146,10 +149,13 @@ const SignUp: React.FC = ({}) => {
             <p className={style.error}>{errors.repeatPassword.message}</p>
           )}
         </div>
-        {isError && error && (
+        {isError && error?.response?.status === 400 && (
           <p className={style.mainErr}>
             ამ სახელით ან ელ.ფოსტით, უკვე არსებობს ანგარიში
           </p>
+        )}
+        {isError && error?.response?.status !== 400 && (
+          <p className={style.mainErr}>შეცდომაა, მოგვიანებით სცადეთ </p>
         )}
 
         <Button type="submit" className={style.btn}>
