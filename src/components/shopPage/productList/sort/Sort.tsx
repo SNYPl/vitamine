@@ -9,7 +9,7 @@ const Sort: React.FC = ({}) => {
     <section className={`${style.sort}`}>
       <Select
         defaultValue=""
-        style={{ width: "45" }}
+        style={{ width: "47%" }}
         // onChange={onSortSelectChange}
       >
         <Option value="">Default</Option>
@@ -20,7 +20,7 @@ const Sort: React.FC = ({}) => {
       </Select>
       <Select
         defaultValue="10"
-        style={{ width: "45" }}
+        style={{ width: "47%" }}
         // onChange={onShowSelectChange}
       >
         <Option value="10">Show 10</Option>
