@@ -8,6 +8,7 @@ import { QueryClientProviderHelper } from "@/components/helper/queryClient";
 import { ReduxToolkitProvider } from "@/components/helper/reduxProvider";
 import React from "react";
 import ProductInfoModal from "@/components/productInfoModal/ProductInfoModal";
+import AuthWrapper from "./auth_wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,10 +30,12 @@ export default function RootLayout({
         <body className={inter.className}>
           <ReduxToolkitProvider>
             <QueryClientProviderHelper>
-              <Header />
-              <ProductInfoModal />
-              {children}
-              {modal}
+              <AuthWrapper>
+                <Header />
+                <ProductInfoModal />
+                {children}
+                {modal}
+              </AuthWrapper>
             </QueryClientProviderHelper>
             <footer className={"container"}>
               <Footer />

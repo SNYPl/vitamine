@@ -1,16 +1,11 @@
 .ad {
   margin: 1.875rem 0;
   position: relative;
-  padding: 3.25em 0.9375em;
+  padding: 0.25em 0.9375em;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
 }
 
 .adBackground {
-  width: 100%;
-  height: 100%;
-
   img {
     width: auto;
     height: auto;
@@ -30,30 +25,6 @@
   flex-direction: column;
   order: -1;
 
-  h4 {
-    color: var(--green-color);
-    font-size: 0.875em;
-    font-family: geoMr;
-    line-height: 1;
-    letter-spacing: 0.2em;
-    margin-bottom: 1.2em;
-  }
-
-  h2 {
-    font-size: 2.1em;
-    margin-bottom: 0.7em;
-    color: #252525;
-    font-family: geoMr;
-    line-height: 1;
-  }
-
-  h3 {
-    color: var(--green-color);
-    font-size: 2em;
-    font-family: geoMr;
-    line-height: 1;
-    margin-bottom: 1.7em;
-  }
   a {
     font-size: 0.8125em;
     font-family: geoMr;
@@ -73,29 +44,6 @@
 
     &:hover {
       background-color: #e0871a;
-    }
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .adInfo {
-    h4 {
-      font-size: 0.8em;
-    }
-
-    h2 {
-      font-size: 2.8em;
-      line-height: 1.2;
-    }
-
-    h3 {
-      font-size: 1.675em;
-    }
-    a {
-      font-size: 0.7125em;
-      height: 3.4375em;
-      padding: 0 2.8125em;
-      width: 135px;
     }
   }
 }

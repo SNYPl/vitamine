@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer: React.FC = ({}) => {
   const links = [
-    { title: "მაღაზია", value: "/shop" },
+    { title: "შეთავაზებები", value: "/shop" },
     { title: "ჩვენს შესახებ", value: "/about" },
     { title: "კონტაქტი", value: "/contact" },
     // { title: "Service us", value: "service" },

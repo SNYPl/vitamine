@@ -200,10 +200,6 @@
 
   button {
     transform: scale(1) translateY(-20px);
-
-    &:hover {
-      background-color: var(--green-color) !important;
-    }
   }
 }
 .cartButtons {
@@ -225,6 +221,10 @@
     border: 0;
     font-size: 16px;
     margin-right: 0.3125em;
+
+    &:hover {
+      background-color: var(--green-color);
+    }
   }
 }
 .currenct {

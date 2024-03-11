@@ -5,6 +5,7 @@ export const cartSlice = createSlice({
   initialState: {
     cartUpdated: true,
     cartItems: [],
+    wishList: [],
   },
   reducers: {
     setCartUpdated: (state, action) => {
@@ -13,9 +14,16 @@ export const cartSlice = createSlice({
     setCartItemsGlobal: (state, action) => {
       state.cartItems = action.payload;
     },
+    setWishListItem: (state, action) => {
+      state.wishList = action.payload;
+    },
   },
 });
 
-export const { setCartUpdated, setCartItemsGlobal } = cartSlice.actions;
+export const {
+  setCartUpdated,
+  setCartItemsGlobal,
+  setWishListItem,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

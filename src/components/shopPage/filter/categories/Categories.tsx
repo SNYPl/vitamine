@@ -26,7 +26,7 @@ const Categories: React.FC = ({}) => {
       <ul>
         <li>
           <Link
-            href={`/shop`}
+            href={`/`}
             onClick={() => setActiveProduct("all")}
             className={
               activeProduct === "all" && !searchParam ? style.active : ""
@@ -38,7 +38,7 @@ const Categories: React.FC = ({}) => {
         {categoriesData.slice(1).map((el, id) => (
           <li key={id}>
             <Link
-              href={`/shop?category=${el.value}`}
+              href={`/?category=${el.value}`}
               onClick={() => setActiveProduct(el.value)}
               className={
                 activeProduct === el.value && !searchParam ? style.active : ""

@@ -101,6 +101,11 @@
   }
 }
 
+.error {
+  color: red;
+  margin-top: 4px;
+}
+
 @media only screen and (max-width: 805px) {
   .mailInputs {
     flex-direction: column;

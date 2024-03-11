@@ -16,6 +16,7 @@ interface product {
   country: string;
   productQuantity?: number | undefined | any;
   sold: number;
+  userWishlist?: [string] | null | undefined;
 }
 
 const Product: React.FC<product> = ({
@@ -29,8 +30,11 @@ const Product: React.FC<product> = ({
   country,
   productQuantity,
   sold,
+  userWishlist,
 }) => {
   const categoryString = category?.join("/");
+  const id = _id.toString();
+  const isWishlisted = userWishlist?.includes(id);
 
   return (
     <article
@@ -50,7 +54,7 @@ const Product: React.FC<product> = ({
         ""
       )}
       <div className={`${style.productImg}`}>
-        <Link href={`/shop/product?id=${_id}`} className={`${style.imgLink}`}>
+        <Link href={`product?id=${_id}`} className={`${style.imgLink}`}>
           <Image
             src={mainImage}
             alt="img"
@@ -70,10 +74,7 @@ const Product: React.FC<product> = ({
       </div>
       <div className={`${style.productInfo}`}>
         <h3>{categoryString}</h3>
-        <Link
-          href={`/shop/product?id=${_id}`}
-          className={`${style.productNameLink}`}
-        >
+        <Link href={`product?id=${_id}`} className={`${style.productNameLink}`}>
           {name}
         </Link>
         <h4>
@@ -90,6 +91,7 @@ const Product: React.FC<product> = ({
             id={_id}
             key={_id}
             productQuantity={productQuantity}
+            isWishlisted={isWishlisted}
           />
         </div>
       )}

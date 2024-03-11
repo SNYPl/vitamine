@@ -47,7 +47,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         if (!user.isVerified) {
-          redirect("/verify");
+          throw new Error(
+            "ანგარიში არ არის ვერიფიცებული, შეამოწმეთ ელ.ფოსტა ვერიფიკაციისთვის"
+          );
+          // redirect("/verify");
         }
 
         if (user) {
@@ -64,14 +67,29 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token, user, trigger }) {
+      const wishlistArr = await User.findOne({ email: token.email });
+      const wishlistArray = token.wishlist;
+      console.log(wishlistArray);
       session.user = {
         name: token.name,
         email: token.email,
+        wishlist: wishlistArray || wishlistArr.wishlist || null,
+        image: wishlistArr.image || null,
       };
 
       return session;
     },
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        const wishlistArr = await User.findOne({ email: token.email });
+
+        token = { ...token, wishlist: wishlistArr.wishlist };
+        return token;
+      }
+      return token;
+    },
+
     async redirect({ url, baseUrl }) {
       // Redirect to a specific URL after successful login
       return baseUrl + "/";

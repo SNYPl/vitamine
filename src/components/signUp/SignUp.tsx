@@ -52,9 +52,6 @@ const SignUp: React.FC = ({}) => {
     );
   }
 
-  console.log(isError);
-  console.log(error?.response.status);
-
   return (
     <section className={style.signUp}>
       <h2>რეგისტრაცია</h2>

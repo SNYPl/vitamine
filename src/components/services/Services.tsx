@@ -14,13 +14,13 @@ const servicesList = [
     img: "/images/services/2.png",
   },
   {
-    title: "თანხის გადახდა ადგილზე",
-    info: "მარტივად და სწრაფად",
+    title: "თანხის გადახდა ადგილზე როგორც",
+    info: " საბანკო, ასევე ნაღდი ანგარიშსწორებით",
     img: "/images/services/3.png",
   },
   {
     title: "24/7 საფორთი",
-    info: "მოგვწერეთ როცა გინდათ",
+    info: "მოგვწერეთ ნებისმიერ დროს",
     img: "/images/services/4.png",
   },
 ];

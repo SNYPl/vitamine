@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./style.module.scss";
 import FeaturedMenu from "./featuredMenu/FeaturedMenu";
 import Product from "../product/Product";
@@ -8,9 +7,30 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { Skeleton } from "antd";
 import NoProduct from "../emptyProduct/noProduct";
+import { getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishListItem } from "@/store/slices/cartSlice";
 
-const FeaturedProducts: React.FC = ({}) => {
+const FeaturedProducts = ({
+  userWishlist,
+}: {
+  userWishlist: [string] | null | undefined;
+}) => {
   const [activeMenu, setActiveMenu] = useState("all");
+  const { data: session, update } = useSession();
+  const dispatch = useDispatch();
+
+  const wishListItems = useSelector((state: any) => state.cartReducer.wishList);
+
+  const getProductIds = async () => {
+    const user = await getSession();
+    dispatch(setWishListItem(user?.user.wishlist));
+  };
+
+  useEffect(() => {
+    getProductIds();
+  }, [update]);
 
   const { data, isLoading, isError, isFetching } = useQuery(
     "featuredProducts",
@@ -23,7 +43,8 @@ const FeaturedProducts: React.FC = ({}) => {
         console.error("Error fetching featured products", error);
         throw new Error("Error fetching featured products");
       }
-    }
+    },
+    { refetchOnWindowFocus: false }
   );
 
   const filteredData = data?.filter((product: any) => {
@@ -54,7 +75,7 @@ const FeaturedProducts: React.FC = ({}) => {
         )}
 
         {filteredData?.slice(0, 9).map((el: any) => (
-          <Product {...el} key={el._id} />
+          <Product {...el} key={el._id} userWishlist={wishListItems} />
         ))}
       </section>
     </section>

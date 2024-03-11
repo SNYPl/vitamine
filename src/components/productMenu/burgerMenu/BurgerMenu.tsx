@@ -46,11 +46,11 @@ const BurgerMenu: React.FC<BurgerMenu> = ({ activeMenu }) => {
       >
         <ul>
           <li>
-            <Link href={`/shop`}>ყველა</Link>
+            <Link href={`/`}>ყველა</Link>
           </li>
           {categories.slice(1).map((el: any) => (
             <li key={el.value}>
-              <Link href={`/shop?category=${el.value}`}>{el.name}</Link>
+              <Link href={`/?category=${el.value}`}>{el.name}</Link>
             </li>
           ))}
         </ul>

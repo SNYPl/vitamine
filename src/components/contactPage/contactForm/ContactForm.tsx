@@ -2,6 +2,9 @@
 import React from "react";
 import style from "./style.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { Spin } from "antd";
 
 type Inputs = {
   username: string;
@@ -17,7 +20,25 @@ const ContactForm: React.FC = ({}) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const sendMessageMutation = useMutation(
+    (data: Inputs) => axios.post(`/api/contact`, { ...data }),
+    {
+      onSuccess: (data: any) => {
+        return data;
+      },
+      onError: (error: any) => {
+        console.error("Registration error:", error);
+        return error;
+      },
+    }
+  );
+
+  const { error, data, isLoading, isError, isSuccess } = sendMessageMutation;
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    sendMessageMutation.mutate(data);
+    console.log(data);
+  };
 
   return (
     <section className={`${style.contact}`}>
@@ -48,7 +69,9 @@ const ContactForm: React.FC = ({}) => {
                 },
               })}
             />
-            {errors.username && <p>{errors.username.message}</p>}
+            {errors.username && (
+              <p className={style.error}>{errors.username.message}</p>
+            )}
           </div>
           <div className={`${style.mailInput}`}>
             <input
@@ -71,11 +94,22 @@ const ContactForm: React.FC = ({}) => {
                 },
               })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && (
+              <p className={style.error}>{errors.email.message}</p>
+            )}
           </div>
         </article>
         <textarea
-          {...register("message")}
+          {...register("message", {
+            required: {
+              value: true,
+              message: "გრაფა ცარიელია",
+            },
+            minLength: {
+              value: 10,
+              message: "მინიმუმ 10 ასო",
+            },
+          })}
           placeholder="დატოვეთ შეტყობინება.."
           className={`${style.textAreaInput}`}
           required

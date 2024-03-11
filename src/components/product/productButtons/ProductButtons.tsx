@@ -6,13 +6,19 @@ import { setModal, setProductId } from "@/store/slices/productButtonsSlice";
 import { addToCart } from "@/components/api/addToCart";
 import { setCartUpdated } from "@/store/slices/cartSlice";
 import { LoadingOutlined } from "@ant-design/icons";
+import WishlistBtn from "./Wishlist";
 
 interface buttonProps {
   id: number;
   productQuantity: number;
+  isWishlisted?: boolean | undefined;
 }
 
-const ProductButtons: React.FC<buttonProps> = ({ id, productQuantity }) => {
+const ProductButtons: React.FC<buttonProps> = ({
+  id,
+  productQuantity,
+  isWishlisted,
+}) => {
   const [addToCartLoading, setAddToCartLoading] = useState(false);
   const dispatch = useDispatch();
   const openModal = useSelector((state: any) => state.productButtons.modal);
@@ -37,15 +43,7 @@ const ProductButtons: React.FC<buttonProps> = ({ id, productQuantity }) => {
 
   return (
     <>
-      <Tooltip title="ფავორიტებში დამატება">
-        <Button
-          // onClick={() => onAddWishlist(data)}
-          className={`product-btn ${style.productBtn} `}
-          type="primary"
-          shape="round"
-          icon={<i className="far fa-heart" />}
-        />
-      </Tooltip>
+      <WishlistBtn id={id} isWishlisted={isWishlisted} />
 
       <Tooltip title="კალათაში დამატება">
         <Button

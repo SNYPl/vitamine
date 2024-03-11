@@ -2,7 +2,6 @@ import BurgerMenu from "@/components/productMenu/burgerMenu/BurgerMenu";
 import styles from "./page.module.css";
 import Search from "@/components/productMenu/productSearch/search/Search";
 import ShopComponent from "@/components/shopPage/Shop";
-import Ad from "@/components/productMenu/productSearch/productAd/Ad";
 
 export default function Shop({ params }: { params: { shop: string } }) {
   return (
@@ -12,7 +11,6 @@ export default function Shop({ params }: { params: { shop: string } }) {
           <BurgerMenu activeMenu={false} />
           <Search />
         </div>
-        <Ad />
         <ShopComponent />
       </div>
     </main>

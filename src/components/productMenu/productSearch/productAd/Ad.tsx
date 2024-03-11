@@ -6,19 +6,15 @@ const Ad = () => {
   return (
     <section className={`${styles.ad} adImage`}>
       <div className={styles.adBackground}>
-        <Image
-          src="/images/home/adLg.png"
-          width={461}
-          height={461}
-          alt="img"
-          priority
-        />
-      </div>
-      <div className={styles.adInfo}>
-        <h4>ამერიკული ტოპ ბრენდები</h4>
-        <h2>საუკეთესო ხარისხის პროდუქცია</h2>
-        <h3>საუკეთესო ფასად</h3>
-        <Link href={"/shop"}>მაღაზია</Link>
+        <Link href="/product?id=65cbe67306970833b5bfc330" target="_blank">
+          <Image
+            src="/images/offer.jpg"
+            width={1040}
+            height={400}
+            alt="img"
+            priority
+          />
+        </Link>
       </div>
     </section>
   );

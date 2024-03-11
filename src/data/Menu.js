@@ -4,7 +4,7 @@ export const navigatorData = [
     href: "/",
   },
   {
-    title: "მაღაზია",
+    title: "შეთავაზებები",
     href: "/shop",
   },
 

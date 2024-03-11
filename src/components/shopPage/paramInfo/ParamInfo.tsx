@@ -9,7 +9,7 @@ const ParamInfo: React.FC = () => {
   const pathArray = path.split("/").filter((el) => el);
 
   const paths = [
-    { eng: "shop", geo: "მაღაზია" },
+    { eng: "shop", geo: "შეთავაზებები" },
     { eng: "about", geo: "ჩვენს შესახებ" },
     { eng: "contact", geo: "კონტაქტი" },
     { eng: "cart", geo: "კალათა" },
