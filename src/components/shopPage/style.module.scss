@@ -1,5 +1,6 @@
 .shop {
   margin: 60px 0;
+  margin-bottom: 50px;
 }
 
 .shopContent {
@@ -10,10 +11,11 @@
 @media only screen and (max-width: 768px) {
   .shopContent {
     flex-direction: column;
-    row-gap: 50px;
+    row-gap: 35px;
   }
 
   .shop {
     margin: 30px 0;
+    margin-top: 0;
   }
 }
