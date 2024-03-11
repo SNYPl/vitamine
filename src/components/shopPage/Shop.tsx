@@ -7,7 +7,7 @@ import ProductList from "./productList/ProductList";
 const Shop: React.FC = ({}) => {
   return (
     <section className={`${style.shop}`}>
-      <ParamInfo />
+      {/* <ParamInfo /> */}
 
       <div className={`${style.shopContent}`}>
         <Filter />
