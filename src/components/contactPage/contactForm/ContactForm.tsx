@@ -44,10 +44,7 @@ const ContactForm: React.FC = ({}) => {
     <section className={`${style.contact}`}>
       <div className={`${style.contactText}`}>
         <h3>გამოგვიგზავნეთ შეტყობინება</h3>
-        <p>
-          ჩვენი თანამშრომლები მოგვიანებით დაგირეკავთ და უპასუხებენ თქვენს
-          შეკითხვებს.
-        </p>
+        <p>ჩვენი თანამშრომლები დაგიკავშირდებიან.</p>
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}

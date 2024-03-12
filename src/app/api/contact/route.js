@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 const AWS = require("aws-sdk");
 
 AWS.config.update({
-  accessKeyId: "AKIAQ3EGQD6OI5POESNL",
-  secretAccessKey: "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",
+  accessKeyId: process.env.accessKeyId,
+  secretAccessKey: process.env.secretAccessKey,
   region: "eu-north-1",
 });
 
