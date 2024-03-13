@@ -1,19 +1,13 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/components/helper/session";
 import User from "@/models/user";
-import connectDB from "@/lib/db";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { getUser } from "@/components/helper/getUser";
 
 export const PATCH = async (req, res) => {
   try {
     const data = await req.json();
-    const user = await getCurrentUser();
-
-    await connectDB();
+    const user = data?.params?.user;
+    const productId = data?.params.id;
 
     if (!user) {
-      // User is not authenticated, return 401 Unauthorized
       return new NextResponse(
         JSON.stringify({ error: "გაიარეთ ავტორიზაცია" }),
         {
@@ -25,26 +19,23 @@ export const PATCH = async (req, res) => {
       );
     }
 
-    const findUser = await User.findOne({ email: user.email });
+    const findUser = await User.findOne({ email: user });
 
     // Check if the id is already in the wishlist array
-    const isInWishlist = await findUser.wishlist.includes(data.id);
+    const isInWishlist = await findUser.wishlist.includes(productId);
 
     if (isInWishlist) {
       // If id is found, remove it from the wishlist array
       findUser.wishlist = await findUser.wishlist.filter(
-        (id) => id !== data.id
+        (id) => id !== productId
       );
     } else {
       // If id is not found, add it to the wishlist array
-      findUser.wishlist.push(data.id);
+      findUser.wishlist.push(productId);
     }
 
     // Save the updated user document
     await findUser.save();
-
-    revalidateTag("user");
-    revalidatePath("/");
 
     return Response.json({ revalidated: true, message: "item added" });
   } catch (err) {

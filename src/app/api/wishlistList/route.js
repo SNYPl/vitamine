@@ -1,23 +1,69 @@
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/db";
 import Vitamine from "@/models/Vitamine";
+import User from "@/models/user";
 
-export const GET = async (req, res) => {
+export async function GET(req, res) {
   try {
-    await connectDB();
-    const data = await req.nextUrl.searchParams.get("wishlistItems");
-    const list = JSON.parse(data);
+    const userEmail = await req.nextUrl.searchParams.get("user");
 
-    // Use the $in operator to find all products with the specified IDs
-    const vitamines = await Vitamine.find({ _id: { $in: list } });
+    const user = await User.findOne({ email: userEmail });
 
-    return new NextResponse(JSON.stringify(vitamines), {
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const wishlist = user.wishlist;
+
+    const vitamines = (await Vitamine.find({ _id: { $in: wishlist } })) || [];
+
+    return new NextResponse(JSON.stringify(vitamines));
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("error in fetching " + error);
+  }
+}
+
+export async function POST(req, res) {
+  try {
+    const userEmail = await req.nextUrl.searchParams.get("user");
+
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const wishlist = user.wishlist;
+
+    const vitamines = (await Vitamine.find({ _id: { $in: wishlist } })) || [];
+
+    return new NextResponse(JSON.stringify(vitamines));
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("error in fetching " + error);
+  }
+}
+
+export const DELETE = async (req, res) => {
+  try {
+    const productId = await req.nextUrl.searchParams.get("id");
+    const userEmail = await req.nextUrl.searchParams.get("user");
+
+    const user = await User.findOne({ email: userEmail });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await User.updateOne({ _id: user._id }, { $pull: { wishlist: productId } });
+
+    return new NextResponse(JSON.stringify("product Deleted"), {
       headers: {
         "Content-Type": "application/json",
       },
     });
   } catch (error) {
     console.log(error);
-    return new NextResponse("error in fetching " + error);
+    return new NextResponse("error deleting wishlist product " + error);
   }
 };

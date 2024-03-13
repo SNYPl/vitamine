@@ -7,7 +7,7 @@ interface stepOneTotal {
   children?: any;
 }
 
-const StepOneTotal: React.FC<stepOneTotal> = ({ totalPrice, children }) => {
+const StepOneTotal: React.FC<stepOneTotal> = ({ totalPrice = 0, children }) => {
   const shipping = 5;
   const shippingPrice =
     totalPrice >= 100 ? "უფასო" : formatCurrencyWithSymbol(shipping);
@@ -16,6 +16,7 @@ const StepOneTotal: React.FC<stepOneTotal> = ({ totalPrice, children }) => {
     totalPrice >= 100
       ? formatCurrencyWithSymbol(totalPrice)
       : formatCurrencyWithSymbol(totalPrice + shipping);
+
   return (
     <section className={style.stepOneTotal}>
       <h2 className={style.title}>მთლიანი ღირებულება</h2>

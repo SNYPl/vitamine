@@ -37,7 +37,6 @@ const ContactForm: React.FC = ({}) => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     sendMessageMutation.mutate(data);
-    console.log(data);
   };
 
   return (

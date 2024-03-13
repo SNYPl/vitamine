@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./style.module.scss";
 import { Button, ConfigProvider, Space, Tooltip } from "antd";
-import { useMutation, useQueryClient } from "react-query";
-import axios from "axios";
-import { getUser } from "@/components/helper/getUser";
-import { useSession } from "next-auth/react";
+import { addItemToWishList } from "@/lib/wishlist";
+import { useTransition } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import { useOptimistic } from "react";
 
 const WishlistBtn = ({
   id,
@@ -13,34 +14,24 @@ const WishlistBtn = ({
   id: number;
   isWishlisted: boolean | undefined;
 }) => {
-  const queryClient = useQueryClient();
-  const { data: session, update } = useSession();
+  const [errorHandler, setErrorHandler] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const [optimisticState, addOptimistic] = useOptimistic(isWishlisted);
 
-  const addToWishlist = useMutation(
-    () => axios.patch(`/api/favouriteProduct`, { id: id }),
-    {
-      onSuccess: (data: any) => {
-        queryClient.invalidateQueries("featuredProducts");
-        queryClient.invalidateQueries("session");
-        return data;
-      },
-      onError: (error: any) => {
-        console.error("Registration error:", error);
-        return error;
-      },
+  const addItemToWishListHandler = async () => {
+    try {
+      const response = await addItemToWishList(id);
+      if (response) {
+        setErrorHandler("");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred";
+      setErrorHandler(errorMessage);
     }
-  );
-
-  const { error, data, isLoading, isError, isSuccess } = addToWishlist;
-
-  const onAddWishlist = () => {
-    addToWishlist.mutate();
-    update();
   };
 
-  const ifError = !error?.response.data.error
-    ? "ფავორიტებში დამატება"
-    : error?.response.data.error;
+  const ifError = !errorHandler ? "ფავორიტებში დამატება" : errorHandler;
 
   return (
     <ConfigProvider
@@ -56,16 +47,19 @@ const WishlistBtn = ({
       <Space>
         <Tooltip title={ifError}>
           <Button
-            onClick={() => onAddWishlist()}
+            onClick={async () => {
+              addOptimistic(!isWishlisted);
+              await addItemToWishListHandler();
+            }}
             className={`product-btn ${style.productBtn} ${
-              isError && style.btnError
+              errorHandler && style.btnError
             }`}
             type="primary"
             shape="round"
             icon={<i className="far fa-heart" />}
             style={{
-              backgroundColor: isWishlisted ? "#f79823" : "",
-              color: isWishlisted ? "#ffff" : "",
+              backgroundColor: optimisticState ? "#f79823" : "",
+              color: optimisticState ? "#ffff" : "",
             }}
           />
         </Tooltip>

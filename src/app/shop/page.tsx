@@ -7,27 +7,23 @@ import Introduction from "@/components/introduction/Introduction";
 import Companies from "@/components/companies/Companies";
 import { Suspense } from "react";
 import { Skeleton } from "antd";
-import { getCurrentUser } from "@/components/helper/session";
-import { getSession } from "next-auth/react";
-import { getUser } from "@/components/helper/getUser";
+import { getAllWishListProductsIds } from "@/lib/wishlist";
+import { getFeaturesProducts } from "@/lib/featuresProducts";
 
 export default async function Home() {
-  const user = await getCurrentUser();
-  const us = await getUser();
-  const user1 = await getSession();
+  const featureProducts = await getFeaturesProducts();
+  const productIds = (await getAllWishListProductsIds()) || [];
 
-  // console.log(us);
-
-  // const user2 = await revalidateUserSession();
-
-  // console.log(user2);
   return (
     <main className={styles.main}>
       <div className={"container"}>
         <ProductMenu />
         <Services />
         <Suspense fallback={<Skeleton active />}>
-          <FeaturedProducts userWishlist={user?.wishlist} />
+          <FeaturedProducts
+            userWishlist={productIds}
+            featureProducts={featureProducts}
+          />
         </Suspense>
         {/* <Deal /> */}
         <Suspense fallback={<Skeleton active />}>

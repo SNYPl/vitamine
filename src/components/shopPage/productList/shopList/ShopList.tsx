@@ -10,7 +10,11 @@ import { setProductList } from "@/store/slices/paginationSlice";
 import { Skeleton } from "antd";
 import NoProduct from "@/components/emptyProduct/noProduct";
 
-const ShopList: React.FC = ({}) => {
+const ShopList = ({
+  userWishlist,
+}: {
+  userWishlist: [string] | undefined | null;
+}) => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const pageCount = useSelector((state: any) => state.products.shopPageValue);
@@ -78,7 +82,7 @@ const ShopList: React.FC = ({}) => {
   return (
     <section className={`${style.shopList}`}>
       {allVitamines?.map((item: any) => (
-        <Product {...item} key={item._id} />
+        <Product {...item} key={item._id} userWishlist={userWishlist} />
       ))}
     </section>
   );

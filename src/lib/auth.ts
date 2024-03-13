@@ -70,7 +70,6 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token, user, trigger }) {
       const wishlistArr = await User.findOne({ email: token.email });
       const wishlistArray = token.wishlist;
-      console.log(wishlistArray);
       session.user = {
         name: token.name,
         email: token.email,

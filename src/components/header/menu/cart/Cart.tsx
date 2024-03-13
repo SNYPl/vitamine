@@ -9,12 +9,17 @@ import { Spin } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setCartItemsGlobal } from "@/store/slices/cartSlice";
 
-const Cart = () => {
+const Cart = ({
+  wishlistLength,
+}: {
+  wishlistLength: [string] | [] | undefined;
+}) => {
   const dispatch = useDispatch();
   const cartUpdatedRender = useSelector(
     (state: any) => state.cartReducer.cartUpdated
   );
   const cartList = useSelector((state: any) => state.cartReducer.cartItems);
+  const wishlistLengthNumber = wishlistLength?.length;
 
   useEffect(() => {
     const existingCartItems = JSON.parse(
@@ -53,11 +58,14 @@ const Cart = () => {
     <section className={styles.cart}>
       <Link href={"/wishlist"} className="function-items-item">
         <i className="fa-regular fa-heart"></i>
+        {wishlistLengthNumber !== 0 && (
+          <span className={styles.productLegtn}>{wishlistLengthNumber}</span>
+        )}
       </Link>
 
       <Link href={"/shop/cart"} className="function-items-item">
         <i className="fa-solid fa-cart-shopping"></i>
-        {productsListLength && (
+        {productsListLength !== 0 && (
           <span className={styles.productLegtn}>{productsListLength}</span>
         )}
         <span>{isLoading ? <Spin /> : cartNumberValue}</span>

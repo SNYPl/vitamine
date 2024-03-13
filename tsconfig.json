@@ -27,7 +27,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/header/menu/navigation",
-    "src/app/api/featuredProducts/get/route.js"
+    "src/app/api/featuredProducts/get/route.js",
+    "src/lib/wishlist.ts"
   ],
   "exclude": ["node_modules"]
 }

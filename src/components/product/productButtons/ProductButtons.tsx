@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "./style.module.scss";
-import { Button, Tooltip } from "antd";
+import { Button, ConfigProvider, Space, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { setModal, setProductId } from "@/store/slices/productButtonsSlice";
 import { addToCart } from "@/components/api/addToCart";
@@ -45,35 +45,46 @@ const ProductButtons: React.FC<buttonProps> = ({
     <>
       <WishlistBtn id={id} isWishlisted={isWishlisted} />
 
-      <Tooltip title="კალათაში დამატება">
-        <Button
-          onClick={() => {
-            handleAddToCart();
-          }}
-          className={`product-btn ${style.productBtn} `}
-          type="primary"
-          shape="round"
-          loading={addToCartLoading}
-          disabled={!productQuantity}
-          icon={
-            addToCartLoading ? (
-              <LoadingOutlined spin />
-            ) : (
-              <i className="fa-solid fa-bag-shopping" />
-            )
-          }
-        />
-      </Tooltip>
-
-      <Tooltip title="სწრაფი ნახვა">
-        <Button
-          onClick={showModalHandler}
-          className={`product-btn ${style.productBtn} `}
-          type="primary"
-          shape="round"
-          icon={<i className="far fa-eye" />}
-        />
-      </Tooltip>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#f79823",
+          },
+        }}
+      >
+        <Space>
+          <Tooltip title="კალათაში დამატება">
+            <Button
+              onClick={() => {
+                handleAddToCart();
+              }}
+              className={`product-btn ${style.productBtn} `}
+              type="primary"
+              shape="round"
+              loading={addToCartLoading}
+              disabled={!productQuantity}
+              icon={
+                addToCartLoading ? (
+                  <LoadingOutlined spin />
+                ) : (
+                  <i className="fa-solid fa-bag-shopping" />
+                )
+              }
+            />
+          </Tooltip>
+        </Space>
+        <Space>
+          <Tooltip title="სწრაფი ნახვა">
+            <Button
+              onClick={showModalHandler}
+              className={`product-btn ${style.productBtn} `}
+              type="primary"
+              shape="round"
+              icon={<i className="far fa-eye" />}
+            />
+          </Tooltip>
+        </Space>
+      </ConfigProvider>
     </>
   );
 };

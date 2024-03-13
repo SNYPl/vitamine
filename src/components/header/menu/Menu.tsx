@@ -4,8 +4,10 @@ import Navigation from "./navigation/Navigation";
 import Cart from "./cart/Cart";
 import MobileMenuOpener from "./mobileMenu/menuOpener/MenuOpener";
 import Image from "next/image";
+import { getAllWishListProductsIds } from "@/lib/wishlist";
 
-const Menu = () => {
+const Menu = async () => {
+  const productIds = (await getAllWishListProductsIds()) || [];
   return (
     <section className={styles.menu}>
       <div className="container">
@@ -20,7 +22,7 @@ const Menu = () => {
             />
           </Link>
           <Navigation />
-          <Cart />
+          <Cart wishlistLength={productIds} />
         </div>
       </div>
     </section>

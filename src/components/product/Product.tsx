@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import style from "./style.module.scss";
 import Link from "next/link";
-import { formatCurrency, formatCurrencyWithSymbol } from "@/common/utils";
+import { formatCurrencyWithSymbol } from "@/common/utils";
 import ProductButtons from "./productButtons/ProductButtons";
 
 interface product {

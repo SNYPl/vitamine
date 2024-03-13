@@ -1,0 +1,62 @@
+.titlesForm {
+  display: grid;
+  grid-template-columns: 0.9fr 2fr 1fr 1.5fr 1fr;
+  width: 100%;
+  align-items: center;
+  padding-bottom: 5px;
+  border: 1px solid #ebebeb;
+
+  p {
+    padding: 10px;
+    text-align: center;
+    color: #252525;
+    font-size: 1rem;
+    font-family: ceraBold;
+    line-height: 1;
+    text-transform: uppercase;
+    height: 53px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    font-weight: bold;
+  }
+
+  .clearBtn {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+    height: 53px;
+
+    .btnInf {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: transparent;
+      background: #ffffff;
+      border-color: #d9d9d9;
+      color: rgba(0, 0, 0, 0.88);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+
+      &:hover {
+        color: #4096ff;
+        border-color: #4096ff;
+        background: #ffffff;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+}
+
+@media only screen and (max-width: 500px) {
+  .titlesForm {
+    overflow-y: scroll;
+  }
+}

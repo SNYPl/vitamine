@@ -4,12 +4,15 @@ import Sort from "./sort/Sort";
 import ShopList from "./shopList/ShopList";
 import PaginationComponent from "./pagination/Pagination";
 import FeaturedList from "../featuredList/FeaturedList";
+import { getAllWishListProductsIds } from "@/lib/wishlist";
 
-const ProductList: React.FC = ({}) => {
+const ProductList: React.FC = async ({}) => {
+  const productIds = (await getAllWishListProductsIds()) || [];
+
   return (
     <section className={`${style.productList}`}>
       <Sort />
-      <ShopList />
+      <ShopList userWishlist={productIds} />
       <PaginationComponent />
       <FeaturedList />
     </section>
