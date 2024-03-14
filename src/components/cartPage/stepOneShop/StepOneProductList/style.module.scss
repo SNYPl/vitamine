@@ -58,6 +58,14 @@
   }
 }
 
+.itemLink {
+  color: #000;
+
+  &:hover {
+    color: var(--green-color);
+  }
+}
+
 .quantityInfo {
   display: flex;
   align-items: center;

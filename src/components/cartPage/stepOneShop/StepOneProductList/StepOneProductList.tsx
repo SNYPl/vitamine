@@ -10,6 +10,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import StepOneTotal from "../stepOneTotal/StepOneTotal";
 import NoProduct from "@/components/emptyProduct/noProduct";
+import Link from "next/link";
 
 interface ProductListProps {
   setStepCart: any;
@@ -80,7 +81,13 @@ const StepOneProductList: React.FC<ProductListProps> = ({ setStepCart }) => {
                   height={110}
                 />
               </div>
-              <p className={style.productName}>{product.name}</p>
+              <Link
+                href={`/product?id=${product._id}`}
+                className={style.itemLink}
+                target="_blank"
+              >
+                <p className={style.productName}>{product.name}</p>
+              </Link>
               <p>{product.discount ? product.discount : product.price}</p>
               <div className={style.productQuantity}>
                 <InputNumber

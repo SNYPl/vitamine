@@ -18,7 +18,7 @@ const Description: React.FC<DescriptionProps> = ({
   use,
   warning,
 }) => {
-  const aboutParagraphs = about.split("*");
+  const aboutParagraphs = about?.split("*");
   return (
     <article className={`${style.description}`}>
       <div className={`${style.about}`}>

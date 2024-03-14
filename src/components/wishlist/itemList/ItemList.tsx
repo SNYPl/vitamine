@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/components/api/addToCart";
 import { setCartUpdated } from "@/store/slices/cartSlice";
 import { LoadingOutlined } from "@ant-design/icons";
+import Link from "next/link";
 
 const WishlistItemList = ({ wishlistData }: { wishlistData: any }) => {
   const [addToCartLoading, setAddToCartLoading] = useState(false);
@@ -56,7 +57,13 @@ const WishlistItemList = ({ wishlistData }: { wishlistData: any }) => {
                   height={110}
                 />
               </div>
-              <p className={style.productName}>{product.name}</p>
+              <Link
+                href={`product?id=${product._id}`}
+                className={style.itemLink}
+                target="_blank"
+              >
+                <p className={style.productName}>{product.name}</p>
+              </Link>
               <p>{product.discount ? product.discount : product.price}</p>
 
               <div className={style.addCart}>

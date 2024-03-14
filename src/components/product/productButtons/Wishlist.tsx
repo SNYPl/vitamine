@@ -6,6 +6,7 @@ import { useTransition } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useOptimistic } from "react";
+import { useSession } from "next-auth/react";
 
 const WishlistBtn = ({
   id,
@@ -17,6 +18,9 @@ const WishlistBtn = ({
   const [errorHandler, setErrorHandler] = useState("");
   const [isPending, startTransition] = useTransition();
   const [optimisticState, addOptimistic] = useOptimistic(isWishlisted);
+  const { data: session, status } = useSession();
+
+  const user = session;
 
   const addItemToWishListHandler = async () => {
     try {
@@ -31,7 +35,7 @@ const WishlistBtn = ({
     }
   };
 
-  const ifError = !errorHandler ? "ფავორიტებში დამატება" : errorHandler;
+  const ifError = user ? "ფავორიტებში დამატება" : "გაიარეთ ავტორიზაცია";
 
   return (
     <ConfigProvider
@@ -47,13 +51,15 @@ const WishlistBtn = ({
       <Space>
         <Tooltip title={ifError}>
           <Button
-            onClick={async () => {
-              addOptimistic(!isWishlisted);
-              await addItemToWishListHandler();
+            onClick={() => {
+              startTransition(async () => {
+                addOptimistic(!isWishlisted);
+                await addItemToWishListHandler();
+              });
             }}
             className={`product-btn ${style.productBtn} ${
               errorHandler && style.btnError
-            }`}
+            } ${!user && style.disableBtn}`}
             type="primary"
             shape="round"
             icon={<i className="far fa-heart" />}
@@ -61,6 +67,7 @@ const WishlistBtn = ({
               backgroundColor: optimisticState ? "#f79823" : "",
               color: optimisticState ? "#ffff" : "",
             }}
+            disabled={!user}
           />
         </Tooltip>
       </Space>

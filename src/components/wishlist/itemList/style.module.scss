@@ -92,6 +92,14 @@
   height: 200px;
 }
 
+.itemLink {
+  color: #000;
+
+  &:hover {
+    color: var(--green-color);
+  }
+}
+
 @media only screen and (max-width: 500px) {
   .product {
     overflow-y: scroll;
