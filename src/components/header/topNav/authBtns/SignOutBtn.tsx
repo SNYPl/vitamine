@@ -5,7 +5,7 @@ import Button from "@/components/button/Button";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 
-const SignOut = ({ user }: { user: any }) => {
+const SignOut = ({ user }: { user: string | null | undefined }) => {
   const signOutFunction = () => {
     signOut();
   };
@@ -14,7 +14,7 @@ const SignOut = ({ user }: { user: any }) => {
     <div className={style.profileCont}>
       <p className={style.profile}>
         <i className="fas fa-user" /> გამარჯობა,{" "}
-        <Link href="/profile">{user?.name}</Link>
+        <Link href="/profile">{user}</Link>
       </p>
       <Button onSubmitButton={signOutFunction}>
         <i className="fa-solid fa-arrow-right-from-bracket"></i> გასვლა

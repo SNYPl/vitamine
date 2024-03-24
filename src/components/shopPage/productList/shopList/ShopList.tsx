@@ -19,6 +19,10 @@ const ShopList = ({
   const dispatch = useDispatch();
   const pageCount = useSelector((state: any) => state.products.shopPageValue);
   const searchValue = searchParams.get("search");
+  const showProductNumber = useSelector(
+    (state: any) => state.products.showProductNumber
+  );
+  const sortingValue = useSelector((state: any) => state.products.sortingValue);
 
   const categoryList = searchParams.get("category");
 
@@ -32,6 +36,8 @@ const ShopList = ({
       pageCount,
       searchValue,
       priceRange,
+      showProductNumber,
+      sortingValue,
     ],
     async () => {
       try {
@@ -42,6 +48,8 @@ const ShopList = ({
             search: searchValue,
             min: min,
             max: max,
+            itemsPerPage: showProductNumber,
+            sort: sortingValue,
           },
         });
 

@@ -42,6 +42,15 @@
   line-height: 1;
 }
 
+.ratingNumber {
+  justify-content: center;
+  display: flex;
+  align-items: flex-start;
+  font-size: 11px;
+  margin-left: 2px;
+  color: rgb(25, 118, 210);
+}
+
 .priceInfo {
   margin-bottom: 1.875em;
 

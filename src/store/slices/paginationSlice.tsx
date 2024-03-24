@@ -4,6 +4,8 @@ const initialState = {
   productList: [],
   productListLength: 0,
   shopPageValue: 1,
+  showProductNumber: 12,
+  sortingValue: "default",
 };
 
 const productsSlice = createSlice({
@@ -16,8 +18,19 @@ const productsSlice = createSlice({
     setShopPage: (state, action) => {
       state.shopPageValue = action.payload;
     },
+    setShowProductNumber: (state, action) => {
+      state.showProductNumber = action.payload;
+    },
+    setSortingValue: (state, action) => {
+      state.sortingValue = action.payload;
+    },
   },
 });
 
-export const { setProductList, setShopPage } = productsSlice.actions;
+export const {
+  setProductList,
+  setShopPage,
+  setShowProductNumber,
+  setSortingValue,
+} = productsSlice.actions;
 export default productsSlice.reducer;

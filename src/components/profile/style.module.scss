@@ -1,0 +1,126 @@
+.profile {
+  padding: 60px 0;
+
+  h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    font-weight: bold;
+  }
+}
+
+.input {
+  margin-bottom: 30px;
+  width: 100%;
+  display: flex;
+
+  input {
+    height: 2.8125em;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-variant: tabular-nums;
+    list-style: none;
+    font-feature-settings: "tnum";
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 0;
+    padding: 3px 11px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    line-height: 1.5715;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    transition: all 0.3s;
+    outline: none;
+  }
+
+  label {
+    padding-bottom: 10px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 16px;
+    position: relative;
+  }
+}
+
+.inputCont {
+  width: 100%;
+}
+
+.btn {
+  margin-bottom: 1.25em;
+  width: 250px;
+  height: 2.8125em;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-family: ceraBold;
+  background-color: var(--green-color);
+  border-color: var(--green-color);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.editForm {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profileInputs {
+  width: 70%;
+}
+
+.repeatPassword,
+.emailInput {
+  flex-direction: column;
+  width: calc(100% - 100px);
+}
+
+.error {
+  color: red;
+  margin-top: 4px;
+}
+
+.mainErr {
+  margin: 0 0 12px 0;
+  color: red;
+}
+
+.editBtn {
+  width: 100px;
+  height: 40px;
+  border-radius: 50px;
+  align-self: flex-end;
+  margin-left: 6px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  font-family: ceraBold;
+  background-color: rgb(239, 239, 239);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--green-color);
+    color: #fff;
+  }
+}

@@ -21,6 +21,8 @@ interface descriptionProps {
   use: string;
   warning: string;
   name: string;
+  id: string;
+  user: any;
 }
 
 const ProductDescription: React.FC<descriptionProps> = ({
@@ -32,6 +34,8 @@ const ProductDescription: React.FC<descriptionProps> = ({
   use,
   warning,
   name,
+  id,
+  user,
 }) => {
   const menuItems = [
     { geo: "პროდუქტის აღწერა", eng: "description" },
@@ -72,7 +76,9 @@ const ProductDescription: React.FC<descriptionProps> = ({
         {menuHandler === "facts" && (
           <Specifications supplementFacts={supplementFacts} />
         )}
-        {menuHandler === "review" && <Review />}
+        {menuHandler === "review" && (
+          <Review id={id} user={user} review={review} />
+        )}
       </section>
     </section>
   );

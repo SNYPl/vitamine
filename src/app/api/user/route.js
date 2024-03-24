@@ -12,7 +12,9 @@ export const GET = async (req, res) => {
       throw new Error("error user is not here");
     }
 
-    const userObj = await User.findOne({ email: userEmail });
+    const userObj = await User.findOne({ email: userEmail }).select({
+      password: 0,
+    });
 
     return new NextResponse(JSON.stringify({ user: userObj }), {
       headers: {

@@ -40,6 +40,7 @@ export const POST = async (request) => {
       password: hashedPassword,
       isVerified: false,
       verificationToken: verificationToken,
+      image: "/images/profile/user.jpg",
     });
 
     await newUser.save();

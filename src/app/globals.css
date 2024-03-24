@@ -32,6 +32,11 @@ a {
   --green-color: #f79823;
 }
 
+.ant-upload {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 @font-face {
   font-family: ceraReg;
   src: url("/fonts/Cera Pro Regular.otf");
@@ -57,6 +62,10 @@ a {
 @font-face {
   font-family: geoMr;
   src: "/fonts/mrgvlovani.ttf";
+}
+
+.ant-rate-star:not(:last-child) {
+  margin-right: 2px !important;
 }
 
 .slick-slider {

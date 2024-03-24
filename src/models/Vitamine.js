@@ -16,7 +16,7 @@ const vitamineSchema = new mongoose.Schema({
   isFeatured: Boolean,
   images: [String],
   mainImage: String,
-  rating: Number,
+  rating: [Number],
   about: String,
   description: [String],
   use: String,

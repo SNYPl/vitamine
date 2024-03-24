@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Drawer } from "antd";
 import styles from "./style.module.scss";
 
 import MobileNavigator from "../menuNavigation/MenuNavigation";
 
-function MobileMenuOpener() {
+const MobileMenuOpener = () => {
   const [visible, setVisible] = useState(false);
   const onShowDrawer = () => {
     setVisible(true);
@@ -31,6 +31,6 @@ function MobileMenuOpener() {
       </Drawer>
     </>
   );
-}
+};
 
-export default React.memo(MobileMenuOpener);
+export default memo(MobileMenuOpener);

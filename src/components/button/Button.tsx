@@ -1,5 +1,7 @@
 import React from "react";
 import style from "./style.module.scss";
+import { useFormStatus } from "react-dom";
+import { LoadingOutlined } from "@ant-design/icons";
 
 interface buttonProps {
   onSubmitButton?: any;
@@ -17,6 +19,8 @@ const Button: React.FC<buttonProps> = ({
   disabled = false,
   ...props
 }) => {
+  const { pending } = useFormStatus();
+
   return (
     <button
       onClick={onSubmitButton}
@@ -25,7 +29,7 @@ const Button: React.FC<buttonProps> = ({
       className={`${className} ${style.button} `}
       disabled={disabled}
     >
-      {children}
+      {pending ? <LoadingOutlined spin /> : children}
     </button>
   );
 };

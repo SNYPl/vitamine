@@ -23,7 +23,7 @@ const Description: React.FC<DescriptionProps> = ({
     <article className={`${style.description}`}>
       <div className={`${style.about}`}>
         <p className={`${style.aboutTitle}`}>{name}</p>
-        {aboutParagraphs.map((el: string, id: number) => (
+        {aboutParagraphs?.map((el: string, id: number) => (
           <p className={`${style.aboutItem}`} key={id}>
             {el}
           </p>

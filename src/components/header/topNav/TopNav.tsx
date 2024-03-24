@@ -1,13 +1,18 @@
+"use client";
 import styles from "./style.module.scss";
 import Socials from "./socials/Socials";
-import { getCurrentUser } from "@/components/helper/session";
 import LoginBtn from "./authBtns/LoginBtn";
 import SignOut from "./authBtns/SignOutBtn";
+import { useSession } from "next-auth/react";
 
-const TopNav = async () => {
-  const user = await getCurrentUser();
+const TopNav = () => {
+  const { data: session } = useSession();
 
-  const linkComponent = !user ? <LoginBtn /> : <SignOut user={user} />;
+  const linkComponent = !session?.user ? (
+    <LoginBtn />
+  ) : (
+    <SignOut user={session?.user.name} />
+  );
 
   return (
     <section className={styles.topNav}>

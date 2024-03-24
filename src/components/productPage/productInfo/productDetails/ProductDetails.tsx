@@ -3,7 +3,6 @@ import style from "./style.module.scss";
 import { Rate } from "antd";
 import Quantity from "./quantityInput/Quantity";
 import { formatCurrency } from "@/common/utils";
-import { useSession } from "next-auth/react";
 
 interface detailProps {
   category: string[];
@@ -11,7 +10,7 @@ interface detailProps {
   infoTitle: string;
   price: number;
   discount: number;
-  rating: number;
+  rating: number[];
   productQuantity: number;
   packageQuantity: string;
   id: string;
@@ -31,9 +30,12 @@ const ProductDetails: React.FC<detailProps> = ({
   sold,
 }) => {
   const categoryString = category?.join("/");
-  const { data: session, status } = useSession();
+  const ratingLength = rating?.length;
 
-  const user = session;
+  const averageRating =
+    rating.reduce((acc, curr) => acc + curr, 0) / ratingLength;
+
+  const boundedRating = Math.min(averageRating, 5);
 
   return (
     <article className={`${style.details}`}>
@@ -52,12 +54,10 @@ const ProductDetails: React.FC<detailProps> = ({
           <h3>
             {discount ? formatCurrency(discount) : formatCurrency(price)}{" "}
           </h3>
-          <Rate
-            allowHalf
-            defaultValue={rating}
-            disabled={!user}
-            value={rating}
-          />
+          <Rate allowHalf disabled value={boundedRating} />{" "}
+          {ratingLength && (
+            <span className={style.ratingNumber}>{`(${ratingLength})`}</span>
+          )}
         </div>
       </div>
 

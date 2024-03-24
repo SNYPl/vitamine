@@ -14,9 +14,10 @@ import { setProductId } from "@/store/slices/productButtonsSlice";
 interface InfoProps {
   modal: boolean;
   className?: any;
+  user?: any;
 }
 
-const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
+const ProductInfo: React.FC<InfoProps> = ({ modal, className, user }) => {
   const dispatch = useDispatch();
   const productGlobalId = useSelector((state: any) => state.productButtons.id);
   const searchParams = useSearchParams();
@@ -119,6 +120,8 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className }) => {
           use={use}
           warning={warning}
           name={name}
+          id={_id}
+          user={user}
         />
       )}
     </div>

@@ -12,16 +12,16 @@ const PaginationComponent: React.FC = ({}) => {
   const firstPage = 1;
   const router = useRouter();
   const path = usePathname();
+  const dispatch = useDispatch();
 
   const productListLength = useSelector(
     (state: any) => state.products.productListLength
   );
 
   const productPage = useSelector((state: any) => state.products.shopPageValue);
-
-  const dispatch = useDispatch();
-
-  const pageSize = 12;
+  const showProductNumber = useSelector(
+    (state: any) => state.products.showProductNumber
+  );
 
   useEffect(() => {
     if (pageValue) {
@@ -66,7 +66,7 @@ const PaginationComponent: React.FC = ({}) => {
         onChange={onPaginationChange}
         current={productPage}
         defaultCurrent={1}
-        pageSize={pageSize}
+        pageSize={showProductNumber}
         total={productListLength}
         hideOnSinglePage
       />

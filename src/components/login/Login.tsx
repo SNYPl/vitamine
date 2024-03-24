@@ -40,13 +40,15 @@ const Login: React.FC = ({}) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (data?.remember) {
-      Cookies.set("remember", "true", { expires: 1 / 1440 });
+      let maxAge = 30 * 24 * 60 * 60;
+      Cookies.set("remember", "true", { expires: maxAge });
     }
 
     const response = await signIn("credentials", {
       username: data.username,
       password: data.password,
       redirect: false,
+      remember: data?.remember ? true : false,
     });
 
     if (response?.error) {

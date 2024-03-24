@@ -2,7 +2,6 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/user";
 import connectDB from "@/lib/db";
-import { redirect } from "next/navigation";
 const bcrypt = require("bcrypt");
 
 export const authOptions: NextAuthOptions = {
@@ -50,7 +49,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error(
             "ანგარიში არ არის ვერიფიცებული, შეამოწმეთ ელ.ფოსტა ვერიფიკაციისთვის"
           );
-          // redirect("/verify");
         }
 
         if (user) {
@@ -68,22 +66,16 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async session({ session, token, user, trigger }) {
-      const wishlistArr = await User.findOne({ email: token.email });
-      const wishlistArray = token.wishlist;
       session.user = {
         name: token.name,
         email: token.email,
-        wishlist: wishlistArray || wishlistArr.wishlist || null,
-        image: wishlistArr.image || null,
       };
 
       return session;
     },
     async jwt({ token, user, trigger, session }) {
       if (trigger === "update") {
-        const wishlistArr = await User.findOne({ email: token.email });
-
-        token = { ...token, wishlist: wishlistArr.wishlist };
+        token = { ...token, ...session };
         return token;
       }
       return token;

@@ -6,7 +6,6 @@ declare module "next-auth" {
       name: string | null | undefined;
       email: string | null | undefined;
       image?: string | null | undefined;
-      wishlist: [string] | null | undefined | any;
     } & DefaultSession["user"];
   }
 }

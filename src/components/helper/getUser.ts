@@ -1,14 +1,12 @@
-import User from "@/models/user";
+"use server";
+
 import { getCurrentUser } from "./session";
-import { revalidatePath } from "next/cache";
-import axios from "axios";
 
 export const getUser = async () => {
   const user = await getCurrentUser();
 
   const requestData = user?.email;
 
-  // Make the request using Axios
   const response = await fetch(
     `${process.env.API_REQUEST_URL}/api/user?email=${requestData}`,
     {
@@ -19,8 +17,6 @@ export const getUser = async () => {
       },
     }
   );
-
-  revalidatePath("/");
 
   const data = await response.json();
 
