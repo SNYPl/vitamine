@@ -124,3 +124,19 @@
     color: #fff;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .profileInputs {
+    width: 90%;
+  }
+
+  .emailInput {
+    width: calc(100% - 80px);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .btn {
+    width: 200px;
+  }
+}

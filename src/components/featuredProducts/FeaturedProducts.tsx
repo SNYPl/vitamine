@@ -4,15 +4,17 @@ import style from "./style.module.scss";
 import FeaturedMenu from "./featuredMenu/FeaturedMenu";
 import Product from "../product/Product";
 import NoProduct from "../emptyProduct/noProduct";
+import Button from "../button/Button";
 
 const FeaturedProducts = ({
   userWishlist,
   featureProducts,
 }: {
   userWishlist: [string] | null | undefined;
-  featureProducts: [string] | null | undefined;
+  featureProducts: [string];
 }) => {
   const [activeMenu, setActiveMenu] = useState("all");
+  const [isFeaturedCount, setIsFeaturedCount] = useState(9);
 
   const filteredData = featureProducts?.filter((product: any) => {
     if (activeMenu === "all") {
@@ -24,6 +26,15 @@ const FeaturedProducts = ({
     return false;
   });
 
+  const changeCountNumber = () => {
+    if (isFeaturedCount > filteredData?.length) {
+      return;
+    }
+    const num = 9;
+
+    setIsFeaturedCount((state) => state + num);
+  };
+
   return (
     <section className={`${style.featured}`}>
       <article className={`${style.title}`}>
@@ -34,10 +45,18 @@ const FeaturedProducts = ({
       <section className={`${style.featuredProductsList}`}>
         {!filteredData?.length && <NoProduct title={"პროდუქტი არ არის"} />}
 
-        {filteredData?.slice(0, 9).map((el: any) => (
+        {filteredData?.slice(0, isFeaturedCount).map((el: any) => (
           <Product {...el} key={el._id} userWishlist={userWishlist} />
         ))}
       </section>
+      <Button
+        className={`${style.moreBtn} ${
+          isFeaturedCount > filteredData?.length && style.disabled
+        }`}
+        onSubmitButton={changeCountNumber}
+      >
+        მეტის ჩვენება
+      </Button>
     </section>
   );
 };

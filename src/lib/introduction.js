@@ -1,6 +1,6 @@
+"use server";
 import connectDB from "@/lib/db";
 import Vitamine from "@/models/Vitamine";
-import axios from "axios";
 import { unstable_cache } from "next/cache";
 
 export const introductionBestSales = unstable_cache(async () => {
@@ -26,15 +26,17 @@ export const introductionBestSales = unstable_cache(async () => {
   return JSON.stringify(bestSellingVitamines);
 });
 
-export const introductionBestSalesReq = async () => {
-  const response = await axios.get(
-    `${process.env.API_REQUEST_URL}/api/bestSales`
-  );
+// export const introductionBestSalesReq = async () => {
+//   const response = await fetch(`${process.env.API_REQUEST_URL}/api/bestSales`, {
+//     next: { revalidate: 3600, tags: ["bestSales"] },
+//   });
 
-  const data = response.data;
+//   // console.log(response);
 
-  return data;
-};
+//   const data = response.data;
+
+//   return data;
+// };
 
 export const introductionDaleOfWeek = async () => {
   await connectDB();

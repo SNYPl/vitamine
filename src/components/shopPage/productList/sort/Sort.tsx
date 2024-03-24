@@ -2,19 +2,22 @@
 import React from "react";
 import style from "./style.module.scss";
 import { Select } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   setShowProductNumber,
   setSortingValue,
 } from "@/store/slices/paginationSlice";
+// import { setShopPage } from "@/store/slices/paginationSlice";
 
 const Sort: React.FC = ({}) => {
   const dispatch = useDispatch();
   const { Option } = Select;
 
   const onShowSelectChange = (e: any) => {
+    // const firstPage = 1;
     const showValue = +e;
     dispatch(setShowProductNumber(showValue));
+    // dispatch(setShopPage(firstPage));
   };
 
   const onSortSelectChange = (e: any) => {
@@ -32,8 +35,8 @@ const Sort: React.FC = ({}) => {
         <Option value="default">სტანდარტული</Option>
         <Option value="lowHight">ფასი: ზრდადობით</Option>
         <Option value="highLow">ფასი: კლებით</Option>
-        {/* <Option value="review">მიმოხილვით</Option>
-        <Option value="rating">რეიტინგით</Option> */}
+        <Option value="review">მიმოხილვით</Option>
+        <Option value="rating">რეიტინგით</Option>
       </Select>
       <Select
         defaultValue="მაჩვენე 12"

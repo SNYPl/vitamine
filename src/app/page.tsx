@@ -12,7 +12,7 @@ export default function Shop({ params }: { params: { shop: string } }) {
           <BurgerMenu activeMenu={false} />
           <Search />
         </div>
-        {/* <Ad /> */}
+        <Ad />
         <ShopComponent />
       </div>
     </main>

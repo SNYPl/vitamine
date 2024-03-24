@@ -67,6 +67,13 @@ a {
 .ant-rate-star:not(:last-child) {
   margin-right: 2px !important;
 }
+.ant-modal-mask {
+  z-index: 10000 !important;
+}
+
+.ant-modal-wrap {
+  z-index: 1000000 !important;
+}
 
 .slick-slider {
   position: relative;

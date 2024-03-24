@@ -15,7 +15,7 @@ const ParamInfo: React.FC = () => {
     { eng: "cart", geo: "კალათა" },
     { eng: "login", geo: "ავტორიზაცია" },
     { eng: "signup", geo: "რეგისტრაცია" },
-    { eng: "forgot", geo: "პაროლის აღდგენა" },
+    { eng: "forgotPassword", geo: "პაროლის აღდგენა" },
     { eng: "verify", geo: "ვერიფიკაცია" },
     { eng: "wishlist", geo: "ფავორიტები" },
     { eng: "profile", geo: "პროფილი" },

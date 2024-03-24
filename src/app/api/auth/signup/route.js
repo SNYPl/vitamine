@@ -76,7 +76,6 @@ export const POST = async (request) => {
       },
     });
   } catch (error) {
-    console.log(error);
     return new NextResponse(
       JSON.stringify({ error: "Error creating user", error }),
       {

@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { Drawer } from "antd";
 import styles from "./style.module.scss";
 

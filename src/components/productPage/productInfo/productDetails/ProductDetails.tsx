@@ -55,8 +55,10 @@ const ProductDetails: React.FC<detailProps> = ({
             {discount ? formatCurrency(discount) : formatCurrency(price)}{" "}
           </h3>
           <Rate allowHalf disabled value={boundedRating} />{" "}
-          {ratingLength && (
+          {ratingLength ? (
             <span className={style.ratingNumber}>{`(${ratingLength})`}</span>
+          ) : (
+            ""
           )}
         </div>
       </div>

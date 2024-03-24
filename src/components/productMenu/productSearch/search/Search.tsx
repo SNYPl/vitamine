@@ -2,6 +2,7 @@
 import styles from "./style.module.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { LoadingOutlined } from "@ant-design/icons";
 
 type Inputs = {
   search: string;
@@ -13,12 +14,11 @@ const Search = () => {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    router.push(`/shop?search=${data.search}`);
+    router.push(`/?search=${data.search}`);
   };
 
   return (
@@ -38,7 +38,9 @@ const Search = () => {
           })}
         />
 
-        <button type="submit">ძებნა</button>
+        <button type="submit">
+          {isSubmitting ? <LoadingOutlined spin /> : "ძებნა"}
+        </button>
       </form>
     </section>
   );

@@ -3,10 +3,11 @@ import React from "react";
 import style from "./style.module.scss";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "../button/Button";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 type Inputs = {
-  username: string;
-  password: string;
+  email: string;
 };
 
 const ForgotPassword: React.FC = ({}) => {
@@ -17,7 +18,24 @@ const ForgotPassword: React.FC = ({}) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const forgotPassword = useMutation(
+    (data: any) => axios.post(`/api/forgotPassword`, { ...data }),
+    {
+      onSuccess: (data: any) => {
+        return data;
+      },
+      onError: (error: any) => {
+        console.error("Registration error:", error);
+        return error;
+      },
+    }
+  );
+
+  const { error, data, isLoading, isError, isSuccess, status } = forgotPassword;
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    forgotPassword.mutate(data);
+  };
 
   return (
     <section className={style.forgot}>
@@ -27,17 +45,21 @@ const ForgotPassword: React.FC = ({}) => {
         className={`${style.contactForm}`}
       >
         <div className={`${style.input}`}>
-          <label htmlFor="username">სახელი ან ელ.ფოსტა</label>
+          <label htmlFor="email">ელ.ფოსტა</label>
           <input
             type="text"
-            id="username"
-            {...register("username", {
+            id="forgotemail"
+            {...register("email", {
               required: {
                 value: true,
                 message: "გრაფა ცარიელია",
               },
+              pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "საჭიროა ელ.ფოსტის ფორმატი",
+              },
             })}
-            style={{ border: errors.username ? "1px solid red" : "" }}
+            style={{ border: errors.email ? "1px solid red" : "" }}
           />
         </div>
 

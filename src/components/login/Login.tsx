@@ -111,7 +111,10 @@ const Login: React.FC = ({}) => {
             დამიმახსოვრე
           </label>
 
-          <Link href={"/forgot"} onClick={() => dispatch(setLoginModal(false))}>
+          <Link
+            href={"/forgotPassword"}
+            onClick={() => dispatch(setLoginModal(false))}
+          >
             დაგავიწყდა პაროლი?
           </Link>
         </div>

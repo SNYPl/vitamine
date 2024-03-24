@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./style.module.scss";
 import { useFormStatus } from "react-dom";
 import { LoadingOutlined } from "@ant-design/icons";

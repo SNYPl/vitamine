@@ -59,7 +59,7 @@ const Review = ({
       {user?.user ? (
         <ReviwForm id={id} user={user} />
       ) : (
-        <p>
+        <p style={{ marginTop: "10px" }}>
           განხვილვის დასატოვებლად, გაიარეთ{" "}
           <Link href="/login" style={{ color: "#f79823" }}>
             ავტორიზაცია

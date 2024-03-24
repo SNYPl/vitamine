@@ -12,15 +12,6 @@ export const GET = async (req, res) => {
 
     if (!user) {
       return NextResponse.redirect(new URL(`/verify?verify=${false}`, req.url));
-      // return new NextResponse(
-      //   JSON.stringify({ error: "Invalid verification token" }),
-      //   {
-      //     status: 400,
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
     }
 
     user.isVerified = true;

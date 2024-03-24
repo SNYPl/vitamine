@@ -6,7 +6,7 @@ const Ad = () => {
   return (
     <section className={`${styles.ad} adImage`}>
       <div className={styles.adBackground}>
-        <Link href="/product?id=65cbe67306970833b5bfc330" target="_blank">
+        {/* <Link href="/product?id=65cbe67306970833b5bfc330" target="_blank">
           <Image
             src="/images/offer.jpg"
             width={1040}
@@ -14,7 +14,7 @@ const Ad = () => {
             alt="img"
             priority
           />
-        </Link>
+        </Link> */}
       </div>
     </section>
   );

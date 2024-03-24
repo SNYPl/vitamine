@@ -82,3 +82,10 @@
     opacity: 0.8;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .nameInputs {
+    flex-direction: column;
+    row-gap: 15px;
+  }
+}

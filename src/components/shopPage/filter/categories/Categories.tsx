@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import style from "./style.module.scss";
 import { categories } from "@/data/categories.js";
 import Link from "next/link";
@@ -10,7 +10,7 @@ interface Category {
   value: string;
 }
 
-const Categories: React.FC = ({}) => {
+const Categories = () => {
   const categoriesData: Category[] = categories;
   const param = useSearchParams();
   const category = param.get("category");
