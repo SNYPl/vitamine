@@ -9,6 +9,7 @@ const PaginationComponent: React.FC = ({}) => {
   const searchParam = useSearchParams();
   const categoryValue = searchParam.get("category");
   const pageValue = searchParam.get("page");
+  const searchValue = searchParam.get("search");
   const firstPage = 1;
   const router = useRouter();
   const path = usePathname();
@@ -32,17 +33,27 @@ const PaginationComponent: React.FC = ({}) => {
   }, [pageValue]);
 
   const onPaginationChange = (page: number) => {
-    if (categoryValue && page !== 1) {
-      router.push(`${path}?category=${categoryValue}&page=${page}`);
-    } else if (categoryValue && page === 1) {
-      router.push(`${path}?category=${categoryValue}`);
+    let queryParams: { [key: string]: string } = {};
+
+    // Preserve existing search and category parameters if they exist
+    if (searchValue) {
+      queryParams["search"] = searchValue;
     }
 
-    if (!categoryValue && page !== 1) {
-      router.push(`${path}?page=${page}`);
-    } else if (!categoryValue && page === 1) {
-      router.push(`${path}`);
+    if (categoryValue) {
+      queryParams["category"] = categoryValue;
     }
+
+    // Add the page parameter
+    if (page !== 1) {
+      queryParams["page"] = page.toString();
+    }
+
+    // Construct the new URL with the updated parameters
+    const queryString = new URLSearchParams(queryParams).toString();
+
+    // Update the URL using router.push
+    router.push(`${path}${queryString ? "?" + queryString : ""}`);
   };
 
   return (
