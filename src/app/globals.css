@@ -38,8 +38,8 @@ a {
 }
 
 .ant-float-btn {
-  bottom: 100px !important;
-  margin-right: 9px !important;
+  bottom: 80px !important;
+  /* margin-right: 9px !important; */
 }
 
 @font-face {
