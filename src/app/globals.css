@@ -37,6 +37,11 @@ a {
   height: 100% !important;
 }
 
+.ant-float-btn {
+  bottom: 100px !important;
+  margin-right: 9px !important;
+}
+
 @font-face {
   font-family: ceraReg;
   src: url("/fonts/Cera Pro Regular.otf");
