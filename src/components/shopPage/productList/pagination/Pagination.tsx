@@ -80,6 +80,7 @@ const PaginationComponent: React.FC = ({}) => {
         pageSize={showProductNumber}
         total={productListLength}
         hideOnSinglePage
+        showSizeChanger={false}
       />
     </ConfigProvider>
   );
