@@ -19,18 +19,23 @@ const Categories = () => {
 
   const [activeProduct, setActiveProduct] = useState<string>(activeCategory);
 
+  const handleCategoryClick = (categoryValue: string) => {
+    setActiveProduct(categoryValue);
+  };
+
   return (
     <article className={`${style.categories}`}>
-      <h2 className={`${style.filterTitle}`}>კატეგორიები</h2>
+      {/* <h2 className=ა{`${style.filterTitle}`}>კატეგორიები</h2> */}
 
       <ul>
         <li>
           <Link
             href={`/`}
-            onClick={() => setActiveProduct("all")}
+            onClick={() => handleCategoryClick("all")}
             className={
               activeProduct === "all" && !searchParam ? style.active : ""
             }
+            scroll={false}
           >
             ყველა
           </Link>
@@ -39,10 +44,11 @@ const Categories = () => {
           <li key={id}>
             <Link
               href={`/?category=${el.value}`}
-              onClick={() => setActiveProduct(el.value)}
+              onClick={() => handleCategoryClick(el.value)}
               className={
                 activeProduct === el.value && !searchParam ? style.active : ""
               }
+              scroll={false}
             >
               {el.name}
             </Link>

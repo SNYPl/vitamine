@@ -1,0 +1,128 @@
+.policyContainer, .termsContainer {
+  padding: 4rem 0;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  
+  @media (max-width: 768px) {
+    padding: 2rem 0;
+  }
+}
+
+.policyContent, .termsContent {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  padding: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, #3498db, #8e44ad);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-radius: 8px;
+    
+    &::before {
+      width: 4px;
+    }
+  }
+}
+
+.policyTitle, .termsTitle {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.lastUpdated {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.policySection, .termsSection {
+  margin-bottom: 2.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 0.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 3px;
+      background-color: #3498db;
+    }
+  }
+  
+  p {
+    color: #34495e;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: #34495e;
+    
+    li {
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+      
+      ul {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+}
+
+.contactInfo {
+  background-color: #f5f7fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  
+  p {
+    margin-bottom: 0.5rem;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+} 

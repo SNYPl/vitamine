@@ -30,12 +30,12 @@ const Sort: React.FC = ({}) => {
     <section className={style.sort}>
       <div className={style.sortHeader}>
         <SortAscendingOutlined className={style.sortIcon} />
-        <h3>Sort & Filter</h3>
+        <h3>სორტირება</h3>
       </div>
       
       <div className={style.sortSelects}>
         <div className={style.selectWrapper}>
-          <label>Sort by:</label>
+          <label>დაასორტირე:</label>
           <Select
             defaultValue="default"
             className={style.sortSelect}
@@ -43,24 +43,24 @@ const Sort: React.FC = ({}) => {
             dropdownClassName={style.dropdown}
           >
             <Option value="default">Default</Option>
-            <Option value="lowHight">Price: Low to High</Option>
-            <Option value="highLow">Price: High to Low</Option>
-            <Option value="review">By Reviews</Option>
-            <Option value="rating">By Rating</Option>
+            <Option value="lowHight">ფასი: ზრდადი</Option>
+            <Option value="highLow">ფასი: კლებადი</Option>
+            <Option value="review">მიმოხილვა</Option>
+            <Option value="rating">რეიტინგი</Option>
           </Select>
         </div>
         
         <div className={style.selectWrapper}>
-          <label>Show:</label>
+          <label>მანახე:</label>
           <Select
             defaultValue="12"
             className={style.sortSelect}
             onChange={onShowSelectChange}
             dropdownClassName={style.dropdown}
           >
-            <Option value="12">12 Items</Option>
-            <Option value="21">21 Items</Option>
-            <Option value="30">30 Items</Option>
+            <Option value="12">12 ცალი</Option>
+            <Option value="21">21 ცალი</Option>
+            <Option value="30">30 ცალი</Option>
           </Select>
         </div>
       </div>

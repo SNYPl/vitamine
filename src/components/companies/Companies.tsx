@@ -15,8 +15,8 @@ const Companies: React.FC = ({}) => {
     <section className={style.companiesSection}>
       <div className={style.companiesContainer}>
         <div className={style.companiesHeader}>
-          <h2>Our Trusted Partners</h2>
-          <p>We collaborate with leading companies in the wellness industry to deliver premium products</p>
+          <h2>ჩვენი სანდო პარტნიორები</h2>
+          <p>ჩვენ ვთანამშრომლობთ ჯანმრთელობის ინდუსტრიის წამყვან კომპანიებთან პრემიუმ პროდუქტების მისაწოდებლად</p>
         </div>
         
         <div className={style.companiesGrid}>

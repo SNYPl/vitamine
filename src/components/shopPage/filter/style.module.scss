@@ -1,203 +1,105 @@
 .filter {
-  flex: 0 0 22%;
-  max-width: 22%;
   background: white;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px;
   position: sticky;
   top: 20px;
-  height: fit-content;
-  transition: all 0.3s ease;
-  
-  h2 {
-    color: #2d3748;
-    font-size: 1.3rem;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 250px;
+
+  @media (max-width: 768px) {
+    display: none; // Hide on mobile
+  }
+}
+
+.filterContent {
+  width: 100%;
+}
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
+  h3 {
+    font-size: 18px;
     font-weight: 600;
-    margin-bottom: 20px;
-    position: relative;
-    padding-bottom: 12px;
-    
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 50px;
-      height: 3px;
-      background-color: #88c74a;
-    }
-  }
-  
-  .filterSection {
-    margin-bottom: 30px;
-  }
-  
-  .filterTitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    cursor: pointer;
-    
-    h3 {
-      color: #4a5568;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin: 0;
-    }
-    
-    .toggleIcon {
-      color: #88c74a;
-      transition: transform 0.3s ease;
-      
-      &.open {
-        transform: rotate(180deg);
-      }
-    }
-  }
-  
-  .categoryList {
-    list-style: none;
-    padding: 0;
     margin: 0;
-    
-    li {
-      margin-bottom: 12px;
-      
-      a, button {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #718096;
-        text-decoration: none;
-        transition: all 0.2s ease;
-        padding: 8px 12px;
-        border-radius: 8px;
-        border: none;
-        background: transparent;
-        width: 100%;
-        text-align: left;
-        cursor: pointer;
-        font-size: 0.95rem;
-        
-        &:hover, &.active {
-          background-color: rgba(136, 199, 74, 0.1);
-          color: #88c74a;
-          transform: translateX(5px);
-        }
-        
-        span.count {
-          background: #f1f5f9;
-          color: #64748b;
-          padding: 2px 8px;
-          border-radius: 20px;
-          font-size: 0.8rem;
-          transition: all 0.2s ease;
-        }
-        
-        &:hover span.count, &.active span.count {
-          background: #88c74a;
-          color: white;
-        }
-      }
-    }
-  }
-  
-  .slider {
-    padding: 15px 10px 5px;
-  }
-  
-  .priceInputs {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    
-    .priceInput {
-      flex: 1;
-      position: relative;
-      
-      input {
-        width: 100%;
-        padding: 10px 12px;
-        padding-left: 25px;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        
-        &:focus {
-          outline: none;
-          border-color: #88c74a;
-          box-shadow: 0 0 0 3px rgba(136, 199, 74, 0.1);
-        }
-      }
-      
-      &:before {
-        content: '$';
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #a0aec0;
-        font-size: 0.9rem;
-      }
-    }
-  }
-  
-  .filterButton {
-    background-color: #88c74a;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 20px;
-    width: 100%;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background-color: #79b53a;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(136, 199, 74, 0.2);
-    }
-    
-    &:active {
-      transform: translateY(0);
-    }
-  }
-  
-  .resetFilter {
-    background: transparent;
-    border: none;
-    color: #88c74a;
-    padding: 5px;
-    margin-top: 10px;
-    width: 100%;
-    text-align: center;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
-@media (max-width: 992px) {
-  .filter {
-    position: relative;
-    top: 0;
+.divider {
+  margin: 12px 0;
+}
+
+.filterCollapse {
+  width: 100%;
+  overflow: hidden;
+}
+
+.filterPanel {
+  margin-bottom: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.filterSectionTitle {
+  font-weight: 500;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+}
+
+.clearButton {
+  color: #ff4d4f;
+  
+  &:hover {
+    color: #ff7875;
+    background: rgba(255, 77, 79, 0.1);
   }
 }
 
-@media (max-width: 768px) {
-  .filter {
-    flex: 0 0 100%;
-    max-width: 100%;
-    margin-bottom: 30px;
+.mobileFilterButton {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  
+  @media (max-width: 768px) {
+    display: block;
   }
+}
+
+.mobileFilterDrawer {
+  // Removed global selector
+}
+
+// Add this class to the drawer body in component
+.drawerBody {
+  padding: 16px;
+}
+
+.drawerFooter {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  
+  button {
+    width: 48%;
+  }
+}
+
+// Removed global styles for slider and checkbox
+// Add these classes to the respective components instead
+.sliderTrack {
+  background-color: #1890ff;
+}
+
+.checkbox {
+  background-color: #1890ff;
+  border-color: #1890ff;
 }

@@ -1,100 +1,183 @@
 .details {
-  padding: 0 15px;
-  flex: 0 0 47%;
-  max-width: 47%;
-}
-
-.category {
-  color: var(--green-color);
-  font-size: 0.75em;
-  font-family: ceraBlack;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 1.6px;
-  margin-bottom: 10px;
-}
-
-.title {
-  color: #252525;
-  font-size: 1.5em;
-  font-family: ceraBold;
-  line-height: 1;
-  margin-bottom: 0.4166666667em;
-}
-
-.info {
-  color: #636363;
-  font-size: 1rem;
-  font-family: ceraReg;
-  line-height: 1.625em;
-  margin-bottom: 0.625em;
-}
-
-.deliveryInfo {
-  display: block;
-  background-color: #eaeff4;
-  text-align: center;
-  padding: 1.0714285714em;
-  margin-bottom: 2.1428571429em;
-  color: #252525;
-  font-size: 0.875em;
-  font-family: ceraMed;
-  line-height: 1;
-}
-
-.ratingNumber {
-  justify-content: center;
+  width: 100%;
+  max-width: 550px;
+  padding: 1.5rem;
   display: flex;
-  align-items: flex-start;
-  font-size: 11px;
-  margin-left: 2px;
-  color: rgb(25, 118, 210);
+  flex-direction: column;
+  gap: 1.25rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  
+  .header {
+    .categoryWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      
+      .categoryTag {
+        background-color: #f0f8f4;
+        color: #2e7d32;
+        border: none;
+        font-size: 0.75rem;
+        border-radius: 4px;
+      }
+    }
+    
+    .title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #333;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.2;
+    }
+    
+    .info {
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.5;
+    }
+  }
+  
+  .ratingContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    
+    .stars {
+      font-size: 1rem;
+      color: #f9a825;
+    }
+    
+    .ratingNumber {
+      color: #555;
+      font-weight: 500;
+    }
+    
+    .soldCount {
+      margin-left: auto;
+      font-size: 0.875rem;
+      color: #666;
+      background-color: #f5f5f5;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+  }
+  
+  .priceSection {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    
+    .discountContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .originalPrice {
+        font-size: 1rem;
+        color: #999;
+        text-decoration: line-through;
+      }
+      
+      .discountBadge {
+        :global(.ant-badge-count) {
+          background-color: #d32f2f;
+          border-radius: 4px;
+          padding: 0 0.25rem;
+        }
+      }
+    }
+    
+    .currentPrice {
+      h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2e7d32;
+        margin: 0;
+      }
+    }
+  }
+  
+  .infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    
+    .packageInfo, .availabilityInfo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      .infoLabel {
+        font-weight: 600;
+        color: #555;
+        min-width: 100px;
+      }
+      
+      .packageQuantity {
+        color: #333;
+      }
+      
+      .inStock {
+        color: #2e7d32;
+        font-weight: 500;
+      }
+      
+      .outOfStock {
+        color: #d32f2f;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .deliveryInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: #f0f8f4;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    
+    .deliveryIcon {
+      font-size: 1.25rem;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #2e7d32;
+      font-weight: 500;
+    }
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 0.25rem 0;
+  }
 }
 
-.priceInfo {
-  margin-bottom: 1.875em;
-
-  del {
-    color: #b2b2b2;
-    font-size: 0.875em;
-    font-family: ceraMed;
-    line-height: 1;
-  }
-
-  h3 {
-    color: var(--green-color);
-    font-size: 1.5em;
-    font-family: ceraMed;
-    line-height: 1;
-    margin-right: 16px;
-  }
-}
-
-.Star {
-  display: flex;
-
-  ul {
-    transition: none;
-  }
-}
-
-.packageQuantity {
-  color: #636363;
-  font-size: 1rem;
-  font-family: geoMr;
-  line-height: 1.625em;
-  margin-bottom: 0.625em;
-
-  span {
-    color: #252525;
-    font-weight: bold;
-  }
-}
-
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .details {
-    padding: 0;
-    flex: 0 0 100%;
     max-width: 100%;
+    padding: 1rem;
+    
+    .header {
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+    
+    .priceSection {
+      .currentPrice {
+        h2 {
+          font-size: 1.5rem;
+        }
+      }
+    }
   }
 }

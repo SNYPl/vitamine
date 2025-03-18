@@ -1,68 +1,44 @@
 .productDescription {
-  margin-top: 35px;
-  border: 1px solid #ebebeb;
-  margin-left: 30px;
-  margin-right: 15px;
-}
-
-.menuList {
-  display: grid;
-  column-gap: 2px;
-  margin-bottom: 16px;
-  grid-template-columns: 1fr 1fr 1fr;
-
-  li {
+  width: 100%;
+  margin-top: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  
+  .tabs {
     width: 100%;
-  }
-
-  button {
-    width: 100%;
-    margin-right: 0;
-    justify-content: center;
-    border: 0;
-    background-color: #eaeff4;
-    padding: 0.9em 0;
-    border-radius: 2px 2px 0 0;
-    text-transform: uppercase;
-    font-family: ceraBold;
-    transition: all 0.3s;
-    font-size: 16px;
-    cursor: pointer;
-    color: rgba(0, 0, 0, 0.85);
-    // margin-left: 2px;
-
-    &:first-child {
-      margin-left: 0;
+    
+    :global(.ant-tabs-nav) {
+      margin-bottom: 1.5rem;
     }
-
-    &:hover {
-      color: var(--green-color);
+    
+    :global(.ant-tabs-tab) {
+      font-size: 1rem;
+      padding: 0.5rem 0;
+      
+      &:global(.ant-tabs-tab-active) :global(.ant-tabs-tab-btn) {
+        color: #2e7d32;
+        font-weight: 600;
+      }
     }
-  }
-
-  .active {
-    background-color: var(--green-color);
-    color: #fff;
-
-    &:hover {
-      color: #fff;
+    
+    :global(.ant-tabs-ink-bar) {
+      background-color: #2e7d32;
+      height: 3px;
     }
   }
 }
 
-.productInfo {
-  padding: 1.875em;
-}
-
-@media only screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .productDescription {
-    padding: 0;
-    flex: 0 0 100%;
-    max-width: 100%;
-    margin: 26px 0 0 0;
-  }
-
-  .productInfo {
-    padding: 1.875em 1.2em;
+    padding: 1rem;
+    
+    .tabs {
+      :global(.ant-tabs-tab) {
+        font-size: 0.9rem;
+        padding: 0.25rem 0;
+      }
+    }
   }
 }

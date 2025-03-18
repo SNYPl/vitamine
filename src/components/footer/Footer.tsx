@@ -26,7 +26,7 @@ const Footer: React.FC = ({}) => {
                 <h3>VitVit</h3>
               </div>
               <p className={styles.footerDescription}>
-                Premium quality vitamins and supplements to support your healthy lifestyle.
+                პრემიუმ ხარისხის ვიტამინები და საკვები დანამატები თქვენი ჯანსაღი ცხოვრების წესის მხარდასაჭერად.
               </p>
               <div className={styles.socialIcons}>
                 <a href="#" aria-label="Facebook">
@@ -35,36 +35,33 @@ const Footer: React.FC = ({}) => {
                 <a href="#" aria-label="Instagram">
                   <i className="fab fa-instagram"></i>
                 </a>
-                <a href="#" aria-label="Twitter">
-                  <i className="fab fa-twitter"></i>
-                </a>
+               
               </div>
             </div>
             
             <div className={styles.footerColumn}>
-              <h4>Quick Links</h4>
+              <h4>სწრაფი გადასვლა</h4>
               <ul>
-                <li><Link href="/">Home</Link></li>
-                <li><Link href="/shop">Shop</Link></li>
-                <li><Link href="/about">About Us</Link></li>
-                <li><Link href="/contact">Contact</Link></li>
+                <li><Link href="/">მთავარი</Link></li>
+                <li><Link href="/shop">შემოთავაზებები</Link></li>
+                <li><Link href="/about">ჩვენს შესახებ</Link></li>
+                <li><Link href="/contact">კონტაქტი</Link></li>
               </ul>
             </div>
             
             <div className={styles.footerColumn}>
-              <h4>Account</h4>
+              <h4>ექაუნთი</h4>
               <ul>
-                <li><Link href="/login">Login</Link></li>
-                <li><Link href="/signup">Register</Link></li>
-                <li><Link href="/cart">My Cart</Link></li>
-                <li><Link href="/wishlist">Wishlist</Link></li>
+                <li><Link href="/login">შესვლა</Link></li>
+                <li><Link href="/signup">რეგისტრაცია</Link></li>
+                <li><Link href="/cart">კალათა</Link></li>
+                <li><Link href="/wishlist">სურვილები</Link></li>
               </ul>
             </div>
             
             <div className={styles.footerColumn}>
-              <h4>Contact Us</h4>
+              <h4>კონტაქტი</h4>
               <address className={styles.footerAddress}>
-                <p><i className="fas fa-map-marker-alt"></i> 123 Health Street, Wellness City</p>
                 <p><i className="fas fa-phone-alt"></i> +1 234 567 8900</p>
                 <p><i className="fas fa-envelope"></i> vitamine.vitvit@gmail.com</p>
               </address>
