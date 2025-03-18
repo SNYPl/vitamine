@@ -1,21 +1,20 @@
-import styles from "./page.module.css";
-import Companies from "@/components/companies/Companies";
-import BurgerMenu from "@/components/productMenu/burgerMenu/BurgerMenu";
-import Search from "@/components/productMenu/productSearch/search/Search";
-import ForgotPasswordComponent from "@/components/forgotPassword/ForgotPassword";
-import ParamInfo from "@/components/shopPage/paramInfo/ParamInfo";
+'use client';
 
-export default function ForgotPassword() {
+import styles from './page.module.css';
+import ForgotPasswordComponent from "@/components/forgotPassword/ForgotPassword";
+
+export default function ForgotPasswordPage() {
   return (
-    <main className={styles.main}>
-      <div className={"container"}>
-        <section className={styles.searchMenu}>
-          <BurgerMenu activeMenu={false} />
-          <Search />
-        </section>
-        <ParamInfo />
+    <main className={styles.forgotPasswordContainer}>
+      <div className={styles.forgotPasswordBackground}>
+        <div className={styles.shape}></div>
+        <div className={styles.shape}></div>
+      </div>
+      <div className={styles.forgotPasswordWrapper}>
+        <div className={styles.logoContainer}>
+          <img src="/images/vitvitLogo.png" alt="Logo" className={styles.logo} />
+        </div>
         <ForgotPasswordComponent />
-        <Companies />
       </div>
     </main>
   );

@@ -46,13 +46,12 @@ const ShopList = ({
             category: categoryList,
             page: pageCount,
             search: searchValue,
-            min: min,
-            max: max,
-            itemsPerPage: showProductNumber,
+            min,
+            max,
+            limit: showProductNumber,
             sort: sortingValue,
           },
         });
-
         return response.data;
       } catch (error) {
         console.error("Error fetching featured products", error);
@@ -78,17 +77,21 @@ const ShopList = ({
 
   if (isLoading)
     return (
-      <article className={`${style.skeletion} `}>
-        <Skeleton active />
-      </article>
+      <div className={style.skeletonGrid}>
+        {[...Array(6)].map((_, i) => (
+          <div className={style.skeletonItem} key={i}>
+            <Skeleton active />
+          </div>
+        ))}
+      </div>
     );
 
-  if (!allVitamines.length) {
-    return <NoProduct title={"პროდუქტი ვერ მოიძებნა"} />;
+  if (!allVitamines || !allVitamines.length) {
+    return <NoProduct title={"No products found matching your criteria"} />;
   }
 
   return (
-    <section className={`${style.shopList}`}>
+    <section className={style.productGrid}>
       {allVitamines?.map((item: any) => (
         <Product {...item} key={item._id} userWishlist={userWishlist} />
       ))}

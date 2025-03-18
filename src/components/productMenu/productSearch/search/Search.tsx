@@ -1,48 +1,36 @@
 "use client";
-import styles from "./style.module.scss";
-import { SubmitHandler, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import style from "./style.module.scss";
+import { SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import { LoadingOutlined } from "@ant-design/icons";
-
-type Inputs = {
-  search: string;
-};
 
 const Search = () => {
+  const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<Inputs>();
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    router.push(`/?search=${data.search}`);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchValue.trim()) {
+      router.push(`/?search=${encodeURIComponent(searchValue.trim())}`);
+    }
   };
 
   return (
-    <section className={styles.search}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`${styles.contactForm}`}
-      >
+    <div className={style.searchContainer}>
+      <form onSubmit={handleSubmit} className={style.searchForm}>
         <input
           type="text"
-          placeholder="მოეძებნე პროდუქცია"
-          {...register("search", {
-            required: {
-              value: true,
-              message: "გრაფა ცარიელია",
-            },
-          })}
+          placeholder="Search for products..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className={style.searchInput}
         />
-
-        <button type="submit">
-          {isSubmitting ? <LoadingOutlined spin /> : "ძებნა"}
+        <button type="submit" className={style.searchButton}>
+          <SearchOutlined />
+          <span>Search</span>
         </button>
       </form>
-    </section>
+    </div>
   );
 };
 

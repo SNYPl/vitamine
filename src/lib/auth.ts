@@ -1,89 +1,101 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/models/user";
+import bcrypt from "bcrypt";
 import connectDB from "@/lib/db";
-const bcrypt = require("bcrypt");
+import User from "@/models/user";
 
 export const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 60,
-  },
-  pages: {
-    signIn: "/login",
-  },
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
-
       credentials: {
-        username: {},
-        password: {},
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
       },
-
       async authorize(credentials, req) {
-        await connectDB();
-
-        const user = await User.findOne({
-          $or: [
-            { username: credentials?.username },
-            { email: credentials?.username },
-          ],
-        });
-
-        if (!user) {
-          throw new Error("ელ.ფოსტა ან სახელი არასწორია");
+        console.log("Credentials received:", credentials); // Debug log
+        
+        if (!credentials || !credentials.email || !credentials.password) {
+          throw new Error("Email and password are required");
         }
 
-        const isSame = await bcrypt.compare(
-          credentials?.password,
-          user.password
-        );
+        try {
+          await connectDB();
+          
+          console.log("Searching for user with email:", credentials.email); // Debug log
+          const user = await User.findOne({ 
+            email: credentials.email.toLowerCase().trim() 
+          });
+          
+          if (!user) {
+            console.log("User not found"); // Debug log
+            throw new Error("Invalid email or password");
+          }
 
-        if (!isSame) {
-          throw new Error("პაროლი არასწორია");
-        }
-
-        if (!user.isVerified) {
-          throw new Error(
-            "ანგარიში არ არის ვერიფიცებული, შეამოწმეთ ელ.ფოსტა ვერიფიკაციისთვის"
+          // Check if user is verified
+          if (!user.isVerified) {
+            console.log("User not verified"); // Debug log
+            throw new Error("Please verify your email before logging in");
+          }
+          
+          console.log("Checking password"); // Debug log
+          const passwordMatch = await bcrypt.compare(
+            credentials.password,
+            user.password
           );
-        }
-
-        if (user) {
+          
+          if (!passwordMatch) {
+            console.log("Password doesn't match"); // Debug log
+            throw new Error("Invalid email or password");
+          }
+          
+          console.log("Login successful"); // Debug log
           return {
-            id: user._id,
-            name: user.username,
+            id: user._id.toString(),
             email: user.email,
+            name: user.username || user.email.split('@')[0],
+            image: user.image || "",
+            role: user.role || "user",
           };
+        } catch (error) {
+          console.error("Auth error:", error);
+          throw error;
         }
-        // Return null if user data could not be retrieved
-        return null;
-      },
-    }),
+      }
+    })
   ],
-
+  pages: {
+    signIn: "/login",
+    error: "/login",
+  },
   callbacks: {
-    async session({ session, token, user, trigger }) {
-      session.user = {
-        name: token.name,
-        email: token.email,
-      };
-
-      return session;
-    },
-    async jwt({ token, user, trigger, session }) {
-      if (trigger === "update") {
-        token = { ...token, ...session };
-        return token;
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.picture = user.image;
+        token.role = user.role;
       }
       return token;
     },
-
-    async redirect({ url, baseUrl }) {
-      // Redirect to a specific URL after successful login
-      return baseUrl + "/";
-    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        // Use type assertion to satisfy TypeScript
+        const user = session.user as any;
+        user.id = token.id as string;
+        user.name = token.name as string;
+        user.email = token.email as string;
+        user.image = token.picture as string;
+        user.role = token.role as string;
+      }
+      return session;
+    }
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 60, // 30 minutes by default
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === 'development',
 };

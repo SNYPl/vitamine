@@ -1,7 +1,24 @@
-"use server";
-import { cookies } from "next/headers";
+"use client";
 
-export const getRememberUser = async () => {
-  const cookieStore = cookies();
-  return !!cookieStore.get("remember")?.value;
-};
+export function getRememberUser(): boolean {
+  if (typeof document === 'undefined') {
+    return false; // Server-side
+  }
+  
+  // Get all cookies
+  const cookies = document.cookie.split(';');
+  
+  // Find the rememberUser cookie
+  const rememberUserCookie = cookies.find(
+    cookie => cookie.trim().startsWith('rememberUser=')
+  );
+  
+  if (!rememberUserCookie) {
+    return false;
+  }
+  
+  // Get the value
+  const value = rememberUserCookie.split('=')[1];
+  
+  return value === 'true';
+}

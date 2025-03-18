@@ -60,3 +60,134 @@
     margin-bottom: 0;
   }
 }
+
+.adBanner {
+  position: relative;
+  background: linear-gradient(135deg, #fff 0%, #f8fbf4 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  margin: 30px 0;
+  border: 1px solid rgba(136, 199, 74, 0.2);
+}
+
+.adContent {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.adText {
+  flex: 1;
+  padding-right: 30px;
+  
+  h2 {
+    color: #88c74a;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  h3 {
+    color: #2d3748;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+  }
+  
+  p {
+    color: #4a5568;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    max-width: 500px;
+  }
+}
+
+.adButton {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #88c74a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(136, 199, 74, 0.25);
+  
+  &:hover {
+    background-color: #79b53a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(136, 199, 74, 0.35);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.adImageContainer {
+  position: relative;
+  flex: 0 0 350px;
+  height: 250px;
+}
+
+.adImage {
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+.adBadge {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 8px 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+}
+
+@media (max-width: 768px) {
+  .adContent {
+    flex-direction: column;
+    padding: 30px;
+  }
+  
+  .adText {
+    padding-right: 0;
+    margin-bottom: 30px;
+    text-align: center;
+    
+    h3 {
+      font-size: 1.8rem;
+    }
+    
+    p {
+      margin: 0 auto 25px;
+    }
+  }
+  
+  .adImageContainer {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+  }
+}
