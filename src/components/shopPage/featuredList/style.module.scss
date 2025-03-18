@@ -1,14 +1,112 @@
 .featured {
-  margin: 90px 0;
-
-  h2 {
-    color: #252525;
-    font-size: 1.4em;
-    font-family: ceraBold;
-    line-height: 1;
-    text-align: left;
-    font-weight: bold;
-    letter-spacing: 1px;
+  width: 100%;
+  padding: 2.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  overflow: hidden;
+  
+  .title {
+    text-align: center;
+    margin-bottom: 1rem;
+    
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .titleUnderline {
+      height: 4px;
+      width: 80px;
+      background: linear-gradient(90deg, #88c74a, #6ea832);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+  }
+  
+  .skeletonContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem;
+    
+    .skeleton {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  .featuredProductsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem;
+    
+    .product {
+      background: white;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+  
+  .viewAllContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    
+    .viewAllButton {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(90deg, #88c74a, #6ea832);
+      color: white;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(136, 199, 74, 0.2);
+      
+      &:hover {
+        background: linear-gradient(90deg, #6ea832, #88c74a);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(136, 199, 74, 0.3);
+      }
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+    
+    .title h2 {
+      font-size: 1.5rem;
+    }
+    
+    .featuredProductsList {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .featuredProductsList {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
   }
 }
 

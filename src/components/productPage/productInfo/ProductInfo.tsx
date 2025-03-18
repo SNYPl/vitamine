@@ -7,7 +7,7 @@ import axios from "axios";
 import ProductDetails from "./productDetails/ProductDetails";
 import ProductDescription from "./productDescription/ProductDescription";
 import ImageGallery from "./produtImagegallery/ProductImageGallery";
-import { Skeleton } from "antd";
+import { Skeleton, Alert, Card } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductId } from "@/store/slices/productButtonsSlice";
 
@@ -32,10 +32,9 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className, user }) => {
       setProductIdState(urlId);
     } else {
       const id = productGlobalId;
-
       setProductIdState(() => id);
     }
-  }, [productGlobalId, urlId]);
+  }, [productGlobalId, urlId, dispatch]);
 
   const { data, isLoading, isError, isFetched } = useQuery(
     ["getSupplementByCategory", productIdState],
@@ -54,14 +53,22 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className, user }) => {
 
   if (isLoading) {
     return (
-      <article className={`${style.skeletion} container`}>
-        <Skeleton active />
-      </article>
+      <Card className={`${style.skeletonCard}`}>
+        <Skeleton active avatar paragraph={{ rows: 6 }} />
+      </Card>
     );
   }
 
   if (isError || !data) {
-    return <div>შეცდომაა</div>;
+    return (
+      <Alert
+        message="შეცდომა"
+        description="პროდუქტის მონაცემების ჩატვირთვა ვერ მოხერხდა. გთხოვთ სცადოთ მოგვიანებით."
+        type="error"
+        showIcon
+        className={style.errorAlert}
+      />
+    );
   }
 
   const dataObj = Object.assign({}, data[0]);

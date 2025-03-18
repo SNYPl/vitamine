@@ -24,17 +24,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
     setOpen(false);
   };
 
-  const menuItems = [
-    { name: "Home", path: "/" },
-    { name: "Shop", path: "/shop" },
-    { name: "Categories", path: "/categories" },
-    { name: "Best Sellers", path: "/best-sellers" },
-    { name: "New Arrivals", path: "/new-arrivals" },
-    { name: "Special Offers", path: "/special-offers" },
-    { name: "Blog", path: "/blog" },
-    { name: "About Us", path: "/about" },
-    { name: "Contact", path: "/contact" },
-  ];
+  
 
   return (
     <div className={style.burgerMenuContainer}>
@@ -44,11 +34,11 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
         onClick={showDrawer}
         icon={<MenuOutlined />}
       >
-        <span>Categories</span>
+        <span>კატეგორია</span>
       </Button>
       
       <Drawer
-        title="Menu"
+        title="მენიუ"
         placement="left"
         onClose={onClose}
         open={open}
@@ -56,11 +46,11 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
       >
         <div className={style.drawerContent}>
           <div className={style.menuList}>
-            {menuItems.map((item, index) => (
+            {categories.map((item, index) => (
               <Link 
                 key={index} 
-                href={item.path}
-                className={`${style.menuItem} ${pathname === item.path ? style.active : ''}`}
+                href={`./?category=${item.value}`}
+                className={`${style.menuItem} ${pathname === item.value ? style.active : ''}`}
                 onClick={onClose}
               >
                 {item.name}
@@ -69,10 +59,10 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
           </div>
           
           <div className={style.contactInfo}>
-            <h3>Contact Us</h3>
-            <p>Monday - Friday, 9am - 5pm</p>
+            <h3>დაგვიკავშირდით</h3>
+            <p>ორშაბათი - პარასკევი, 9am - 8pm</p>
             <a href="tel:+123456789" className={style.phoneNumber}>+1 (234) 567-89</a>
-            <a href="mailto:info@yourdomain.com" className={style.email}>info@yourdomain.com</a>
+            <a href="mailto:vitamine.vitvit@gmail.com" className={style.email}>vitamine.vitvit@gmail.com</a>
           </div>
         </div>
       </Drawer>

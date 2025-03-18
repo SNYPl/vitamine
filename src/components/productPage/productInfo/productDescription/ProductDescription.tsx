@@ -4,7 +4,8 @@ import style from "./style.module.scss";
 import Description from "./description/Description";
 import Specifications from "./specifications/Specifications";
 import Review from "./review/Review";
-import Button from "@/components/button/Button";
+import { Tabs } from "antd";
+import type { TabsProps } from "antd";
 
 interface SupplementFact {
   _id: string;
@@ -37,49 +38,42 @@ const ProductDescription: React.FC<descriptionProps> = ({
   id,
   user,
 }) => {
-  const menuItems = [
-    { geo: "პროდუქტის აღწერა", eng: "description" },
-    { geo: "პროდუქტის მონაცემები", eng: "facts" },
-    { geo: "განხილვა", eng: "review" },
+  const items: TabsProps["items"] = [
+    {
+      key: "description",
+      label: "პროდუქტის აღწერა",
+      children: (
+        <Description
+          name={name}
+          about={about}
+          description={description}
+          otherIngredients={otherIngredients}
+          use={use}
+          warning={warning}
+        />
+      ),
+    },
+    {
+      key: "facts",
+      label: "პროდუქტის მონაცემები",
+      children: <Specifications supplementFacts={supplementFacts} />,
+    },
+    {
+      key: "review",
+      label: `განხილვა (${review?.length || 0})`,
+      children: <Review id={id} user={user} review={review} />,
+    },
   ];
 
-  const [menuHandler, setMenuHandler] = useState<string | boolean>(
-    "description"
-  );
   return (
     <section className={`${style.productDescription}`}>
-      <ul className={`${style.menuList}`}>
-        {menuItems.map((el: any, id: number) => (
-          <li key={id}>
-            <Button
-              className={`${style.menuButton} ${
-                menuHandler === el.eng ? style.active : ""
-              }`}
-              onSubmitButton={() => setMenuHandler(el.eng)}
-            >
-              {el.geo}
-            </Button>
-          </li>
-        ))}
-      </ul>
-      <section className={`${style.productInfo}`}>
-        {menuHandler === "description" && (
-          <Description
-            name={name}
-            about={about}
-            description={description}
-            otherIngredients={otherIngredients}
-            use={use}
-            warning={warning}
-          />
-        )}
-        {menuHandler === "facts" && (
-          <Specifications supplementFacts={supplementFacts} />
-        )}
-        {menuHandler === "review" && (
-          <Review id={id} user={user} review={review} />
-        )}
-      </section>
+      <Tabs 
+        defaultActiveKey="description" 
+        items={items} 
+        className={style.tabs}
+        size="large"
+        tabBarGutter={30}
+      />
     </section>
   );
 };

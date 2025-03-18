@@ -4,6 +4,7 @@ import style from "./style.module.scss";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import type { GetProp, UploadProps } from "antd";
+import Image from "next/image";
 
 interface imgProps {
   imageUrl: string | null | undefined;
@@ -66,7 +67,7 @@ const ProfileImage: React.FC<imgProps> = ({ imageUrl, setImageUrl }) => {
         onChange={handleChange}
       >
         {imageUrl ? (
-          <img src={imageUrl} alt="avatar" className={style.img} />
+          <Image src={imageUrl} alt="avatar" className={style.img}  fill/>
         ) : (
           uploadButton
         )}

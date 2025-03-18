@@ -53,3 +53,70 @@
     display: none;
   }
 }
+
+.priceFilterContainer {
+  padding: 8px 4px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.priceSlider {
+  margin: 16px 8px 28px;
+
+  :global {
+    .ant-slider-track {
+      background-color: #1890ff;
+    }
+    
+    .ant-slider-handle {
+      border-color: #1890ff;
+      
+      &:focus {
+        box-shadow: 0 0 0 5px rgba(24, 144, 255, 0.2);
+      }
+    }
+  }
+}
+
+.inputsRow {
+  margin-bottom: 16px;
+}
+
+.priceInput {
+  width: 100%;
+  border-radius: 4px;
+  
+  &:hover, &:focus {
+    border-color: #1890ff;
+  }
+}
+
+.rangeDivider {
+  text-align: center;
+  color: #888;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.applyButton {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  
+  &:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
+}
+
+.resetButton {
+  &:hover {
+    color: #1890ff;
+    border-color: #1890ff;
+  }
+}
