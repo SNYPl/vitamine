@@ -245,8 +245,6 @@
 @media only screen and (min-width: 576px) {
   .nonIntroduction {
     display: block;
-    flex: 0 0 33.33333333%;
-    max-width: 33.33333333%;
 
     // img {
     // width: auto;
@@ -259,8 +257,6 @@
 @media only screen and (min-width: 992px) {
   .nonIntroduction {
     display: block;
-    flex: 0 0 31%;
-    max-width: 31%;
     margin: 0 7.5px;
   }
 }

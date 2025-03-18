@@ -1,134 +1,130 @@
 "use client";
-import React, { useState } from "react";
-import style from "./style.module.scss";
-import { useForm, SubmitHandler } from "react-hook-form";
-import Link from "next/link";
-import Button from "../button/Button";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { setLoginModal } from "@/store/slices/modals";
-import { useDispatch } from "react-redux";
-import Cookies from "js-cookie";
-import { useFormStatus } from "react-dom";
-import { LoadingOutlined } from "@ant-design/icons";
 
-type Inputs = {
-  username: string;
-  password: string;
-  remember: boolean;
-};
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import styles from './style.module.scss';
+import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
-function LoginBtn() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" className={style.btn}>
-      {pending ? <LoadingOutlined spin /> : "შესვლა"}
-    </Button>
-  );
-}
-
-const Login: React.FC = ({}) => {
-  const [loginError, setLoginError] = useState("");
-  const dispatch = useDispatch();
+export default function LoginComponent() {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { data: session, status } = useSession();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (data?.remember) {
-      let maxAge = 30 * 24 * 60 * 60;
-      Cookies.set("remember", "true", { expires: maxAge });
+  // Redirect if already logged in
+  useEffect(() => {
+    if (session) {
+      router.push('/'); // Go to homepage instead of back
     }
+  }, [session, router]);
 
-    const response = await signIn("credentials", {
-      username: data.username,
-      password: data.password,
-      redirect: false,
-      remember: data?.remember ? true : false,
-    });
-
-    if (response?.error) {
-      setLoginError(response.error);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
     }
+    
+    setLoading(true);
+    setError('');
 
-    if (!response?.error && response?.status === 200) {
-      router.replace("/");
+    try {
+      // Set a cookie to remember the user's preference
+      if (rememberMe) {
+        document.cookie = `rememberUser=true; path=/; max-age=${30 * 24 * 60 * 60}`;
+      } else {
+        document.cookie = 'rememberUser=false; path=/; max-age=0';
+      }
+
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: email,
+        password: password,
+      });
+
+      if (result && result.error) {
+        setError(result.error || 'Invalid email or password');
+        setLoading(false);
+        return;
+      }
+
+      // Redirect to home page
+      router.push('/');
       router.refresh();
-      dispatch(setLoginModal(false));
+    } catch (error) {
+      console.error('Login error:', error);
+      setError('An error occurred during login');
+      setLoading(false);
     }
   };
 
+  if (status === 'loading') {
+    return <div className={styles.loadingSpinner}>Loading...</div>;
+  }
+
   return (
-    <section className={style.login}>
-      <h2>ავტორიზაცია</h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`${style.contactForm}`}
-      >
-        <div className={`${style.input}`}>
-          <label htmlFor="username">სახელი</label>
+    <div className={styles.loginComponent}>
+      <h1>Welcome Back</h1>
+      
+      {error && <div className={styles.error}>{error}</div>}
+      
+      <form onSubmit={handleSubmit}>
+        <div className={styles.formGroup}>
+          <label htmlFor="email">Email Address</label>
           <input
-            type="text"
-            id="username"
-            {...register("username", {
-              required: {
-                value: true,
-                message: "გრაფა ცარიელია",
-              },
-            })}
-            style={{ border: errors.username ? "1px solid red" : "" }}
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Enter your email"
           />
-          {errors.username && (
-            <p className={style.error}>{errors.username.message}</p>
-          )}
         </div>
-
-        <div className={`${style.input} ${style.password}`}>
-          <label htmlFor="loginpassword">პაროლი</label>
+        
+        <div className={styles.formGroup}>
+          <label htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
-            id="loginpassword"
-            {...register("password", {
-              required: {
-                value: true,
-                message: "გრაფა ცარიელია",
-              },
-            })}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            placeholder="Enter your password"
           />
-          {errors.password && (
-            <p className={style.error}>{errors.password.message}</p>
-          )}
         </div>
-        {loginError && <p className={style.mainErr}>{loginError}</p>}
-
-        <div className={style.forgot}>
-          <label>
-            <input type="checkbox" {...register("remember")} />
-            დამიმახსოვრე
-          </label>
-
-          <Link
-            href={"/forgotPassword"}
-            onClick={() => dispatch(setLoginModal(false))}
-          >
-            დაგავიწყდა პაროლი?
-          </Link>
+        
+        <div className={styles.formGroup}>
+          <div className={styles.checkbox}>
+            <input
+              id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
+            <label htmlFor="rememberMe">Remember me</label>
+          </div>
         </div>
-
-        <LoginBtn />
+        
+        <button 
+          type="submit" 
+          className={styles.loginButton}
+          disabled={loading}
+        >
+          {loading ? 'Logging in...' : 'Sign In'}
+        </button>
       </form>
-
-      <div className={style.createCont}>
-        <Link href="/signup" onClick={() => dispatch(setLoginModal(false))}>
-          ან დარეგისტრირდი
-        </Link>
+      
+      <div className={styles.links}>
+        <Link href="/forgotPassword">Forgot password?</Link>
+        <Link href="/signup">Don t have an account? Sign up</Link>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default Login;
+}

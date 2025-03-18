@@ -10,7 +10,7 @@ const ProductList: React.FC = async ({}) => {
   const productIds = (await getAllWishListProductsIds()) || [];
 
   return (
-    <section className={`${style.productList}`}>
+    <section className={style.productList}>
       <Sort />
       <ShopList userWishlist={productIds} />
       <PaginationComponent />

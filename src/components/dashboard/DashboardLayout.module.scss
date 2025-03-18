@@ -1,0 +1,44 @@
+.dashboardLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboardSidebar {
+  width: 250px;
+  background-color: #2d3748;
+  color: white;
+  padding: 20px;
+  
+  h2 {
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    
+    li {
+      margin-bottom: 10px;
+      
+      a {
+        color: #e2e8f0;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background-color: #4a5568;
+        }
+      }
+    }
+  }
+}
+
+.dashboardContent {
+  flex: 1;
+  padding: 20px;
+  background-color: #f7fafc;
+} 

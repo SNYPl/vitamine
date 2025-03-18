@@ -12,17 +12,29 @@ const company = [
 
 const Companies: React.FC = ({}) => {
   return (
-    <section className={`${style.companies}`}>
-      {company.map((el: any, id: any) => (
-        <div key={id}>
-          <Image
-            src={el}
-            alt={`Company Logo ${id + 1}`}
-            width={65}
-            height={55}
-          />
+    <section className={style.companiesSection}>
+      <div className={style.companiesContainer}>
+        <div className={style.companiesHeader}>
+          <h2>Our Trusted Partners</h2>
+          <p>We collaborate with leading companies in the wellness industry to deliver premium products</p>
         </div>
-      ))}
+        
+        <div className={style.companiesGrid}>
+          {company.map((el: string, id: number) => (
+            <div key={id} className={style.companyItem}>
+              <div className={style.companyLogo}>
+                <Image
+                  src={el}
+                  alt={`Partner Company ${id + 1}`}
+                  width={100}
+                  height={80}
+                  objectFit="contain"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

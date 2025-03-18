@@ -7,6 +7,7 @@ import {
   setShowProductNumber,
   setSortingValue,
 } from "@/store/slices/paginationSlice";
+import { SortAscendingOutlined } from "@ant-design/icons";
 // import { setShopPage } from "@/store/slices/paginationSlice";
 
 const Sort: React.FC = ({}) => {
@@ -26,27 +27,43 @@ const Sort: React.FC = ({}) => {
   };
 
   return (
-    <section className={`${style.sort}`}>
-      <Select
-        defaultValue="დახარისხება"
-        style={{ width: "47%" }}
-        onChange={onSortSelectChange}
-      >
-        <Option value="default">სტანდარტული</Option>
-        <Option value="lowHight">ფასი: ზრდადობით</Option>
-        <Option value="highLow">ფასი: კლებით</Option>
-        <Option value="review">მიმოხილვით</Option>
-        <Option value="rating">რეიტინგით</Option>
-      </Select>
-      <Select
-        defaultValue="მაჩვენე 12"
-        style={{ width: "47%" }}
-        onChange={onShowSelectChange}
-      >
-        <Option value="12">მაჩვენე 12</Option>
-        <Option value="21">მაჩვენე 21</Option>
-        <Option value="30">მაჩვენე 30</Option>
-      </Select>
+    <section className={style.sort}>
+      <div className={style.sortHeader}>
+        <SortAscendingOutlined className={style.sortIcon} />
+        <h3>Sort & Filter</h3>
+      </div>
+      
+      <div className={style.sortSelects}>
+        <div className={style.selectWrapper}>
+          <label>Sort by:</label>
+          <Select
+            defaultValue="default"
+            className={style.sortSelect}
+            onChange={onSortSelectChange}
+            dropdownClassName={style.dropdown}
+          >
+            <Option value="default">Default</Option>
+            <Option value="lowHight">Price: Low to High</Option>
+            <Option value="highLow">Price: High to Low</Option>
+            <Option value="review">By Reviews</Option>
+            <Option value="rating">By Rating</Option>
+          </Select>
+        </div>
+        
+        <div className={style.selectWrapper}>
+          <label>Show:</label>
+          <Select
+            defaultValue="12"
+            className={style.sortSelect}
+            onChange={onShowSelectChange}
+            dropdownClassName={style.dropdown}
+          >
+            <Option value="12">12 Items</Option>
+            <Option value="21">21 Items</Option>
+            <Option value="30">30 Items</Option>
+          </Select>
+        </div>
+      </div>
     </section>
   );
 };

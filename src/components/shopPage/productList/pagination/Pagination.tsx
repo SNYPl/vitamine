@@ -4,8 +4,9 @@ import { Pagination, ConfigProvider } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setShopPage } from "@/store/slices/paginationSlice";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import style from "./style.module.scss";
 
-const PaginationComponent: React.FC = ({}) => {
+const PaginationComponent: React.FC = () => {
   const searchParam = useSearchParams();
   const categoryValue = searchParam.get("category");
   const pageValue = searchParam.get("page");
@@ -17,7 +18,7 @@ const PaginationComponent: React.FC = ({}) => {
 
   const productListLength = useSelector(
     (state: any) => state.products.productListLength
-  );
+  )
 
   const productPage = useSelector((state: any) => state.products.shopPageValue);
   const showProductNumber = useSelector(
@@ -30,7 +31,7 @@ const PaginationComponent: React.FC = ({}) => {
     } else {
       dispatch(setShopPage(firstPage));
     }
-  }, [pageValue]);
+  }, [pageValue, dispatch]);
 
   const onPaginationChange = (page: number) => {
     let queryParams: { [key: string]: string } = {};
@@ -51,38 +52,60 @@ const PaginationComponent: React.FC = ({}) => {
 
     // Construct the new URL with the updated parameters
     const queryString = new URLSearchParams(queryParams).toString();
-
-    // Update the URL using router.push
-    router.push(`${path}${queryString ? "?" + queryString : ""}`);
+    
+    // Update Redux state first
+    dispatch(setShopPage(page));
+    
+    // Use router.replace with shallow option to prevent scroll reset
+    // The scroll option is key to preserving scroll position
+    router.replace(`${path}${queryString ? "?" + queryString : ""}`, {
+      scroll: false
+    });
   };
 
+  // The main fix - make sure the URL and state stay consistent
+  // This helps prevent errors with client-side navigation
+  useEffect(() => {
+    // Set page to 1 if going back to a URL without page param
+    if (!pageValue && productPage !== 1) {
+      dispatch(setShopPage(1));
+    }
+  }, [pageValue, productPage, dispatch]);
+
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: "#fff",
-          borderRadius: 2,
-          colorBgContainer: "#f79823",
-        },
-        components: {
-          Pagination: {
-            itemBg: "#eaeff4",
-            itemActiveBgDisabled: "#eaeff4",
-            itemInputBg: "#eaeff4",
+    <div className={style.paginationWrapper}>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#88c74a",
+            borderRadius: 8,
+            colorBgContainer: "#ffffff",
           },
-        },
-      }}
-    >
-      <Pagination
-        onChange={onPaginationChange}
-        current={productPage}
-        defaultCurrent={1}
-        pageSize={showProductNumber}
-        total={productListLength}
-        hideOnSinglePage
-        showSizeChanger={false}
-      />
-    </ConfigProvider>
+          components: {
+            Pagination: {
+              itemActiveBg: "#88c74a",
+              itemActiveBgDisabled: "#f5f5f5",
+              itemActiveColorDisabled: "#88c74a",
+              itemBg: "#ffffff",
+              itemInputBg: "#ffffff",
+              itemLinkBg: "#ffffff",
+              itemSize: 36,
+            },
+          },
+        }}
+      >
+        <Pagination
+          onChange={onPaginationChange}
+          current={productPage}
+          defaultCurrent={1}
+          pageSize={showProductNumber}
+          total={productListLength}
+          hideOnSinglePage
+          showSizeChanger={false}
+          className={style.pagination}
+        />
+      </ConfigProvider>
+    </div>
   );
 };
 
