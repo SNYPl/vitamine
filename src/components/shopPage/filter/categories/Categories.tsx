@@ -13,9 +13,9 @@ interface Category {
 const Categories = () => {
   const categoriesData: Category[] = categories;
   const param = useSearchParams();
-  const category = param.get("category");
+  const category = param?.get("category");
   const activeCategory = category ? category : "all";
-  const searchParam = param.get("search");
+  const searchParam = param?.get("search");
 
   const [activeProduct, setActiveProduct] = useState<string>(activeCategory);
 

@@ -3,7 +3,7 @@
 import React from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { FaHeart } from "react-icons/fa";
+// import { FaHeart } from "react-icons/fa";
 import { Badge } from "antd";
 import LoginModal from "@/components/login/LoginModal";
 
@@ -11,7 +11,7 @@ const WishlistLink = ({ count = 0 }) => {
   const { data: session } = useSession();
   const [loginModalOpen, setLoginModalOpen] = React.useState(false);
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!session) {
       e.preventDefault();
       setLoginModalOpen(true);
@@ -22,8 +22,8 @@ const WishlistLink = ({ count = 0 }) => {
     <>
       <Badge count={count} size="small">
         <Link href="/wishlist" onClick={handleClick}>
-          <FaHeart />
-          <span>Wishlist</span>
+          {/* <FaHeart /> */}
+          <span>დამახსოვრებული ნივთები</span>
         </Link>
       </Badge>
 

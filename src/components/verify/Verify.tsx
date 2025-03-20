@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 
 const Verify: React.FC = ({}) => {
   const searchParams = useSearchParams();
-  const verify = searchParams.get("verify");
+  const verify = searchParams?.get("verify");
   const isVerify = verify === "true";
 
   return (

@@ -128,7 +128,7 @@ export default function LoginModal({
 
         <div className={styles.registerPrompt}>
           <p>
-            Don't have an account?{" "}
+            არ გაქვს ანგარიში?
             <a href="/signup" onClick={() => onClose()}>
               Sign up
             </a>

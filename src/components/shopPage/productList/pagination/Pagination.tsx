@@ -8,9 +8,9 @@ import style from "./style.module.scss";
 
 const PaginationComponent: React.FC = () => {
   const searchParam = useSearchParams();
-  const categoryValue = searchParam.get("category");
-  const pageValue = searchParam.get("page");
-  const searchValue = searchParam.get("search");
+  const categoryValue = searchParam?.get("category");
+  const pageValue = searchParam?.get("page");
+  const searchValue = searchParam?.get("search");
   const firstPage = 1;
   const router = useRouter();
   const path = usePathname();
@@ -18,7 +18,7 @@ const PaginationComponent: React.FC = () => {
 
   const productListLength = useSelector(
     (state: any) => state.products.productListLength
-  )
+  );
 
   const productPage = useSelector((state: any) => state.products.shopPageValue);
   const showProductNumber = useSelector(
@@ -52,14 +52,14 @@ const PaginationComponent: React.FC = () => {
 
     // Construct the new URL with the updated parameters
     const queryString = new URLSearchParams(queryParams).toString();
-    
+
     // Update Redux state first
     dispatch(setShopPage(page));
-    
+
     // Use router.replace with shallow option to prevent scroll reset
     // The scroll option is key to preserving scroll position
     router.replace(`${path}${queryString ? "?" + queryString : ""}`, {
-      scroll: false
+      scroll: false,
     });
   };
 

@@ -11,7 +11,7 @@ import VerifyAccount from "@/components/verify/Verify";
 
 export default function VerifyPage() {
   const searchParams = useSearchParams();
-  const verifyStatus = searchParams.get("verify");
+  const verifyStatus = searchParams?.get("verify");
   const [message, setMessage] = useState<string>("");
   const [status, setStatus] = useState<"success" | "error" | "loading">(
     "loading"

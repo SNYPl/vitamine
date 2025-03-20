@@ -21,7 +21,7 @@ const ProductInfo: React.FC<InfoProps> = ({ modal, className, user }) => {
   const dispatch = useDispatch();
   const productGlobalId = useSelector((state: any) => state.productButtons.id);
   const searchParams = useSearchParams();
-  const urlId = searchParams.get("id");
+  const urlId = searchParams?.get("id");
   const [productIdState, setProductIdState] = useState(
     productGlobalId || urlId
   );

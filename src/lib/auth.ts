@@ -45,7 +45,6 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Invalid email or password");
           }
 
-          console.log("Authentication successful for:", user.email);
           return {
             id: user._id.toString(),
             email: user.email,
@@ -73,7 +72,7 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.picture = user.image;
+        token.image = user.image || null;
         token.role = user.role;
       }
 

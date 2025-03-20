@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const ParamInfo: React.FC = () => {
   const path = usePathname();
-  const pathArray = path.split("/").filter((el) => el);
+  const pathArray = path?.split("/").filter((el) => el);
 
   const paths = [
     { eng: "shop", geo: "შეთავაზებები" },
@@ -32,7 +32,7 @@ const ParamInfo: React.FC = () => {
       <p className={`${style.params}`}>მთავარი </p>
 
       <p className={`${style.addedParams}`}>
-        {pathArray.map((el: any) => (
+        {pathArray?.map((el: any) => (
           <React.Fragment key={el}>
             <span className={`${style.paramArrow}`}>{">"}</span>
             <span>{translatePath(el)}</span>

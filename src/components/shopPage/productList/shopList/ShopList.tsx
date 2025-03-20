@@ -18,13 +18,13 @@ const ShopList = ({
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const pageCount = useSelector((state: any) => state.products.shopPageValue);
-  const searchValue = searchParams.get("search");
+  const searchValue = searchParams?.get("search");
   const showProductNumber = useSelector(
     (state: any) => state.products.showProductNumber
   );
   const sortingValue = useSelector((state: any) => state.products.sortingValue);
 
-  const categoryList = searchParams.get("category");
+  const categoryList = searchParams?.get("category");
 
   const priceRange = useSelector((state: any) => state.priceFilter.priceFilter);
   const [min, max] = priceRange;

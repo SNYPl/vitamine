@@ -55,17 +55,16 @@ const WishlistPage = () => {
       <ParamInfo />
 
       <div className={style.wishlistHeader}>
-        <h1>{/* <FaHeart className={style.heartIcon} /> My Wishlist */}</h1>
-        <p>Items you've saved for later</p>
+        <p>დამახსოვრებული ნივთები</p>
       </div>
 
       {isEmpty ? (
         <div className={style.emptyWishlist}>
           {/* <FaHeart className={style.emptyIcon} /> */}
-          <h2>Your wishlist is empty</h2>
-          <p>Browse our products and add items you love to your wishlist</p>
+          <h2>თქვენ არ გაქვთ დამახსოვრებული ნივთები</h2>
+          <p>გადამოწმეთ ჩვენი ნივთები და დაამატეთ თქვენი სასურვილი ნივთები</p>
           <a href="/shop" className={style.shopButton}>
-            Shop Now
+            მაღაზია
           </a>
         </div>
       ) : (
