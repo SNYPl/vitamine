@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+// Initialize S3 client
+const s3Client = new S3Client({
+  region: "eu-north-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+  },
+});
+
+const bucketName = "vitvit123";
 
 export async function POST(request) {
   try {
@@ -27,16 +37,24 @@ export async function POST(request) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
         const fileExtension = file.name.split('.').pop();
-        const fileName = `${uuidv4()}.${fileExtension}`;
+        const fileName = `uploads/${uuidv4()}.${fileExtension}`;
         
-        // Define the path to save the file
-        const path = join(process.cwd(), 'public', 'uploads', fileName);
+        // Set up the S3 upload parameters
+        const params = {
+          Bucket: bucketName,
+          Key: fileName,
+          Body: buffer,
+          ContentType: file.type,
+          // No ACL parameter as it may cause issues
+        };
         
-        // Write the file
-        await writeFile(path, buffer);
+        // Upload to S3
+        const command = new PutObjectCommand(params);
+        await s3Client.send(command);
         
-        // Add the URL to the array
-        urls.push(`/uploads/${fileName}`);
+        // Add the S3 URL to the array
+        const fileUrl = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
+        urls.push(fileUrl);
       }
     }
     
@@ -49,7 +67,7 @@ export async function POST(request) {
     
     return NextResponse.json({ message: 'Files uploaded', urls });
   } catch (error) {
-    console.error('Error uploading files:', error);
+    console.error('Error uploading files to S3:', error);
     
     return NextResponse.json(
       { message: 'Failed to upload files', error: error.message },

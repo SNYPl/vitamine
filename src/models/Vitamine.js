@@ -15,7 +15,10 @@ const vitamineSchema = new mongoose.Schema({
   daleOfWeek: Boolean,
   isFeatured: Boolean,
   images: [String],
-  mainImage: String,
+  mainImage: {
+    type: String,
+    required: true
+  },
   rating: [Number],
   about: String,
   description: [String],

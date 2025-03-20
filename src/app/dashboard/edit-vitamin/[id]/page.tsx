@@ -186,14 +186,14 @@ export default function EditVitamin({ params }: { params: Params }) {
   
   return (
     <div className={styles.editForm}>
-      <h1>Edit Vitamin: {vitamin.name}</h1>
+      <h1>დააედითე: {vitamin.name}</h1>
       
       <form onSubmit={handleSubmit}>
         <div className={styles.formSection}>
-          <h2>Basic Information</h2>
+          <h2>ინფორმაცია</h2>
           
           <div className={styles.formGroup}>
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">სახელი:</label>
             <input
               type="text"
               id="name"
@@ -205,7 +205,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           </div>
           
           <div className={styles.formGroup}>
-            <label htmlFor="category">Categories (comma-separated):</label>
+            <label htmlFor="category">კატეგორიები (comma-separated):</label>
             <input
               type="text"
               id="category"
@@ -216,7 +216,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           </div>
           
           <div className={styles.formGroup}>
-            <label htmlFor="infoTitle">Info Title:</label>
+            <label htmlFor="infoTitle">მოკლე აღწერა:</label>
             <textarea
               id="infoTitle"
               name="infoTitle"
@@ -228,7 +228,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="price">Price:</label>
+              <label htmlFor="price">ფასი:</label>
               <input
                 type="number"
                 id="price"
@@ -240,7 +240,7 @@ export default function EditVitamin({ params }: { params: Params }) {
             </div>
             
             <div className={styles.formGroup}>
-              <label htmlFor="discount">Discount (optional):</label>
+              <label htmlFor="discount">ფასდაკლება (optional):</label>
               <input
                 type="number"
                 id="discount"
@@ -253,7 +253,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="productQuantity">Product Quantity:</label>
+              <label htmlFor="productQuantity">პროდუქტის რაოდენობა:</label>
               <input
                 type="number"
                 id="productQuantity"
@@ -265,7 +265,7 @@ export default function EditVitamin({ params }: { params: Params }) {
             </div>
             
             <div className={styles.formGroup}>
-              <label htmlFor="packageQuantity">Package Quantity:</label>
+              <label htmlFor="packageQuantity">შეკვრის რაოდენობა:</label>
               <input
                 type="text"
                 id="packageQuantity"
@@ -278,7 +278,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="tabletSize">Tablet Size:</label>
+              <label htmlFor="tabletSize">ტაბლეტის ზომა:</label>
               <input
                 type="number"
                 id="tabletSize"
@@ -289,7 +289,7 @@ export default function EditVitamin({ params }: { params: Params }) {
             </div>
             
             <div className={styles.formGroup}>
-              <label htmlFor="sold">Sold:</label>
+              <label htmlFor="sold">გაიყიდა:</label>
               <input
                 type="number"
                 id="sold"
@@ -301,7 +301,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           </div>
           
           <div className={styles.formGroup}>
-            <label htmlFor="mainImage">Main Image URL:</label>
+            <label htmlFor="mainImage">მთავარი ფოტო:</label>
             <input
               type="text"
               id="mainImage"
@@ -329,7 +329,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                   vitamin && setVitamin({ ...vitamin, isFeatured: e.target.checked } as Vitamin)
                 }
               />
-              <label htmlFor="isFeatured">Featured Product</label>
+              <label htmlFor="isFeatured">განსაკუთრებული პროდუქტი</label>
             </div>
             
             <div className={styles.checkbox}>
@@ -340,7 +340,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                 checked={vitamin.mainDaleOfWeek}
                 onChange={(e) => setVitamin({ ...vitamin, mainDaleOfWeek: e.target.checked })}
               />
-              <label htmlFor="mainDaleOfWeek">Main Deal of Week</label>
+              <label htmlFor="mainDaleOfWeek">მთავარი კვირის შემთავაზება</label>
             </div>
             
             <div className={styles.checkbox}>
@@ -351,7 +351,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                 checked={vitamin.daleOfWeek}
                 onChange={(e) => setVitamin({ ...vitamin, daleOfWeek: e.target.checked })}
               />
-              <label htmlFor="daleOfWeek">Deal of Week</label>
+              <label htmlFor="daleOfWeek">კვირის შემოთავაზება</label>
             </div>
           </div>
         </div>
@@ -390,7 +390,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           <h2>Description</h2>
           
           <div className={styles.formGroup}>
-            <label htmlFor="about">About:</label>
+            <label htmlFor="about">აღწერა:</label>
             <textarea
               id="about"
               name="about"
@@ -400,7 +400,7 @@ export default function EditVitamin({ params }: { params: Params }) {
             />
           </div>
           
-          <h3>Description Points</h3>
+          <h3>აღწერის სია</h3>
           {vitamin.description.map((desc, index) => (
             <div key={index} className={styles.arrayItem}>
               <input
@@ -413,7 +413,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                 onClick={() => removeArrayItem(index, 'description')}
                 className={styles.removeButton}
               >
-                Remove
+                წაშალე
               </button>
             </div>
           ))}
@@ -423,11 +423,11 @@ export default function EditVitamin({ params }: { params: Params }) {
             onClick={() => addArrayItem('description')}
             className={styles.addButton}
           >
-            Add Description Point
+            დაამატე აღწერა
           </button>
           
           <div className={styles.formGroup}>
-            <label htmlFor="use">Usage Instructions:</label>
+            <label htmlFor="use">გამოყენების ინსტრუქცია:</label>
             <textarea
               id="use"
               name="use"
@@ -439,9 +439,9 @@ export default function EditVitamin({ params }: { params: Params }) {
         </div>
         
         <div className={styles.formSection}>
-          <h2>Ingredients & Warnings</h2>
+          <h2>ინგრედიენტები და გაფრთხილება</h2>
           
-          <h3>Other Ingredients</h3>
+          <h3>სხვა ინგრედიენტები</h3>
           {vitamin.otherIngredients.map((ingredient, index) => (
             <div key={index} className={styles.arrayItem}>
               <input
@@ -454,7 +454,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                 onClick={() => removeArrayItem(index, 'otherIngredients')}
                 className={styles.removeButton}
               >
-                Remove
+                წაშალე
               </button>
             </div>
           ))}
@@ -464,11 +464,11 @@ export default function EditVitamin({ params }: { params: Params }) {
             onClick={() => addArrayItem('otherIngredients')}
             className={styles.addButton}
           >
-            Add Ingredient
+           დაამატე ინგრედიენტი
           </button>
           
           <div className={styles.formGroup}>
-            <label htmlFor="warning">Warning:</label>
+            <label htmlFor="warning">გაფრთხილება:</label>
             <textarea
               id="warning"
               name="warning"
@@ -480,13 +480,13 @@ export default function EditVitamin({ params }: { params: Params }) {
         </div>
         
         <div className={styles.formSection}>
-          <h2>Supplement Facts</h2>
+          <h2>პროდუქტის ფაქტები</h2>
           
           {vitamin.supplementFacts.map((fact, index) => (
             <div key={index} className={styles.factItem}>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label>Title:</label>
+                  <label>სახელი:</label>
                   <input
                     type="text"
                     value={fact.title}
@@ -495,7 +495,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                 </div>
                 
                 <div className={styles.formGroup}>
-                  <label>Info:</label>
+                  <label>ინფო:</label>
                   <input
                     type="text"
                     value={fact.info}
@@ -508,7 +508,7 @@ export default function EditVitamin({ params }: { params: Params }) {
                   onClick={() => removeSupplementFact(index)}
                   className={styles.removeButton}
                 >
-                  Remove
+                  წაშალე
                 </button>
               </div>
             </div>
@@ -519,15 +519,15 @@ export default function EditVitamin({ params }: { params: Params }) {
             onClick={addSupplementFact}
             className={styles.addButton}
           >
-            Add Supplement Fact
+            დაამატე ფაქტი
           </button>
         </div>
         
         <div className={styles.formSection}>
-          <h2>Additional Information</h2>
+          <h2>სხვა ინფორმაცია</h2>
           
           <div className={styles.formGroup}>
-            <label htmlFor="country">Country:</label>
+            <label htmlFor="country">ქვეყანა:</label>
             <input
               type="text"
               id="country"
@@ -538,7 +538,7 @@ export default function EditVitamin({ params }: { params: Params }) {
           </div>
           
           <div className={styles.formGroup}>
-            <label htmlFor="tags">Tags (for search):</label>
+            <label htmlFor="tags">თეგები (ძებნისთვის):</label>
             <textarea
               id="tags"
               name="tags"
@@ -556,7 +556,7 @@ export default function EditVitamin({ params }: { params: Params }) {
             className={styles.cancelButton}
             disabled={saving}
           >
-            Cancel
+            გაუქმება
           </button>
           
           <button 
@@ -564,7 +564,7 @@ export default function EditVitamin({ params }: { params: Params }) {
             className={styles.saveButton}
             disabled={saving}
           >
-            {saving ? 'Saving...' : 'Save Changes'}
+            {saving ? 'ინახება...' : 'შეინახე'}
           </button>
         </div>
       </form>

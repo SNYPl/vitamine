@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import styles from "./addVitamin.module.css";
+import styles from "./addVitamin.module.scss";
 import Link from "next/link";
 import { categories } from "@/data/categories";
+import Image from "next/image";
 
 interface SupplementFact {
   title: string;
@@ -22,21 +23,21 @@ interface VitaminForm {
   packageQuantity: string;
   tabletSize: number;
   sold: number;
+  country: string;
   mainDaleOfWeek: boolean;
   daleOfWeek: boolean;
   isFeatured: boolean;
   mainImage: string;
   images: string[];
+  rating: number[];
   about: string;
   description: string[];
   use: string;
   otherIngredients: string[];
   warning: string;
   supplementFacts: SupplementFact[];
-  country: string;
-  tags: string;
+  tags: string[];
   review: any[];
-  rating: any[];
 }
 
 export default function AddVitamin() {
@@ -44,6 +45,12 @@ export default function AddVitamin() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
   const [newImageUrl, setNewImageUrl] = useState("");
+  const [tagsInput, setTagsInput] = useState("");
+  const [newTag, setNewTag] = useState("");
+  const [mainImageFile, setMainImageFile] = useState<File | null>(null);
+  const [additionalImageFiles, setAdditionalImageFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const {
     register,
@@ -75,7 +82,7 @@ export default function AddVitamin() {
       images: [],
       supplementFacts: [{ title: "", info: "" }],
       country: "",
-      tags: "",
+      tags: [],
       review: [],
       rating: [],
     },
@@ -155,6 +162,77 @@ export default function AddVitamin() {
   };
 
   // Handle images
+  const handleMainImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setMainImageFile(e.target.files[0]);
+      
+      // Create a preview URL for the selected file
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setValue("mainImage", event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+
+  const handleAdditionalImagesSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles = Array.from(e.target.files);
+      setAdditionalImageFiles(prev => [...prev, ...newFiles]);
+      
+      // Create preview URLs for all selected files
+      const currentImages = getValues("images") || [];
+      const newPreviews: string[] = [];
+      
+      newFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            newPreviews.push(event.target.result as string);
+            if (newPreviews.length === newFiles.length) {
+              setValue("images", [...currentImages, ...newPreviews]);
+            }
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const removeAdditionalImage = (index: number) => {
+    setAdditionalImageFiles(prev => {
+      const newFiles = [...prev];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+    
+    const currentImages = getValues("images");
+    setValue(
+      "images",
+      currentImages.filter((_, i) => i !== index)
+    );
+  };
+
+  // Handle tags
+  const addTag = () => {
+    if (newTag.trim()) {
+      const currentTags = getValues("tags");
+      setValue("tags", [...currentTags, newTag.trim()]);
+      setNewTag("");
+    }
+  };
+
+  const removeTag = (index: number) => {
+    const currentTags = getValues("tags");
+    setValue(
+      "tags",
+      currentTags.filter((_, i) => i !== index)
+    );
+  };
+
+  // Add this function back to handle adding images via URL
   const handleAddImage = () => {
     if (newImageUrl.trim()) {
       const currentImages = getValues("images");
@@ -163,28 +241,81 @@ export default function AddVitamin() {
     }
   };
 
-  const removeImage = (index: number) => {
-    const currentImages = getValues("images");
-    setValue(
-      "images",
-      currentImages.filter((_, i) => i !== index)
-    );
-  };
-
   const onSubmit = async (data: VitaminForm) => {
     setIsSubmitting(true);
+    setIsUploading(true);
     setMessage({ type: "", text: "" });
 
     try {
+      // Upload main image if selected
+      let mainImageUrl = data.mainImage;
+      if (mainImageFile) {
+        setUploadProgress(10);
+        const formData = new FormData();
+        formData.append("file", mainImageFile);
+        
+        const uploadResponse = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        
+        if (!uploadResponse.ok) {
+          throw new Error("Failed to upload main image");
+        }
+        
+        const uploadResult = await uploadResponse.json();
+        mainImageUrl = uploadResult.url;
+        setUploadProgress(40);
+      }
+
+      // Upload additional images if selected
+      let additionalImageUrls = data.images.filter(url => url.startsWith('http'));
+      if (additionalImageFiles.length > 0) {
+        setUploadProgress(50);
+        
+        const uploadPromises = additionalImageFiles.map(async (file) => {
+          const formData = new FormData();
+          formData.append("file", file);
+          
+          const uploadResponse = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+          
+          if (!uploadResponse.ok) {
+            throw new Error("Failed to upload additional image");
+          }
+          
+          const uploadResult = await uploadResponse.json();
+          return uploadResult.url;
+        });
+        
+        const uploadedUrls = await Promise.all(uploadPromises);
+        additionalImageUrls = [...additionalImageUrls, ...uploadedUrls];
+        setUploadProgress(80);
+      }
+
+      // Update the form data with the S3 URLs
+      const formData = {
+        ...data,
+        mainImage: mainImageUrl,
+        images: additionalImageUrls,
+      };
+
+      setUploadProgress(90);
+      
+      // Send the data to your API
       const response = await fetch("/api/supplements/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
       const result = await response.json();
+      setUploadProgress(100);
+      setIsUploading(false);
 
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin created successfully!" });
@@ -205,6 +336,7 @@ export default function AddVitamin() {
         text: "An error occurred while creating the vitamin",
       });
       setIsSubmitting(false);
+      setIsUploading(false);
     }
   };
 
@@ -214,10 +346,11 @@ export default function AddVitamin() {
   const descriptionFields = watch("description");
   const ingredientFields = watch("otherIngredients");
   const supplementFactsFields = watch("supplementFacts");
+  const tagsValues = watch("tags");
 
   return (
     <div className={styles.editForm}>
-      <h1>Add New Vitamin</h1>
+      <h1 className={styles.formTitle}>დაამატე ვიტამინი</h1>
 
       {message.text && (
         <div className={`${styles.message} ${styles[message.type]}`}>
@@ -227,13 +360,16 @@ export default function AddVitamin() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formSection}>
-          <h2>Basic Information</h2>
+          <h2 className={styles.sectionTitle}>ინფორმაცია
+
+          </h2>
 
           <div className={styles.formGroup}>
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">სახელი:</label>
             <input
               type="text"
               id="name"
+              className={styles.formInput}
               {...register("name", { required: "Product name is required" })}
               required
             />
@@ -243,7 +379,7 @@ export default function AddVitamin() {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="category">Categories (comma-separated):</label>
+            <label htmlFor="category">კატეგორიები (comma-separated):</label>
             <div className={styles.categoriesCheckboxGroup}>
               {categories
                 .filter((cat) => cat.value !== "all")
@@ -283,47 +419,49 @@ export default function AddVitamin() {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="infoTitle">Info Title:</label>
+            <label htmlFor="infoTitle">მოკლე აღწერა:</label>
             <textarea
               id="infoTitle"
+              className={styles.formTextarea}
               {...register("infoTitle")}
               rows={3}
             />
           </div>
 
-          <div className={styles.formRow}>
-            <div className={styles.formGroup}>
-              <label htmlFor="price">Price:</label>
-              <input
-                type="number"
-                id="price"
-                {...register("price", {
-                  required: "Price is required",
-                  min: 0,
-                })}
-                required
-              />
-              {errors.price && (
-                <p className={styles.errorText}>{errors.price.message}</p>
-              )}
-            </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="price">ფასი:</label>
+            <input
+              type="number"
+              id="price"
+              className={styles.formInput}
+              {...register("price", {
+                required: "Price is required",
+                min: 0,
+              })}
+              required
+            />
+            {errors.price && (
+              <p className={styles.errorText}>{errors.price.message}</p>
+            )}
+          </div>
 
-            <div className={styles.formGroup}>
-              <label htmlFor="discount">Discount (optional):</label>
-              <input
-                type="number"
-                id="discount"
-                {...register("discount")}
-              />
-            </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="discount">ფასდაკლება (optional):</label>
+            <input
+              type="number"
+              id="discount"
+              className={styles.formInput}
+              {...register("discount")}
+            />
           </div>
 
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="productQuantity">Product Quantity:</label>
+              <label htmlFor="productQuantity">პროდუქტის რაოდენობა:</label>
               <input
                 type="number"
                 id="productQuantity"
+                className={styles.formInput}
                 {...register("productQuantity", {
                   required: "Inventory quantity is required",
                   min: 0,
@@ -338,10 +476,11 @@ export default function AddVitamin() {
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="packageQuantity">Package Quantity:</label>
+              <label htmlFor="packageQuantity">ტაბლეტების რაოდენობა:</label>
               <input
                 type="text"
                 id="packageQuantity"
+                className={styles.formInput}
                 {...register("packageQuantity")}
               />
             </div>
@@ -349,38 +488,71 @@ export default function AddVitamin() {
 
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="tabletSize">Tablet Size:</label>
+              <label htmlFor="tabletSize">ტაბლეტის ზომა:</label>
               <input
                 type="number"
                 id="tabletSize"
+                className={styles.formInput}
                 {...register("tabletSize")}
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="sold">Sold:</label>
+              <label htmlFor="sold">რამდენი გაიყიდა:</label>
               <input
                 type="number"
                 id="sold"
+                className={styles.formInput}
                 {...register("sold")}
               />
             </div>
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="mainImage">Main Image URL:</label>
-            <input
-              type="text"
-              id="mainImage"
-              {...register("mainImage")}
-            />
-            {mainImageValue && (
-              <img 
-                src={mainImageValue} 
-                alt="Main product image" 
-                className={styles.previewImage}
-              />
-            )}
+            <label htmlFor="mainImage">მთავარი ფოტო:</label>
+            <div className={styles.imageUploadContainer}>
+              <div className={styles.fileInputWrapper}>
+                <input
+                  type="file"
+                  id="mainImageUpload"
+                  accept="image/*"
+                  onChange={handleMainImageSelect}
+                  className={styles.fileInput}
+                />
+                <button 
+                  type="button" 
+                  onClick={() => document.getElementById('mainImageUpload')?.click()}
+                  className={styles.uploadButton}
+                >
+                  Select Image
+                </button>
+                <span className={styles.fileName}>
+                  {mainImageFile ? mainImageFile.name : "No file selected"}
+                </span>
+              </div>
+              
+              {/* Show direct URL input as alternative */}
+              <div className={styles.formGroup}>
+                <label htmlFor="mainImageUrl">ან შეიყვანე ლინკი:</label>
+                <input
+                  type="text"
+                  id="mainImageUrl"
+                  className={styles.formInput}
+                  {...register("mainImage")}
+                />
+              </div>
+              
+              {/* Image preview */}
+              {mainImageValue && (
+                <div className={styles.mainImagePreview}>
+                  <img
+                    src={mainImageValue}
+                    alt="Main product preview"
+                    className={styles.previewImage}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           <div className={styles.checkboxGroup}>
@@ -390,7 +562,7 @@ export default function AddVitamin() {
                 id="isFeatured"
                 {...register("isFeatured")}
               />
-              <label htmlFor="isFeatured">Featured Product</label>
+              <label htmlFor="isFeatured">გამორჩეული დამატება</label>
             </div>
 
             <div className={styles.checkbox}>
@@ -399,7 +571,7 @@ export default function AddVitamin() {
                 id="mainDaleOfWeek"
                 {...register("mainDaleOfWeek")}
               />
-              <label htmlFor="mainDaleOfWeek">Main Deal of Week</label>
+              <label htmlFor="mainDaleOfWeek">მთავარი კვირის შეთავაზება</label>
             </div>
 
             <div className={styles.checkbox}>
@@ -408,22 +580,47 @@ export default function AddVitamin() {
                 id="daleOfWeek"
                 {...register("daleOfWeek")}
               />
-              <label htmlFor="daleOfWeek">Deal of Week</label>
+              <label htmlFor="daleOfWeek">კვირის შეთავაზება</label>
             </div>
           </div>
         </div>
 
         <div className={styles.formSection}>
-          <h2>Images</h2>
-
+          <h2 className={styles.sectionTitle}>სხვა ფოტოები</h2>
+          
           <div className={styles.formGroup}>
+            <label htmlFor="additionalImages">ატვირთე სხვა ფოტოები:</label>
+            <div className={styles.fileInputWrapper}>
+              <input
+                type="file"
+                id="additionalImagesUpload"
+                accept="image/*"
+                multiple
+                onChange={handleAdditionalImagesSelect}
+                className={styles.fileInput}
+              />
+              <button 
+                type="button" 
+                onClick={() => document.getElementById('additionalImagesUpload')?.click()}
+                className={styles.uploadButton}
+              >
+                Select Images
+              </button>
+              <span className={styles.fileName}>
+                {additionalImageFiles.length > 0 
+                  ? `${additionalImageFiles.length} files selected` 
+                  : "No files selected"}
+              </span>
+            </div>
+            
+            {/* Direct URL input */}
             <div className={styles.imageUrlInputGroup}>
               <input
                 type="text"
                 id="newImageUrl"
                 value={newImageUrl}
                 onChange={(e) => setNewImageUrl(e.target.value)}
-                className={styles.input}
+                className={styles.formInput}
                 placeholder="Enter image URL"
               />
               <button
@@ -432,47 +629,47 @@ export default function AddVitamin() {
                 className={styles.addButton}
                 disabled={!newImageUrl.trim()}
               >
-                Add Image
+                Add Image URL
               </button>
             </div>
           </div>
-
-          {imagesValue.map((image, index) => (
-            <div key={index} className={styles.imageItem}>
-              <input
-                type="text"
-                value={image}
-                onChange={(e) => {
-                  const newImages = [...imagesValue];
-                  newImages[index] = e.target.value;
-                  setValue("images", newImages);
-                }}
-              />
-              <button 
-                type="button" 
-                onClick={() => removeImage(index)}
-                className={styles.removeButton}
-              >
-                Remove
-              </button>
-              <img src={image} alt={`Product ${index + 1}`} className={styles.previewImage} />
+          
+          {/* Image previews */}
+          {imagesValue.length > 0 && (
+            <div className={styles.additionalImagesGrid}>
+              {imagesValue.map((image, index) => (
+                <div key={index} className={styles.imageItem}>
+                  <div className={styles.imagePreview}>
+                    <img src={image} alt={`Product ${index + 1}`} />
+                    <button 
+                      type="button" 
+                      onClick={() => removeAdditionalImage(index)}
+                      className={styles.removeImageButton}
+                      aria-label="Remove image"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
 
         <div className={styles.formSection}>
-          <h2>Description</h2>
+          <h2 className={styles.sectionTitle}>აღწერა</h2>
 
           <div className={styles.formGroup}>
-            <label htmlFor="about">About:</label>
+            <label htmlFor="about">აღწერის ტექსტი:</label>
             <textarea
               id="about"
+              className={styles.formTextarea}
               {...register("about")}
               rows={6}
             />
           </div>
 
-          <h3>Description Points</h3>
+          <h3 className={styles.subtitle}>აღწერის სია</h3>
           {descriptionFields.map((desc, index) => (
             <div key={index} className={styles.arrayItem}>
               <input
@@ -485,7 +682,7 @@ export default function AddVitamin() {
                 onClick={() => removeDescriptionPoint(index)}
                 className={styles.removeButton}
               >
-                Remove
+                წაშალე
               </button>
             </div>
           ))}
@@ -495,13 +692,14 @@ export default function AddVitamin() {
             onClick={addDescriptionPoint}
             className={styles.addButton}
           >
-            Add Description Point
+            დაამატე აღწერა
           </button>
 
           <div className={styles.formGroup}>
-            <label htmlFor="use">Usage Instructions:</label>
+            <label htmlFor="use">გამოყენების ინსტრუქცია:</label>
             <textarea
               id="use"
+              className={styles.formTextarea}
               {...register("use")}
               rows={3}
             />
@@ -509,9 +707,9 @@ export default function AddVitamin() {
         </div>
 
         <div className={styles.formSection}>
-          <h2>Ingredients & Warnings</h2>
+          <h2 className={styles.sectionTitle}>ინგრედიენტები და გაფრთხილება</h2>
 
-          <h3>Other Ingredients</h3>
+          <h3 className={styles.subtitle}>სხვა ინგრედიენტების სია</h3>
           {ingredientFields.map((ingredient, index) => (
             <div key={index} className={styles.arrayItem}>
               <input
@@ -524,7 +722,7 @@ export default function AddVitamin() {
                 onClick={() => removeIngredient(index)}
                 className={styles.removeButton}
               >
-                Remove
+                წაშალე
               </button>
             </div>
           ))}
@@ -534,13 +732,14 @@ export default function AddVitamin() {
             onClick={addIngredient}
             className={styles.addButton}
           >
-            Add Ingredient
+            დაამატე ინგრედიენტი
           </button>
 
           <div className={styles.formGroup}>
-            <label htmlFor="warning">Warning:</label>
+            <label htmlFor="warning">გაფრთხილება:</label>
             <textarea
               id="warning"
+              className={styles.formTextarea}
               {...register("warning")}
               rows={4}
             />
@@ -548,13 +747,13 @@ export default function AddVitamin() {
         </div>
 
         <div className={styles.formSection}>
-          <h2>Supplement Facts</h2>
+          <h2 className={styles.sectionTitle}>პროდუქტის ფაქტები</h2>
 
           {supplementFactsFields.map((fact, index) => (
             <div key={index} className={styles.factItem}>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label>Title:</label>
+                  <label>სახელი:</label>
                   <input
                     type="text"
                     value={fact.title}
@@ -563,7 +762,7 @@ export default function AddVitamin() {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label>Info:</label>
+                  <label>ინფო:</label>
                   <input
                     type="text"
                     value={fact.info}
@@ -576,7 +775,7 @@ export default function AddVitamin() {
                   onClick={() => removeSupplementFact(index)}
                   className={styles.removeButton}
                 >
-                  Remove
+                  წაშალე
                 </button>
               </div>
             </div>
@@ -587,29 +786,63 @@ export default function AddVitamin() {
             onClick={addSupplementFact}
             className={styles.addButton}
           >
-            Add Supplement Fact
+            დაამატე ფაქტი
           </button>
         </div>
 
         <div className={styles.formSection}>
-          <h2>Additional Information</h2>
+          <h2 className={styles.sectionTitle}>სხვა ინფორმაცია</h2>
 
           <div className={styles.formGroup}>
-            <label htmlFor="country">Country:</label>
-            <input
-              type="text"
+            <label htmlFor="country">ქვეყანა:</label>
+            <select
               id="country"
+              className={`${styles.formSelect} ${styles.select}`}
               {...register("country")}
-            />
+            >
+              <option value="">აირჩიე ქვეყანა</option>
+              <option value="USA">United States</option>
+              <option value="Canada">Canada</option>
+              <option value="UK">United Kingdom</option>
+              <option value="Germany">Germany</option>
+              
+            </select>
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="tags">Tags (for search):</label>
-            <textarea
-              id="tags"
-              {...register("tags")}
-              rows={3}
-            />
+            <label>თაგები (სერჩისთვის):</label>
+            <div className={styles.tagInputContainer}>
+              <input
+                type="text"
+                value={newTag}
+                onChange={(e) => setNewTag(e.target.value)}
+                placeholder="Enter a tag and press Add"
+                className={styles.formInput}
+              />
+              <button
+                type="button"
+                onClick={addTag}
+                className={styles.addButton}
+                disabled={!newTag.trim()}
+              >
+                დაამატე თეგი
+              </button>
+            </div>
+            
+            <div className={styles.tagsContainer}>
+              {tagsValues.map((tag, index) => (
+                <div key={index} className={styles.tagItem}>
+                  <span>{tag}</span>
+                  <button 
+                    type="button" 
+                    onClick={() => removeTag(index)}
+                    className={styles.removeTagButton}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -628,10 +861,23 @@ export default function AddVitamin() {
             className={styles.saveButton}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Creating...' : 'Create Product'}
+            {isSubmitting ? 'ემატება...' : 'დაამატე პროდუქტი'}
           </button>
         </div>
       </form>
+
+      {/* Upload progress indicator */}
+      {isUploading && (
+        <div className={styles.uploadProgressContainer}>
+          <div 
+            className={styles.uploadProgressBar}
+            style={{ width: `${uploadProgress}%` }}
+          ></div>
+          <span className={styles.uploadProgressText}>
+            იტვირთება... {uploadProgress}%
+          </span>
+        </div>
+      )}
     </div>
   );
 }
