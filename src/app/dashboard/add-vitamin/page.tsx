@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
-import styles from './addVitamin.module.css';
-import Link from 'next/link';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import styles from "./addVitamin.module.css";
+import Link from "next/link";
+import { categories } from "@/data/categories";
 
 interface SupplementFact {
   title: string;
@@ -22,546 +23,609 @@ interface VitaminForm {
   tabletSize: number;
   sold: number;
   mainDaleOfWeek: boolean;
-  description: string;
-  descriptionPoints: string[];
-  ingredientInfo: string;
-  nutritionalInfo: string;
-  usageInfo: string;
-  warningInfo: string;
-  allergenInfo: string;
-  supplementInfo: string;
+  daleOfWeek: boolean;
+  isFeatured: boolean;
   mainImage: string;
-  secondaryImages: string[];
+  images: string[];
+  about: string;
+  description: string[];
+  use: string;
+  otherIngredients: string[];
+  warning: string;
   supplementFacts: SupplementFact[];
+  country: string;
+  tags: string;
+  review: any[];
   rating: any[];
 }
 
 export default function AddVitamin() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: '', text: '' });
-  const [activeTab, setActiveTab] = useState('basic');
-  const [newImageUrl, setNewImageUrl] = useState('');
-  
-  const { register, control, handleSubmit, formState: { errors }, setValue, getValues, watch } = useForm<VitaminForm>({
+  const [message, setMessage] = useState({ type: "", text: "" });
+  const [newImageUrl, setNewImageUrl] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    getValues,
+    watch,
+  } = useForm<VitaminForm>({
     defaultValues: {
-      name: '',
+      name: "",
       category: [],
-      infoTitle: '',
+      infoTitle: "",
       price: 0,
       discount: 0,
       productQuantity: 0,
-      packageQuantity: '',
+      packageQuantity: "",
       tabletSize: 0,
       sold: 0,
       mainDaleOfWeek: false,
-      description: '',
-      descriptionPoints: [''],
-      ingredientInfo: '',
-      nutritionalInfo: '',
-      usageInfo: '',
-      warningInfo: '',
-      allergenInfo: '',
-      supplementInfo: '',
-      mainImage: '',
-      secondaryImages: [],
-      supplementFacts: [],
-      rating: []
-    }
+      daleOfWeek: false,
+      isFeatured: false,
+      about: "",
+      description: [""],
+      use: "",
+      otherIngredients: [""],
+      warning: "",
+      mainImage: "",
+      images: [],
+      supplementFacts: [{ title: "", info: "" }],
+      country: "",
+      tags: "",
+      review: [],
+      rating: [],
+    },
   });
-  
-  const { fields: descriptionPointsFields, append: appendDescriptionPoint, remove: removeDescriptionPoint } = 
-    useFieldArray({
-      control, 
-      name: 'descriptionPoints' as any
-    });
-    
-  const { fields: supplementFactsFields, append: appendSupplementFact, remove: removeSupplementFact } = 
-    useFieldArray({
-      control, 
-      name: 'supplementFacts' as any
-    });
-  
-  // Add secondary image URL
-  const handleAddSecondaryImage = () => {
+
+  // Handle description points
+  const addDescriptionPoint = () => {
+    const currentDescription = getValues("description");
+    setValue("description", [...currentDescription, ""]);
+  };
+
+  const removeDescriptionPoint = (index: number) => {
+    const currentDescription = getValues("description");
+    setValue(
+      "description",
+      currentDescription.filter((_, i) => i !== index)
+    );
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const currentDescription = getValues("description");
+    const updatedDescription = [...currentDescription];
+    updatedDescription[index] = e.target.value;
+    setValue("description", updatedDescription);
+  };
+
+  // Handle ingredients
+  const addIngredient = () => {
+    const currentIngredients = getValues("otherIngredients");
+    setValue("otherIngredients", [...currentIngredients, ""]);
+  };
+
+  const removeIngredient = (index: number) => {
+    const currentIngredients = getValues("otherIngredients");
+    setValue(
+      "otherIngredients",
+      currentIngredients.filter((_, i) => i !== index)
+    );
+  };
+
+  const handleIngredientChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const currentIngredients = getValues("otherIngredients");
+    const updatedIngredients = [...currentIngredients];
+    updatedIngredients[index] = e.target.value;
+    setValue("otherIngredients", updatedIngredients);
+  };
+
+  // Handle supplement facts
+  const addSupplementFact = () => {
+    const currentFacts = getValues("supplementFacts");
+    setValue("supplementFacts", [...currentFacts, { title: "", info: "" }]);
+  };
+
+  const removeSupplementFact = (index: number) => {
+    const currentFacts = getValues("supplementFacts");
+    setValue(
+      "supplementFacts",
+      currentFacts.filter((_, i) => i !== index)
+    );
+  };
+
+  const handleSupplementFactChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    key: "title" | "info"
+  ) => {
+    const { value } = e.target;
+    const newFacts = [...getValues("supplementFacts")];
+    newFacts[index][key] = value;
+    setValue("supplementFacts", newFacts);
+  };
+
+  // Handle images
+  const handleAddImage = () => {
     if (newImageUrl.trim()) {
-      const currentImages = getValues('secondaryImages');
-      setValue('secondaryImages', [...currentImages, newImageUrl.trim()]);
-      setNewImageUrl('');
+      const currentImages = getValues("images");
+      setValue("images", [...currentImages, newImageUrl.trim()]);
+      setNewImageUrl("");
     }
   };
-  
-  // Remove image from secondaryImages
-  const removeSecondaryImage = (index: number) => {
-    const currentImages = getValues('secondaryImages');
-    setValue('secondaryImages', currentImages.filter((_, i) => i !== index));
-  };
-  
-  // Handle category input (comma-separated)
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const categories = e.target.value.split(',').map(cat => cat.trim()).filter(cat => cat);
-    setValue('category', categories);
+
+  const removeImage = (index: number) => {
+    const currentImages = getValues("images");
+    setValue(
+      "images",
+      currentImages.filter((_, i) => i !== index)
+    );
   };
 
   const onSubmit = async (data: VitaminForm) => {
     setIsSubmitting(true);
-    setMessage({ type: '', text: '' });
-    
+    setMessage({ type: "", text: "" });
+
     try {
-      const response = await fetch('/api/supplements/create', {
-        method: 'POST',
+      const response = await fetch("/api/supplements/create", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-      
+
       const result = await response.json();
-      
+
       if (response.ok) {
-        setMessage({ type: 'success', text: 'Vitamin created successfully!' });
+        setMessage({ type: "success", text: "Vitamin created successfully!" });
         setTimeout(() => {
-          router.push('/dashboard');
+          router.push("/dashboard");
         }, 2000);
       } else {
-        setMessage({ type: 'error', text: result.message || 'Failed to create vitamin' });
+        setMessage({
+          type: "error",
+          text: result.message || "Failed to create vitamin",
+        });
         setIsSubmitting(false);
       }
     } catch (error) {
-      console.error('Error:', error);
-      setMessage({ type: 'error', text: 'An error occurred while creating the vitamin' });
+      console.error("Error:", error);
+      setMessage({
+        type: "error",
+        text: "An error occurred while creating the vitamin",
+      });
       setIsSubmitting(false);
     }
   };
 
-  // Watch the mainImage value for preview
-  const mainImageValue = watch('mainImage');
-  const secondaryImagesValue = watch('secondaryImages');
-  
+  // Watch values for previews
+  const mainImageValue = watch("mainImage");
+  const imagesValue = watch("images");
+  const descriptionFields = watch("description");
+  const ingredientFields = watch("otherIngredients");
+  const supplementFactsFields = watch("supplementFacts");
+
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1>Add New Vitamin</h1>
-        <Link href="/dashboard" className={styles.backButton}>
-          Back to Dashboard
-        </Link>
-      </div>
-      
+    <div className={styles.editForm}>
+      <h1>Add New Vitamin</h1>
+
       {message.text && (
         <div className={`${styles.message} ${styles[message.type]}`}>
           {message.text}
         </div>
       )}
-      
-      {/* Tab Navigation */}
-      <div className={styles.tabNavigation}>
-        <button 
-          className={`${styles.tabButton} ${activeTab === 'basic' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('basic')}
-          type="button"
-        >
-          Basic Info
-        </button>
-        <button 
-          className={`${styles.tabButton} ${activeTab === 'description' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('description')}
-          type="button"
-        >
-          Description
-        </button>
-        <button 
-          className={`${styles.tabButton} ${activeTab === 'details' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('details')}
-          type="button"
-        >
-          Product Details
-        </button>
-        <button 
-          className={`${styles.tabButton} ${activeTab === 'images' ? styles.activeTab : ''}`}
-          onClick={() => setActiveTab('images')}
-          type="button"
-        >
-          Images
-        </button>
-      </div>
-      
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        {/* Basic Information Section */}
-        <div className={`${styles.formSection} ${activeTab === 'basic' ? styles.activeSection : styles.hiddenSection}`}>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.formSection}>
           <h2>Basic Information</h2>
-          
-          <div className={styles.formRow}>
-            <div className={styles.formGroup}>
-              <label htmlFor="name">Product Name*</label>
-              <input
-                type="text"
-                id="name"
-                {...register('name', { required: 'Product name is required' })}
-                className={styles.input}
-              />
-              {errors.name && <p className={styles.errorText}>{errors.name.message}</p>}
-            </div>
-            
-            <div className={styles.formGroup}>
-              <label htmlFor="infoTitle">Info Title</label>
-              <input
-                type="text"
-                id="infoTitle"
-                {...register('infoTitle')}
-                className={styles.input}
-                placeholder="Short catchy title"
-              />
+
+          <div className={styles.formGroup}>
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              {...register("name", { required: "Product name is required" })}
+              required
+            />
+            {errors.name && (
+              <p className={styles.errorText}>{errors.name.message}</p>
+            )}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="category">Categories (comma-separated):</label>
+            <div className={styles.categoriesCheckboxGroup}>
+              {categories
+                .filter((cat) => cat.value !== "all")
+                .map((category) => (
+                  <label
+                    key={category.value}
+                    className={styles.categoryCheckboxLabel}
+                  >
+                    <input
+                      type="checkbox"
+                      value={category.value}
+                      onChange={(e) => {
+                        const selectedCategories = getValues("category") || [];
+                        if (e.target.checked) {
+                          // Add category if checked
+                          setValue("category", [
+                            ...selectedCategories,
+                            category.value,
+                          ]);
+                        } else {
+                          // Remove category if unchecked
+                          setValue(
+                            "category",
+                            selectedCategories.filter(
+                              (cat) => cat !== category.value
+                            )
+                          );
+                        }
+                      }}
+                      checked={watch("category")?.includes(category.value)}
+                      className={styles.categoryCheckbox}
+                    />
+                    {category.name}
+                  </label>
+                ))}
             </div>
           </div>
-          
-          <div className={styles.formRow}>
-            <div className={styles.formGroup}>
-              <label htmlFor="category">Categories</label>
-              <input
-                type="text"
-                id="category"
-                value={getValues('category').join(', ')}
-                onChange={handleCategoryChange}
-                className={styles.input}
-                placeholder="Separate with commas (e.g., Vitamin D, Immune Support)"
-              />
-            </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="infoTitle">Info Title:</label>
+            <textarea
+              id="infoTitle"
+              {...register("infoTitle")}
+              rows={3}
+            />
           </div>
-          
+
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="price">Price ($)*</label>
+              <label htmlFor="price">Price:</label>
               <input
                 type="number"
                 id="price"
-                {...register('price', { required: 'Price is required', min: 0 })}
-                step="0.01"
-                min="0"
-                className={styles.input}
+                {...register("price", {
+                  required: "Price is required",
+                  min: 0,
+                })}
+                required
               />
-              {errors.price && <p className={styles.errorText}>{errors.price.message}</p>}
+              {errors.price && (
+                <p className={styles.errorText}>{errors.price.message}</p>
+              )}
             </div>
-            
+
             <div className={styles.formGroup}>
-              <label htmlFor="discount">Discount (%)</label>
+              <label htmlFor="discount">Discount (optional):</label>
               <input
                 type="number"
                 id="discount"
-                {...register('discount')}
-                min="0"
-                max="100"
-                className={styles.input}
+                {...register("discount")}
               />
             </div>
           </div>
-          
+
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="productQuantity">Inventory Quantity*</label>
+              <label htmlFor="productQuantity">Product Quantity:</label>
               <input
                 type="number"
                 id="productQuantity"
-                {...register('productQuantity', { required: 'Inventory quantity is required', min: 0 })}
-                min="0"
-                className={styles.input}
+                {...register("productQuantity", {
+                  required: "Inventory quantity is required",
+                  min: 0,
+                })}
+                required
               />
-              {errors.productQuantity && <p className={styles.errorText}>{errors.productQuantity.message}</p>}
+              {errors.productQuantity && (
+                <p className={styles.errorText}>
+                  {errors.productQuantity.message}
+                </p>
+              )}
             </div>
-            
+
             <div className={styles.formGroup}>
-              <label htmlFor="packageQuantity">Package Size</label>
+              <label htmlFor="packageQuantity">Package Quantity:</label>
               <input
                 type="text"
                 id="packageQuantity"
-                {...register('packageQuantity')}
-                className={styles.input}
-                placeholder="e.g., 60 tablets, 120 capsules"
+                {...register("packageQuantity")}
               />
             </div>
           </div>
-          
+
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="tabletSize">Tablet Size (mg)</label>
+              <label htmlFor="tabletSize">Tablet Size:</label>
               <input
                 type="number"
                 id="tabletSize"
-                {...register('tabletSize', { min: 0 })}
-                min="0"
-                className={styles.input}
+                {...register("tabletSize")}
               />
             </div>
-            
+
             <div className={styles.formGroup}>
-              <label htmlFor="sold">Units Sold</label>
+              <label htmlFor="sold">Sold:</label>
               <input
                 type="number"
                 id="sold"
-                {...register('sold', { min: 0 })}
-                min="0"
-                className={styles.input}
+                {...register("sold")}
               />
             </div>
           </div>
-          
+
           <div className={styles.formGroup}>
-            <label className={styles.checkboxLabel}>
+            <label htmlFor="mainImage">Main Image URL:</label>
+            <input
+              type="text"
+              id="mainImage"
+              {...register("mainImage")}
+            />
+            {mainImageValue && (
+              <img 
+                src={mainImageValue} 
+                alt="Main product image" 
+                className={styles.previewImage}
+              />
+            )}
+          </div>
+
+          <div className={styles.checkboxGroup}>
+            <div className={styles.checkbox}>
               <input
                 type="checkbox"
-                {...register('mainDaleOfWeek')}
+                id="isFeatured"
+                {...register("isFeatured")}
               />
-              Feature as Deal of the Week
-            </label>
-          </div>
-        </div>
-        
-        {/* Description Section */}
-        <div className={`${styles.formSection} ${activeTab === 'description' ? styles.activeSection : styles.hiddenSection}`}>
-          <h2>Product Description</h2>
-          
-          <div className={styles.formGroup}>
-            <label htmlFor="description">General Description</label>
-            <div className={styles.editorContainer}>
-              <textarea
-                id="description"
-                {...register('description')}
-                className={styles.textarea}
-                placeholder="Enter a detailed description of the product"
-              ></textarea>
+              <label htmlFor="isFeatured">Featured Product</label>
+            </div>
+
+            <div className={styles.checkbox}>
+              <input
+                type="checkbox"
+                id="mainDaleOfWeek"
+                {...register("mainDaleOfWeek")}
+              />
+              <label htmlFor="mainDaleOfWeek">Main Deal of Week</label>
+            </div>
+
+            <div className={styles.checkbox}>
+              <input
+                type="checkbox"
+                id="daleOfWeek"
+                {...register("daleOfWeek")}
+              />
+              <label htmlFor="daleOfWeek">Deal of Week</label>
             </div>
           </div>
-          
+        </div>
+
+        <div className={styles.formSection}>
+          <h2>Images</h2>
+
           <div className={styles.formGroup}>
-            <label>Key Benefits & Features</label>
-            <div className={styles.descriptionPointsContainer}>
-              {descriptionPointsFields.map((field, index) => (
-                <div key={field.id} className={styles.descriptionPointItem}>
-                  <div className={styles.pointNumbering}>{index + 1}</div>
-                  <div className={styles.pointInputContainer}>
-                    <input
-                      type="text"
-                      {...register(`descriptionPoints.${index}` as const)}
-                      className={styles.input}
-                      placeholder="Add a key feature or benefit"
-                    />
-                    {descriptionPointsFields.length > 1 && (
-                      <button
-                        type="button"
-                        className={styles.removePointButton}
-                        onClick={() => removeDescriptionPoint(index)}
-                      >
-                        ×
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ))}
-              
+            <div className={styles.imageUrlInputGroup}>
+              <input
+                type="text"
+                id="newImageUrl"
+                value={newImageUrl}
+                onChange={(e) => setNewImageUrl(e.target.value)}
+                className={styles.input}
+                placeholder="Enter image URL"
+              />
               <button
                 type="button"
-                className={styles.addPointButton}
-                onClick={() => appendDescriptionPoint('')}
+                onClick={handleAddImage}
+                className={styles.addButton}
+                disabled={!newImageUrl.trim()}
               >
-                + Add Another Point
+                Add Image
               </button>
             </div>
           </div>
+
+          {imagesValue.map((image, index) => (
+            <div key={index} className={styles.imageItem}>
+              <input
+                type="text"
+                value={image}
+                onChange={(e) => {
+                  const newImages = [...imagesValue];
+                  newImages[index] = e.target.value;
+                  setValue("images", newImages);
+                }}
+              />
+              <button 
+                type="button" 
+                onClick={() => removeImage(index)}
+                className={styles.removeButton}
+              >
+                Remove
+              </button>
+              <img src={image} alt={`Product ${index + 1}`} className={styles.previewImage} />
+            </div>
+          ))}
         </div>
-        
-        {/* Product Details Section */}
-        <div className={`${styles.formSection} ${activeTab === 'details' ? styles.activeSection : styles.hiddenSection}`}>
-          <h2>Product Details</h2>
-          
-          <div className={styles.detailsGrid}>
-            <div className={styles.detailCard}>
-              <h3>Ingredients</h3>
-              <textarea
-                id="ingredientInfo"
-                {...register('ingredientInfo')}
-                className={styles.textarea}
-                placeholder="List all ingredients"
-              ></textarea>
-            </div>
-            
-            <div className={styles.detailCard}>
-              <h3>Nutritional Information</h3>
-              <textarea
-                id="nutritionalInfo"
-                {...register('nutritionalInfo')}
-                className={styles.textarea}
-                placeholder="Nutritional information"
-              ></textarea>
-            </div>
-            
-            <div className={styles.detailCard}>
-              <h3>Usage Instructions</h3>
-              <textarea
-                id="usageInfo"
-                {...register('usageInfo')}
-                className={styles.textarea}
-                placeholder="How to use the product"
-              ></textarea>
-            </div>
-            
-            <div className={styles.detailCard}>
-              <h3>Warnings</h3>
-              <textarea
-                id="warningInfo"
-                {...register('warningInfo')}
-                className={styles.textarea}
-                placeholder="Any warnings or precautions"
-              ></textarea>
-            </div>
-            
-            <div className={styles.detailCard}>
-              <h3>Allergen Information</h3>
-              <textarea
-                id="allergenInfo"
-                {...register('allergenInfo')}
-                className={styles.textarea}
-                placeholder="Any allergens in the product"
-              ></textarea>
-            </div>
-            
-            <div className={styles.detailCard}>
-              <h3>Supplement Information</h3>
-              <textarea
-                id="supplementInfo"
-                {...register('supplementInfo')}
-                className={styles.textarea}
-                placeholder="Additional supplement information"
-              ></textarea>
-            </div>
+
+        <div className={styles.formSection}>
+          <h2>Description</h2>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="about">About:</label>
+            <textarea
+              id="about"
+              {...register("about")}
+              rows={6}
+            />
           </div>
-          
-          <div className={styles.supplementFactsSection}>
-            <h3>Supplement Facts</h3>
-            <p className={styles.infoText}>Add specific supplement facts (e.g., Vitamin D: 1000 IU)</p>
-            
-            {supplementFactsFields.map((fact, index) => (
-              <div key={fact.id} className={styles.supplementFactRow}>
-                <div className={styles.factProperty}>
+
+          <h3>Description Points</h3>
+          {descriptionFields.map((desc, index) => (
+            <div key={index} className={styles.arrayItem}>
+              <input
+                type="text"
+                value={desc}
+                onChange={(e) => handleDescriptionChange(e, index)}
+              />
+              <button 
+                type="button" 
+                onClick={() => removeDescriptionPoint(index)}
+                className={styles.removeButton}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+
+          <button 
+            type="button" 
+            onClick={addDescriptionPoint}
+            className={styles.addButton}
+          >
+            Add Description Point
+          </button>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="use">Usage Instructions:</label>
+            <textarea
+              id="use"
+              {...register("use")}
+              rows={3}
+            />
+          </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <h2>Ingredients & Warnings</h2>
+
+          <h3>Other Ingredients</h3>
+          {ingredientFields.map((ingredient, index) => (
+            <div key={index} className={styles.arrayItem}>
+              <input
+                type="text"
+                value={ingredient}
+                onChange={(e) => handleIngredientChange(e, index)}
+              />
+              <button 
+                type="button" 
+                onClick={() => removeIngredient(index)}
+                className={styles.removeButton}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+
+          <button 
+            type="button" 
+            onClick={addIngredient}
+            className={styles.addButton}
+          >
+            Add Ingredient
+          </button>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="warning">Warning:</label>
+            <textarea
+              id="warning"
+              {...register("warning")}
+              rows={4}
+            />
+          </div>
+        </div>
+
+        <div className={styles.formSection}>
+          <h2>Supplement Facts</h2>
+
+          {supplementFactsFields.map((fact, index) => (
+            <div key={index} className={styles.factItem}>
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label>Title:</label>
                   <input
                     type="text"
-                    {...register(`supplementFacts.${index}.title` as const)}
-                    className={styles.input}
-                    placeholder="Nutrient"
+                    value={fact.title}
+                    onChange={(e) => handleSupplementFactChange(e, index, "title")}
                   />
                 </div>
-                
-                <div className={styles.factValue}>
+
+                <div className={styles.formGroup}>
+                  <label>Info:</label>
                   <input
                     type="text"
-                    {...register(`supplementFacts.${index}.info` as const)}
-                    className={styles.input}
-                    placeholder="Amount"
+                    value={fact.info}
+                    onChange={(e) => handleSupplementFactChange(e, index, "info")}
                   />
                 </div>
-                
-                <button
-                  type="button"
-                  className={styles.removeFactButton}
+
+                <button 
+                  type="button" 
                   onClick={() => removeSupplementFact(index)}
+                  className={styles.removeButton}
                 >
-                  ×
+                  Remove
                 </button>
               </div>
-            ))}
-            
-            <button
-              type="button"
-              className={styles.addFactButton}
-              onClick={() => appendSupplementFact({ title: '', info: '' })}
-            >
-              + Add Supplement Fact
-            </button>
+            </div>
+          ))}
+
+          <button 
+            type="button" 
+            onClick={addSupplementFact}
+            className={styles.addButton}
+          >
+            Add Supplement Fact
+          </button>
+        </div>
+
+        <div className={styles.formSection}>
+          <h2>Additional Information</h2>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="country">Country:</label>
+            <input
+              type="text"
+              id="country"
+              {...register("country")}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="tags">Tags (for search):</label>
+            <textarea
+              id="tags"
+              {...register("tags")}
+              rows={3}
+            />
           </div>
         </div>
-        
-        {/* Images Section */}
-        <div className={`${styles.formSection} ${activeTab === 'images' ? styles.activeSection : styles.hiddenSection}`}>
-          <h2>Product Images</h2>
-          
-          <div className={styles.imageSection}>
-            <div className={styles.mainImageContainer}>
-              <h3>Main Product Image</h3>
-              <div className={styles.formGroup}>
-                <label htmlFor="mainImage">Main Image URL</label>
-                <input
-                  type="url"
-                  id="mainImage"
-                  {...register('mainImage')}
-                  className={styles.input}
-                  placeholder="Enter the URL of the main product image"
-                />
-                
-                {mainImageValue && (
-                  <div className={styles.mainImagePreview}>
-                    <img src={mainImageValue} alt="Main product preview" />
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            <div className={styles.additionalImagesContainer}>
-              <h3>Additional Images</h3>
-              
-              <div className={styles.formGroup}>
-                <label htmlFor="newImageUrl">Add Image URL</label>
-                <div className={styles.imageUrlInputGroup}>
-                  <input
-                    type="url"
-                    id="newImageUrl"
-                    value={newImageUrl}
-                    onChange={(e) => setNewImageUrl(e.target.value)}
-                    className={styles.input}
-                    placeholder="Enter image URL"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddSecondaryImage}
-                    className={styles.addUrlButton}
-                    disabled={!newImageUrl.trim()}
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-              
-              {secondaryImagesValue.length > 0 && (
-                <div className={styles.secondaryImagesGrid}>
-                  {secondaryImagesValue.map((url, index) => (
-                    <div key={index} className={styles.secondaryImageItem}>
-                      <div className={styles.imagePreview}>
-                        <img src={url} alt={`Product view ${index + 1}`} />
-                        <button
-                          type="button"
-                          className={styles.removeImageButton}
-                          onClick={() => removeSecondaryImage(index)}
-                        >
-                          ×
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        {/* Form Actions */}
+
         <div className={styles.formActions}>
-          <button
-            type="button"
-            className={styles.cancelButton}
+          <button 
+            type="button" 
             onClick={() => router.push('/dashboard')}
+            className={styles.cancelButton}
+            disabled={isSubmitting}
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            className={styles.submitButton}
+
+          <button 
+            type="submit" 
+            className={styles.saveButton}
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Creating...' : 'Create Product'}
