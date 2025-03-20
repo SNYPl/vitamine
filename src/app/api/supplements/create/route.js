@@ -27,8 +27,9 @@ export async function POST(request) {
       );
     }
     
-    // Create a new supplement
+    // Create a new supplement with all fields matching the edit form
     const supplement = new Supplement({
+      // Basic Information
       name: data.name,
       category: data.category || [],
       infoTitle: data.infoTitle || '',
@@ -38,19 +39,33 @@ export async function POST(request) {
       packageQuantity: data.packageQuantity || '',
       tabletSize: data.tabletSize || 0,
       sold: data.sold || 0,
+      country: data.country || '',
+      
+      // Flags/Booleans
       mainDaleOfWeek: data.mainDaleOfWeek || false,
-      description: data.description || '',
-      descriptionPoints: data.descriptionPoints || [],
-      ingredientInfo: data.ingredientInfo || '',
-      nutritionalInfo: data.nutritionalInfo || '',
-      usageInfo: data.usageInfo || '',
-      warningInfo: data.warningInfo || '',
-      allergenInfo: data.allergenInfo || '',
-      supplementInfo: data.supplementInfo || '',
+      daleOfWeek: data.daleOfWeek || false,
+      isFeatured: data.isFeatured || false,
+      
+      // Images
       mainImage: data.mainImage || '',
-      secondaryImages: data.secondaryImages || [],
+      images: data.images || [],
+      
+      // Content
+      about: data.about || '',
+      description: data.description || [],
+      use: data.use || '',
+      otherIngredients: data.otherIngredients || [],
+      warning: data.warning || '',
+      
+      // Supplement Facts
       supplementFacts: data.supplementFacts || [],
+      
+      // Additional Information
+      tags: data.tags || [],
       rating: data.rating || [],
+      review: data.review || [],
+      
+      // Metadata
       createdAt: new Date(),
       updatedAt: new Date()
     });
