@@ -1,3 +1,88 @@
 .wishlist {
-  margin: 60px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  .wishlistHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .heartIcon {
+      color: #f79823;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+  }
+
+  .emptyWishlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    text-align: center;
+    margin: 2rem 0;
+
+    .emptyIcon {
+      font-size: 5rem;
+      color: #ddd;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 2rem;
+      max-width: 400px;
+    }
+
+    .shopButton {
+      background-color: #f79823;
+      color: white;
+      font-weight: 500;
+      padding: 0.8rem 2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: darken(#f79823, 10%);
+      }
+    }
+  }
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  gap: 1rem;
+
+  p {
+    color: #666;
+    font-size: 1.1rem;
+  }
 }

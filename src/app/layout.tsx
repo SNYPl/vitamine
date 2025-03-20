@@ -9,7 +9,6 @@ import { ReduxToolkitProvider } from "@/components/helper/reduxProvider";
 import React from "react";
 import ProductInfoModal from "@/components/productInfoModal/ProductInfoModal";
 import AuthWrapper from "./auth_wrapper";
-import FacebookChatPlugin from "@/components/facebookChat/FacebookChatPlugin";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +35,6 @@ export default function RootLayout({
                 <ProductInfoModal />
                 {children}
                 {modal}
-                <FacebookChatPlugin />
               </AuthWrapper>
             </QueryClientProviderHelper>
             <footer className={"container"}>

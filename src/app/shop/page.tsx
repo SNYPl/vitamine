@@ -14,7 +14,11 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const featureProducts = await getFeaturesProducts();
-  const productIds = (await getAllWishListProductsIds()) || [];
+  const productIds = await getAllWishListProductsIds();
+
+  // Convert the array to the expected format
+  const formattedIds: [string] =
+    productIds?.length > 0 ? [productIds[0]] : [""];
 
   return (
     <main className={styles.main}>
@@ -23,7 +27,7 @@ export default async function Home() {
         <Services />
         <Suspense fallback={<Skeleton active />}>
           <FeaturedProducts
-            userWishlist={productIds}
+            userWishlist={formattedIds}
             featureProducts={featureProducts}
           />
         </Suspense>

@@ -16,8 +16,8 @@ type Inputs = {
 
 const ResetPassword: React.FC = ({}) => {
   const param = useSearchParams();
-  const userId = param.get("id");
-  const userToken = param.get("token");
+  const userId = param?.get("id");
+  const userToken = param?.get("token");
 
   const {
     register,

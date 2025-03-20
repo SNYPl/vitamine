@@ -28,7 +28,7 @@ const TopNav = () => {
               </li>
               <li>
                 <i className="fas fa-phone-alt" />
-                +995 557 00 76 37
+                +995 558383881
               </li>
             </ul>
           </div>

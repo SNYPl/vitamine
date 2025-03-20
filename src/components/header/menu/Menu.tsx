@@ -7,7 +7,12 @@ import Image from "next/image";
 import { getAllWishListProductsIds } from "@/lib/wishlist";
 
 const Menu = async () => {
-  const productIds = (await getAllWishListProductsIds()) || [];
+  const productIds = await getAllWishListProductsIds();
+
+  // Format productIds to match the expected type
+  const formattedIds: [] | [string] =
+    productIds?.length > 0 ? [productIds[0]] : [];
+
   return (
     <section className={styles.menu}>
       <div className="container">
@@ -22,7 +27,7 @@ const Menu = async () => {
             />
           </Link>
           <Navigation />
-          <Cart wishlistLength={productIds} />
+          <Cart wishlistLength={formattedIds} />
         </div>
       </div>
     </section>

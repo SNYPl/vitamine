@@ -11,7 +11,20 @@ interface User {
 }
 
 export async function getCurrentUser(): Promise<User | null> {
-  const session = await getServerSession(authOptions);
-  // Cast the session user to our User type
-  return session?.user as unknown as User | null;
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return null;
+    }
+
+    if (!session.user) {
+      return null;
+    }
+
+    return session.user as unknown as User;
+  } catch (error) {
+    console.error("Error getting current user:", error);
+    return null;
+  }
 }

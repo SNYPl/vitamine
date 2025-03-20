@@ -58,7 +58,11 @@ export const POST = async (request) => {
           <body style="font-family: sans-serif;">
             <div style="display: block; margin: auto; max-width: 600px;" class="main">
               <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">ანგარიშის გასააქტიურებლად,</h1>
-              <p>გადადით <a href="${process.env.API_REQUEST_URL}/api/auth/verify?token=${verificationToken}">ლინკზე</a></p>
+              <p>გადადით <a href="${
+                process.env.NODE_ENV === "development" ? "http://" : "https://"
+              }${
+        process.env.VERCEL_URL || "localhost:3000"
+      }/api/auth/verify?token=${verificationToken}">ლინკზე</a></p>
              
             <style>
               .main { background-color: white; }

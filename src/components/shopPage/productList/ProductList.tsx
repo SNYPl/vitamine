@@ -7,12 +7,16 @@ import FeaturedList from "../featuredList/FeaturedList";
 import { getAllWishListProductsIds } from "@/lib/wishlist";
 
 const ProductList: React.FC = async ({}) => {
-  const productIds = (await getAllWishListProductsIds()) || [];
+  const productIds = await getAllWishListProductsIds();
+
+  // Format to expected [string] tuple type
+  const formattedIds: [string] =
+    productIds?.length > 0 ? [productIds[0]] : [""];
 
   return (
     <section className={style.productList}>
       <Sort />
-      <ShopList userWishlist={productIds} />
+      <ShopList userWishlist={formattedIds} />
       <PaginationComponent />
       <FeaturedList />
     </section>
