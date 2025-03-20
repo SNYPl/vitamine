@@ -10,59 +10,55 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        console.log("Credentials received:", credentials); // Debug log
-        
-        if (!credentials || !credentials.email || !credentials.password) {
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password are required");
         }
 
         try {
           await connectDB();
-          
-          console.log("Searching for user with email:", credentials.email); // Debug log
-          const user = await User.findOne({ 
-            email: credentials.email.toLowerCase().trim() 
+          console.log(`Looking up user with email: ${credentials.email}`);
+
+          const user = await User.findOne({
+            email: credentials.email.toLowerCase().trim(),
           });
-          
+
           if (!user) {
-            console.log("User not found"); // Debug log
+            console.log("User not found");
             throw new Error("Invalid email or password");
           }
 
-          // Check if user is verified
           if (!user.isVerified) {
-            console.log("User not verified"); // Debug log
+            console.log("User not verified");
             throw new Error("Please verify your email before logging in");
           }
-          
-          console.log("Checking password"); // Debug log
-          const passwordMatch = await bcrypt.compare(
+
+          const isValid = await bcrypt.compare(
             credentials.password,
             user.password
           );
-          
-          if (!passwordMatch) {
-            console.log("Password doesn't match"); // Debug log
+
+          if (!isValid) {
+            console.log("Invalid password");
             throw new Error("Invalid email or password");
           }
-          
-          console.log("Login successful"); // Debug log
+
+          console.log("Authentication successful for:", user.email);
           return {
             id: user._id.toString(),
             email: user.email,
-            name: user.username || user.email.split('@')[0],
-            image: user.image || "",
+            name: user.username || user.email.split("@")[0],
+            image: user.image || null,
             role: user.role || "user",
           };
         } catch (error) {
-          console.error("Auth error:", error);
+          console.error("Authorization error:", error);
           throw error;
         }
-      }
-    })
+      },
+    }),
   ],
   pages: {
     signIn: "/login",
@@ -70,32 +66,37 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
+      console.log("JWT Callback - User:", user ? "exists" : "null");
+      console.log("JWT Callback - Token:", token);
+
       if (user) {
         token.id = user.id;
-        token.name = user.name;
         token.email = user.email;
+        token.name = user.name;
         token.picture = user.image;
         token.role = user.role;
       }
+
       return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        // Use type assertion to satisfy TypeScript
-        const user = session.user as any;
-        user.id = token.id as string;
-        user.name = token.name as string;
-        user.email = token.email as string;
-        user.image = token.picture as string;
-        user.role = token.role as string;
+      console.log("Session Callback - Token:", token);
+
+      if (session?.user) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.image = (token.picture as string) || null;
+        session.user.role = token.role as string;
       }
+
+      console.log("Final session:", session);
       return session;
-    }
+    },
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 60, // 30 minutes by default
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
-  secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === "development",
 };

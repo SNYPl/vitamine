@@ -4,17 +4,25 @@ import connectDB from "@/lib/db";
 
 export const GET = async (req, res) => {
   try {
-    const userEmail = req.url.split("=")[1];
+    const { searchParams } = new URL(req.url);
+    const email = searchParams.get("email");
+
+    if (!email) {
+      return new Response(JSON.stringify({ error: "Email is required" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     await connectDB();
 
-    if (!userEmail) {
-      throw new Error("error user is not here");
-    }
-
-    const userObj = await User.findOne({ email: userEmail }).select({
+    const userObj = await User.findOne({ email: email }).select({
       password: 0,
     });
+
+    if (!userObj) {
+      throw new Error("No user found");
+    }
 
     return new NextResponse(JSON.stringify({ user: userObj }), {
       headers: {
@@ -22,11 +30,13 @@ export const GET = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
-    return new NextResponse(JSON.stringify(error), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    console.error("Error fetching user:", error);
+    return new NextResponse(
+      JSON.stringify({ error: "Failed to fetch user data" }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 };
