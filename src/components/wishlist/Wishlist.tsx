@@ -1,20 +1,67 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import style from "./style.module.scss";
 import ItemList from "./itemList/ItemList";
 import ParamInfo from "../shopPage/paramInfo/ParamInfo";
 import { useSession } from "next-auth/react";
 // import { FaHeart } from "react-icons/fa";
-import { Spin } from "antd";
+import { Spin, Pagination, Alert } from "antd";
 
 // Change this to a client component with session handling
 const WishlistPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [wishlistData, setWishlistData] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const [wishlistData, setWishlistData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const PAGE_SIZE = 20;
+
+  const fetchWishlistData = useCallback(
+    async (currentPage = 1) => {
+      setLoading(true);
+      setError("");
+
+      try {
+        // First get the count of all items
+        const countResponse = await fetch(
+          "/api/wishlistList?user=" + session?.user?.email,
+          {
+            method: "POST",
+            body: JSON.stringify({ action: "count" }),
+          }
+        );
+
+        if (!countResponse.ok) {
+          throw new Error("Failed to get wishlist count");
+        }
+
+        const countData = await countResponse.json();
+        setTotal(countData.count || 0);
+
+        // Then fetch the paginated items
+        const response = await fetch(
+          `/api/wishlistData?page=${currentPage}&limit=${PAGE_SIZE}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch wishlist: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setWishlistData(data || []);
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+        setError("Failed to load your wishlist. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [session?.user?.email]
+  );
 
   useEffect(() => {
     // Redirect to login if not authenticated
@@ -25,18 +72,18 @@ const WishlistPage = () => {
 
     // Fetch data when authenticated
     if (status === "authenticated") {
-      fetch("/api/wishlistData")
-        .then((response) => response.json())
-        .then((data) => {
-          setWishlistData(data || []);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching wishlist:", error);
-          setLoading(false);
-        });
+      fetchWishlistData(page);
     }
-  }, [status, router]);
+  }, [status, router, page, fetchWishlistData]);
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleItemDeleted = () => {
+    // Refetch wishlist data when an item is deleted
+    fetchWishlistData(page);
+  };
 
   // Loading state
   if (status === "loading" || loading) {
@@ -58,6 +105,16 @@ const WishlistPage = () => {
         <p>დამახსოვრებული ნივთები</p>
       </div>
 
+      {error && (
+        <Alert
+          message="Error"
+          description={error}
+          type="error"
+          showIcon
+          className={style.errorAlert}
+        />
+      )}
+
       {isEmpty ? (
         <div className={style.emptyWishlist}>
           {/* <FaHeart className={style.emptyIcon} /> */}
@@ -68,7 +125,20 @@ const WishlistPage = () => {
           </a>
         </div>
       ) : (
-        <ItemList wishlistData={wishlistData} />
+        <>
+          <ItemList wishlistData={wishlistData} onDelete={handleItemDeleted} />
+          {total > PAGE_SIZE && (
+            <div className={style.paginationContainer}>
+              <Pagination
+                current={page}
+                pageSize={PAGE_SIZE}
+                total={total}
+                onChange={handlePageChange}
+                showSizeChanger={false}
+              />
+            </div>
+          )}
+        </>
       )}
     </section>
   );

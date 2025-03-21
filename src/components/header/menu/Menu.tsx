@@ -9,9 +9,8 @@ import { getAllWishListProductsIds } from "@/lib/wishlist";
 const Menu = async () => {
   const productIds = await getAllWishListProductsIds();
 
-  // Format productIds to match the expected type
-  const formattedIds: [] | [string] =
-    productIds?.length > 0 ? [productIds[0]] : [];
+  // Pass the actual length of the wishlist instead of just one item
+  const wishlistLength = productIds?.length || 0;
 
   return (
     <section className={styles.menu}>
@@ -27,7 +26,7 @@ const Menu = async () => {
             />
           </Link>
           <Navigation />
-          <Cart wishlistLength={formattedIds} />
+          <Cart wishlistLength={wishlistLength} />
         </div>
       </div>
     </section>

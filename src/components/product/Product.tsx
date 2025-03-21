@@ -16,7 +16,7 @@ interface product {
   country: string;
   productQuantity?: number | undefined | any;
   sold: number;
-  userWishlist?: [string] | null | undefined;
+  userWishlist?: string[] | null | undefined;
 }
 
 const Product: React.FC<product> = ({

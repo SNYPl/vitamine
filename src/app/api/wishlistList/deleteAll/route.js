@@ -1,25 +1,44 @@
-import User from "@/models/user";
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
+import User from "@/models/user";
 
-export const DELETE = async (req, res) => {
+export async function DELETE(req) {
   try {
-    const userEmail = await req.nextUrl.searchParams.get("user");
+    const { searchParams } = new URL(req.url);
+    const userEmail = searchParams.get("user");
 
-    const user = await User.findOne({ email: userEmail });
-
-    if (!user) {
-      throw new Error("User not found");
+    if (!userEmail) {
+      return NextResponse.json(
+        { error: "User email is required" },
+        { status: 400 }
+      );
     }
 
-    await User.updateOne({ _id: user._id }, { $unset: { wishlist: [] } });
+    // Update user to have an empty wishlist array
+    const result = await User.updateOne(
+      { email: userEmail },
+      { $set: { wishlist: [] } }
+    );
 
-    return new NextResponse(JSON.stringify("Products Deleted"), {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    if (result.modifiedCount === 0) {
+      return NextResponse.json(
+        { message: "Wishlist already empty or user not found" },
+        { status: 404 }
+      );
+    }
+
+    // Revalidate the wishlist tag to update both server and client data
+    revalidateTag("wishlist");
+
+    return NextResponse.json({
+      message: "All products removed from wishlist",
+      success: true,
     });
   } catch (error) {
-    console.log(error);
-    return new NextResponse("error deleting wishlist product " + error);
+    console.error("Error deleting all wishlist products:", error);
+    return NextResponse.json(
+      { error: "Failed to delete all items from wishlist" },
+      { status: 500 }
+    );
   }
-};
+}

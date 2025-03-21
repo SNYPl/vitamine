@@ -315,6 +315,7 @@ export default function AddVitamin() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
+        cache: "no-store",
       });
 
       const result = await response.json();
@@ -323,10 +324,18 @@ export default function AddVitamin() {
 
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin created successfully!" });
+
+        // First update dashboard via fetch to trigger revalidation
+        await fetch("/api/supplements/get", {
+          cache: "no-store",
+          next: { revalidate: 0 },
+        });
+
+        // Then redirect and refresh the page
         setTimeout(() => {
-          router.push("/dashboard");
-          router.refresh();
-        }, 2000);
+          // Use replace instead of push for a full refresh
+          router.replace("/dashboard");
+        }, 1500);
       } else {
         setMessage({
           type: "error",
