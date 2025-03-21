@@ -4,12 +4,11 @@ import Search from "@/components/productMenu/productSearch/search/Search";
 import ShopComponent from "@/components/shopPage/Shop";
 import Ad from "@/components/productMenu/productSearch/productAd/Ad";
 import Companies from "@/components/companies/Companies";
+import OrganizationSchema from "@/components/OrganizationSchema";
 
 export default function Shop({ params }: { params: { shop: string } }) {
   return (
     <main className={styles.shop}>
-     
-      
       <div className={styles.mainContent}>
         <div className="container">
           <div className={styles.searchWrapper}>
@@ -18,20 +17,31 @@ export default function Shop({ params }: { params: { shop: string } }) {
               <Search />
             </div>
           </div>
-          
+
           <Ad />
-          
+
           <div className={styles.shopSection}>
             <div className={styles.filterBar}>
               <h2>ჩვენი პროდუქტები</h2>
             </div>
-            
+
             <ShopComponent />
           </div>
         </div>
       </div>
-      
+
       <Companies />
+
+      <OrganizationSchema
+        siteUrl={
+          process.env.NEXT_PUBLIC_SITE_URL ||
+          "https://vitamine-store.vercel.app"
+        }
+        logoUrl={`${
+          process.env.NEXT_PUBLIC_SITE_URL ||
+          "https://vitamine-store.vercel.app"
+        }/logo.png`}
+      />
     </main>
   );
 }
