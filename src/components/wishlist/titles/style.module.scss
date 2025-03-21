@@ -1,62 +1,106 @@
+.titleContainer {
+  margin-bottom: 1rem;
+}
+
+.headerRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
 .titlesForm {
   display: grid;
-  grid-template-columns: 0.9fr 2fr 1fr 1.5fr 1fr;
+  grid-template-columns: 0.9fr 2fr 1fr 1.5fr 0.6fr;
   width: 100%;
   align-items: center;
-  padding-bottom: 5px;
-  border: 1px solid #ebebeb;
+  background-color: #f9f9f9;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid #f0f0f0;
+  padding: 1rem 0.5rem;
+  margin-bottom: 0;
 
   p {
-    padding: 10px;
+    padding: 0.5rem;
     text-align: center;
-    color: #252525;
-    font-size: 1rem;
-    font-family: ceraBold;
-    line-height: 1;
-    text-transform: uppercase;
-    height: 53px;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     display: flex;
-    width: 100%;
     justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
-    font-weight: bold;
+    align-items: center;
   }
+}
+
+.clearBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
 
   .clearBtn {
     display: flex;
-    width: 100%;
+    align-items: center;
     justify-content: center;
-    align-content: center;
-    padding: 10px;
-    height: 53px;
+    font-size: 0.9rem;
+    height: auto;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    background-color: #ff4d4f;
+    transition: all 0.3s ease;
 
-    .btnInf {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: transparent;
-      background: #ffffff;
-      border-color: #d9d9d9;
-      color: rgba(0, 0, 0, 0.88);
-      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
-
-      &:hover {
-        color: #4096ff;
-        border-color: #4096ff;
-        background: #ffffff;
-      }
+    &:hover {
+      background-color: darken(#ff4d4f, 10%);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(255, 77, 79, 0.5);
     }
   }
 }
 
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .warningIcon {
+    color: #ff4d4f;
+    font-size: 1.2rem;
+  }
+}
+
+.modalContent {
+  font-size: 1rem;
+  margin: 1rem 0;
+  color: #505050;
+}
+
+// Responsive design
 @media only screen and (max-width: 768px) {
+  .titlesForm {
+    grid-template-columns: 80px 2fr 1fr 1fr 0.8fr;
+  }
 }
 
 @media only screen and (max-width: 500px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .clearBtnContainer {
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+  }
+
   .titlesForm {
-    overflow-y: scroll;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0.5rem;
+
+    p {
+      font-size: 0.7rem;
+      padding: 0.3rem;
+    }
   }
 }

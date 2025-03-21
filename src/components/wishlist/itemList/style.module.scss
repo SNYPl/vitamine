@@ -1,114 +1,277 @@
 .productList {
-  // padding: 10px;
-  // row-gap: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
   padding-top: 0;
+  margin-bottom: 2rem;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
-.productImg {
-  background-color: #eaeff4;
-  padding: 1.25em;
-}
-.product {
-  display: grid;
-  grid-template-columns: 0.9fr 2fr 1fr 1.5fr 1fr;
-  width: 100%;
-  align-items: center;
-  padding-bottom: 10px;
-  border: 1px solid #ebebeb;
-  border-top: none;
-  padding: 10px 0;
 
-  div,
-  p {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
-    padding: 10px;
-    font-size: 1rem;
+.productActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: row;
+}
+
+.productImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  padding: 0.5rem;
+  width: 110px;
+  height: 110px;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
 
-  .productRemove {
-    padding: 10px;
+  .productImage {
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    max-height: 100%;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.product {
+  display: grid;
+  grid-template-columns: 0.9fr 2fr 1fr 1.5fr 0.6fr;
+  width: 100%;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #fafafa;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .productName {
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin: 0;
+    color: #333;
+    text-align: left;
+    line-height: 1.4;
+  }
+}
+
+.productPrice {
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+
+  .discountPrice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .originalPrice {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .salePrice {
+      color: #e53935;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
   }
 }
 
 .addCart {
   display: flex;
-  justify-content: space-between;
-  align-content: center;
-  margin-top: 15px;
+  justify-content: center;
+  align-items: center;
 
-  button {
-    font-size: 0.875em;
-    border: 0;
-    height: 2.5em;
-    padding: 0 1.4285714286em;
-    background-color: var(--green-color);
-    border: 0;
-    color: #fff;
-    font-family: ceraBold;
-    text-transform: uppercase;
-    border-radius: 32px;
+  .addCartBtn {
+    background-color: #f79823;
+    border-color: #f79823;
+    height: 38px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 
     &:hover {
-      opacity: 0.8;
-      color: #fff;
+      background-color: darken(#f79823, 10%);
+      border-color: darken(#f79823, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(247, 152, 35, 0.3);
     }
   }
 }
 
-.quantityInfo {
+.productRemove {
   display: flex;
-  align-items: center;
   justify-content: center;
-  margin-left: 8px;
-}
+  align-items: center;
 
-.btnInf {
-  height: 2.8125em;
-  width: 100%;
-  background-color: var(--green-color);
-  border-color: var(--green-color);
-  padding: 2.4px 16px;
-  font-size: 16px;
-  border-radius: 32px;
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
-  outline: none;
-  margin-top: 30px;
-  &:hover {
-    opacity: 0.8;
-    color: #fff !important;
-    border-color: var(--green-color) !important;
+  .deleteBtn {
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #ff4d4f;
+      color: white;
+      transform: rotate(5deg);
+    }
   }
 }
 
-.skeletion {
-  width: 100%;
-  height: 200px;
-}
-
 .itemLink {
-  color: #000;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
 
   &:hover {
-    color: var(--green-color);
+    color: #f79823;
+  }
+}
+
+// Responsive design
+@media only screen and (max-width: 768px) {
+  .product {
+    grid-template-columns: 80px 2fr 1fr 1fr 0.8fr;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+  }
+
+  .productImg {
+    width: 70px;
+    height: 70px;
+  }
+
+  .addCart {
+    .addCartBtn {
+      font-size: 0.8rem;
+      height: 34px;
+      padding: 0 0.8rem;
+    }
   }
 }
 
 @media only screen and (max-width: 500px) {
   .product {
-    overflow-y: scroll;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    padding: 0.8rem 0.5rem;
   }
 
-  .updateBtn {
-    button {
-      font-size: 0.7em;
-      padding: 0 2em;
+  .productImg {
+    grid-column: 1;
+    width: 60px;
+    height: 60px;
+  }
+
+  .productDetails {
+    grid-column: 2 / 6;
+
+    .productName {
+      font-size: 0.9rem;
     }
+  }
+
+  .productPrice {
+    grid-column: 1;
+    grid-row: 2;
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  .addCart {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    justify-content: flex-start;
+
+    .addCartBtn {
+      font-size: 0.75rem;
+      padding: 0 0.5rem;
+      height: 32px;
+    }
+  }
+
+  .productRemove {
+    grid-column: 4 / 6;
+    grid-row: 2;
+    justify-content: flex-end;
+  }
+}
+
+.clearAllContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-top: 1px solid #f0f0f0;
+}
+
+.clearAllBtn {
+  border-radius: 6px;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.5rem;
+  height: auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.modalTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .warningIcon {
+    color: #ff4d4f;
+    font-size: 1.2rem;
+  }
+}
+
+.modalContent {
+  font-size: 1rem;
+  margin: 1rem 0;
+  color: #505050;
+}
+
+@media only screen and (max-width: 500px) {
+  .clearAllContainer {
+    padding: 1rem;
+  }
+
+  .clearAllBtn {
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
   }
 }

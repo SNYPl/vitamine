@@ -3,7 +3,7 @@ import { getCurrentUser } from "../components/helper/session";
 import axios, { isAxiosError } from "axios";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-export const getWishlistData = async () => {
+export const getWishlistData = async (page: number = 1, limit: number = 20) => {
   try {
     const user = await getCurrentUser();
 
@@ -17,24 +17,40 @@ export const getWishlistData = async () => {
       return [];
     }
 
-    const apiUrl = `${process.env.API_REQUEST_URL}/api/wishlistList?user=${user.email}`;
+    const apiUrl = `${process.env.API_REQUEST_URL}/api/wishlistList?user=${user.email}&page=${page}&limit=${limit}`;
     console.log("Fetching wishlist from:", apiUrl);
 
-    const response = await fetch(apiUrl, {
-      next: { tags: ["wishlist"] },
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
+    // Set a shorter timeout for the fetch operation
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch wishlist: ${response.status}`);
+    try {
+      const response = await fetch(apiUrl, {
+        next: { tags: ["wishlist"] },
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch wishlist: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof DOMException && error.name === "AbortError") {
+        console.error("Wishlist request timed out");
+        return { error: "Request timed out", items: [] };
+      }
+      throw error;
     }
-
-    const data = await response.json();
-    return data;
   } catch (error) {
     console.error("Error fetching wishlist data:", error);
     return [];
@@ -53,18 +69,32 @@ export const deleteWishListItem = async (productId: string) => {
       throw new Error("User email not found");
     }
 
-    const response = await axios.delete(
-      `${process.env.API_REQUEST_URL}/api/wishlistList`,
-      {
-        params: {
-          id: productId,
-          user: user.email,
-        },
-      }
-    );
+    // Set a timeout for the operation
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-    revalidateTag("wishlist");
-    return response.status;
+    try {
+      const response = await axios.delete(
+        `${process.env.API_REQUEST_URL}/api/wishlistList`,
+        {
+          params: {
+            id: productId,
+            user: user.email,
+          },
+          signal: controller.signal,
+        }
+      );
+
+      clearTimeout(timeoutId);
+      revalidateTag("wishlist");
+      return response.status;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof DOMException && error.name === "AbortError") {
+        throw new Error("Request timed out. Please try again.");
+      }
+      throw error;
+    }
   } catch (error) {
     console.error("Error deleting wishlist item:", error);
     throw error;
@@ -83,17 +113,31 @@ export const deleteAllWishlistProducts = async () => {
       throw new Error("User email not found");
     }
 
-    const response = await axios.delete(
-      `${process.env.API_REQUEST_URL}/api/wishlistList/deleteAll`,
-      {
-        params: {
-          user: user.email,
-        },
-      }
-    );
+    // Set a timeout for the operation
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-    revalidateTag("wishlist");
-    return response.status;
+    try {
+      const response = await axios.delete(
+        `${process.env.API_REQUEST_URL}/api/wishlistList/deleteAll`,
+        {
+          params: {
+            user: user.email,
+          },
+          signal: controller.signal,
+        }
+      );
+
+      clearTimeout(timeoutId);
+      revalidateTag("wishlist");
+      return response.status;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof DOMException && error.name === "AbortError") {
+        throw new Error("Request timed out. Please try again.");
+      }
+      throw error;
+    }
   } catch (error) {
     console.error("Error deleting all wishlist items:", error);
     throw error;
@@ -112,25 +156,42 @@ export const addItemToWishList = async (productId: number) => {
       throw new Error("User email not found");
     }
 
-    const response = await axios.patch(
-      `${process.env.API_REQUEST_URL}/api/favouriteProduct`,
-      {
-        params: {
-          id: productId,
-          user: user.email,
+    // Set a timeout for the operation
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+    try {
+      const response = await axios.patch(
+        `${process.env.API_REQUEST_URL}/api/favouriteProduct`,
+        {
+          params: {
+            id: productId,
+            user: user.email,
+          },
         },
+        {
+          signal: controller.signal,
+        }
+      );
+
+      clearTimeout(timeoutId);
+
+      const responseData = {
+        message: response?.data.message,
+        status: response?.status,
+      };
+
+      revalidateTag("featureProducts");
+      revalidateTag("wishlist");
+
+      return responseData;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof DOMException && error.name === "AbortError") {
+        throw new Error("Request timed out. Please try again.");
       }
-    );
-
-    const responseData = {
-      message: response?.data.message,
-      status: response?.status,
-    };
-
-    revalidateTag("featureProducts");
-    revalidateTag("wishlist");
-
-    return responseData;
+      throw error;
+    }
   } catch (error) {
     if (isAxiosError(error)) {
       throw new Error("Please log in to add items to your wishlist");

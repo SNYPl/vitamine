@@ -1,11 +1,24 @@
 .wishlist {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 3rem 1rem;
 
   .wishlistHeader {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background-color: #f79823;
+      border-radius: 2px;
+    }
 
     h1 {
       font-size: 2.5rem;
@@ -22,8 +35,10 @@
     }
 
     p {
-      color: #666;
-      font-size: 1.1rem;
+      color: #505050;
+      font-size: 1.2rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
     }
   }
 
@@ -32,11 +47,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
-    background-color: #f8f8f8;
-    border-radius: 8px;
+    padding: 5rem 2rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
     text-align: center;
     margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
     .emptyIcon {
       font-size: 5rem;
@@ -53,23 +69,43 @@
 
     p {
       color: #666;
-      margin-bottom: 2rem;
-      max-width: 400px;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      line-height: 1.6;
     }
 
     .shopButton {
       background-color: #f79823;
       color: white;
       font-weight: 500;
-      padding: 0.8rem 2rem;
-      border-radius: 4px;
+      padding: 0.9rem 2.5rem;
+      border-radius: 6px;
       text-decoration: none;
-      transition: background-color 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(247, 152, 35, 0.3);
+      display: inline-block;
 
       &:hover {
         background-color: darken(#f79823, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(247, 152, 35, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
       }
     }
+  }
+
+  .paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .errorAlert {
+    margin-bottom: 2rem;
   }
 }
 
@@ -78,11 +114,65 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 300px;
-  gap: 1rem;
+  height: 350px;
+  gap: 1.5rem;
 
   p {
     color: #666;
     font-size: 1.1rem;
+  }
+}
+
+// Responsive design adjustments
+@media (max-width: 768px) {
+  .wishlist {
+    padding: 2rem 1rem;
+
+    .wishlistHeader {
+      margin-bottom: 2.5rem;
+
+      p {
+        font-size: 1.1rem;
+      }
+    }
+
+    .emptyWishlist {
+      padding: 4rem 1.5rem;
+
+      h2 {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist {
+    padding: 1.5rem 0.8rem;
+
+    .wishlistHeader {
+      margin-bottom: 2rem;
+
+      p {
+        font-size: 1rem;
+      }
+    }
+
+    .emptyWishlist {
+      padding: 3rem 1rem;
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+
+      .shopButton {
+        padding: 0.8rem 2rem;
+        font-size: 0.9rem;
+      }
+    }
   }
 }

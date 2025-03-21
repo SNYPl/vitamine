@@ -1,102 +1,190 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import style from "./style.module.scss";
-import { Button, Tooltip } from "antd";
-import Image from "next/image";
+import { Button, Tooltip, message, Modal, Image } from "antd";
 import NoProduct from "@/components/emptyProduct/noProduct";
 import ItemTitles from "../titles/ItemTitle";
-import { deleteWishListItem } from "@/lib/wishlist";
+import { ShoppingCartOutlined, DeleteOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import { formatCurrencyWithSymbol } from "@/common/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/components/api/addToCart";
 import { setCartUpdated } from "@/store/slices/cartSlice";
-import { LoadingOutlined } from "@ant-design/icons";
-import Link from "next/link";
+import { deleteWishListItem, deleteAllWishlistProducts } from "@/lib/wishlist";
 
-const WishlistItemList = ({ wishlistData }: { wishlistData: any }) => {
-  const [addToCartLoading, setAddToCartLoading] = useState(false);
+interface WishlistItemListProps {
+  wishlistData: any;
+  onDelete?: () => void;
+}
 
+const WishlistItemList = ({
+  wishlistData,
+  onDelete,
+}: WishlistItemListProps) => {
+  const [loadingItems, setLoadingItems] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
   const cartUpdatedRender = useSelector(
     (state: any) => state.cartReducer.cartUpdated
   );
 
   const productDeleteHandler = async (productId: string) => {
-    const data = await deleteWishListItem(productId);
+    try {
+      setLoadingItems((prev) => ({ ...prev, [productId]: true }));
+      await deleteWishListItem(productId);
+      message.success("პროდუქტი წაიშალა სურვილების სიიდან");
+      if (onDelete) onDelete();
+    } catch (error) {
+      message.error("შეცდომა, პროდუქტი ვერ წაიშალა სურვილების სიიდან");
+      console.error(error);
+    } finally {
+      setLoadingItems((prev) => ({ ...prev, [productId]: false }));
+    }
   };
 
-  const addToCartHandler = (
-    id: number,
-    num: number,
-    productQuantity: number,
-    setAddToCartLoading: any
+  const deleteAllHandler = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteAllWishlistProducts();
+      setModalVisible(false);
+      message.success("ყველა პროდუქტი წაიშალა სურვილების სიიდან");
+      if (onDelete) onDelete();
+    } catch (error) {
+      message.error("შეცდომა, პროდუქტები ვერ წაიშალა სურვილების სიიდან");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const addCartHandle = async (
+    id: string,
+    quantity = 1,
+    productQuantity = 10
   ) => {
-    setAddToCartLoading(true);
-    addToCart(id, num, productQuantity, setAddToCartLoading);
-    dispatch(setCartUpdated(!cartUpdatedRender));
-
-    setTimeout(() => {
-      setAddToCartLoading(false);
-    }, 400);
+    try {
+      setLoadingItems((prev) => ({ ...prev, [id]: true }));
+      await addToCart(id, quantity, productQuantity);
+      dispatch(setCartUpdated(!cartUpdatedRender));
+      message.success("პროდუქტი დაემატა კალათაში");
+    } catch (error) {
+      message.error("შეცდომა, პროდუქტი ვერ დაემატა კალათაში");
+      console.error(error);
+    } finally {
+      setLoadingItems((prev) => ({ ...prev, [id]: false }));
+    }
   };
 
-  if (!wishlistData?.length) {
+  if (!wishlistData || wishlistData.length === 0) {
     return <NoProduct title="პროდუქტი არ არის არჩეული" />;
   }
+
   return (
     <>
       <ItemTitles />
-      <section className={style.productList}>
+      <div className={style.productList}>
         {wishlistData.map((product: any) => {
+          const productId = product._id;
+          const isLoading = loadingItems[productId];
+
           return (
-            <div className={style.product} key={product._id}>
+            <div className={style.product} key={productId}>
               <div className={style.productImg}>
                 <Image
-                  src={product.mainImage}
-                  alt="product"
-                  width={110}
-                  height={110}
+                  className={style.productImage}
+                  src={
+                    product.image ||
+                    product.images?.[0] ||
+                    product.mainImage ||
+                    "/placeholder-image.jpg"
+                  }
+                  alt={product.name}
+                  preview={false}
+                  fallback="https://via.placeholder.com/100x100?text=Image+Not+Found"
                 />
               </div>
-              <Link
-                href={`product?id=${product._id}`}
-                className={style.itemLink}
-                target="_blank"
-              >
-                <p className={style.productName}>{product.name}</p>
-              </Link>
-              <p>{product.discount ? product.discount : product.price}</p>
 
-              <div className={style.addCart}>
-                <button
-                  onClick={() => {
-                    addToCartHandler(
-                      product._id,
-                      1,
-                      product.productQuantity,
-                      setAddToCartLoading
-                    );
-                  }}
-                >
-                  {!addToCartLoading ? (
-                    "კალათაში დამატება"
-                  ) : (
-                    <LoadingOutlined spin />
-                  )}
-                </button>
+              <Link href={`/product/${productId}`} className={style.itemLink}>
+                <div className={style.productDetails}>
+                  <h3 className={style.productName}>{product.name}</h3>
+                </div>
+              </Link>
+
+              <div className={style.productPrice}>
+                {product.discountedPrice ? (
+                  <>
+                    <span className={style.discountedPrice}>
+                      {formatCurrencyWithSymbol(product.discountedPrice)}
+                    </span>
+                    <span className={style.oldPrice}>
+                      {formatCurrencyWithSymbol(product.price)}
+                    </span>
+                  </>
+                ) : (
+                  <span>{formatCurrencyWithSymbol(product.price)}</span>
+                )}
               </div>
 
-              <div className={style.productRemove}>
-                <Tooltip title="პროდუქტის წაშლა">
-                  <Button
-                    onClick={() => productDeleteHandler(product._id)}
-                    icon={<i className="fa-solid fa-xmark"></i>}
-                  ></Button>
-                </Tooltip>
+              <div className={style.productActions}>
+                <Button
+                  onClick={() =>
+                    addCartHandle(productId, 1, product.quantity || 10)
+                  }
+                  loading={isLoading}
+                  icon={!isLoading && <ShoppingCartOutlined />}
+                  className={style.addCart}
+                  type="primary"
+                >
+                  {!isLoading && "კალათაში დამატება"}
+                </Button>
+                <Button
+                  onClick={() => productDeleteHandler(productId)}
+                  loading={isLoading}
+                  icon={
+                    !isLoading && <DeleteOutlined style={{ color: "red" }} />
+                  }
+                  danger
+                  className={style.productRemove}
+                />
               </div>
             </div>
           );
         })}
-      </section>
+      </div>
+
+      {wishlistData.length > 0 && (
+        <div className={style.clearAllContainer}>
+          <Button
+            onClick={() => setModalVisible(true)}
+            danger
+            className={style.clearAllBtn}
+            type="primary"
+            loading={isDeleting}
+          >
+            ყველას წაშლა
+          </Button>
+        </div>
+      )}
+
+      <Modal
+        title={
+          <div className={style.modalTitle}>სურვილების სიის გასუფთავება</div>
+        }
+        open={modalVisible}
+        onOk={deleteAllHandler}
+        onCancel={() => setModalVisible(false)}
+        okText="წაშლა"
+        cancelText="გაუქმება"
+        confirmLoading={isDeleting}
+        okButtonProps={{ danger: true }}
+        centered
+      >
+        <p className={style.modalContent}>
+          დარწმუნებული ხართ, რომ გსურთ ყველა პროდუქტის წაშლა სურვილების სიიდან?
+        </p>
+      </Modal>
     </>
   );
 };

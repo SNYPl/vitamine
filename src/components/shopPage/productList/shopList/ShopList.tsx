@@ -13,7 +13,7 @@ import NoProduct from "@/components/emptyProduct/noProduct";
 const ShopList = ({
   userWishlist,
 }: {
-  userWishlist: [string] | undefined | null;
+  userWishlist: string[] | undefined | null;
 }) => {
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
