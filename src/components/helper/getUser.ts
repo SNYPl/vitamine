@@ -11,8 +11,6 @@ export const getUser = async () => {
       return null;
     }
 
-    console.log("User from session:", user);
-
     if (!user.email) {
       console.log("User email is missing");
       return null;
