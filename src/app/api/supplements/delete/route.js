@@ -4,7 +4,7 @@ import Vitamine from "@/models/Vitamine";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/components/helper/session";
 
-export async function POST(req) {
+export async function DELETE(req) {
   try {
     // Get the current user to check if they're an admin
     const user = await getCurrentUser();
@@ -17,9 +17,11 @@ export async function POST(req) {
       });
     }
 
-    const data = await req.json();
+    // Get the product ID from the URL
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
 
-    if (!data._id) {
+    if (!id) {
       return new NextResponse(
         JSON.stringify({ error: "Product ID is required" }),
         { status: 400 }
@@ -28,27 +30,22 @@ export async function POST(req) {
 
     await connectDB();
 
-    // Find and update the vitamin
-    const updatedVitamin = await Vitamine.findByIdAndUpdate(
-      data._id,
-      { ...data, updatedAt: new Date() },
-      { new: true, runValidators: true }
-    );
+    // Find and delete the vitamin
+    const deletedVitamin = await Vitamine.findByIdAndDelete(id);
 
-    if (!updatedVitamin) {
+    if (!deletedVitamin) {
       return new NextResponse(JSON.stringify({ error: "Vitamin not found" }), {
         status: 404,
       });
     }
 
-    // Revalidate dashboard path to reflect updates
+    // Revalidate dashboard path to refresh data
     revalidatePath("/dashboard");
 
     return new NextResponse(
       JSON.stringify({
         success: true,
-        message: "Vitamin updated successfully",
-        vitamin: updatedVitamin,
+        message: "Vitamin deleted successfully",
         revalidated: true,
       }),
       {
@@ -59,11 +56,11 @@ export async function POST(req) {
       }
     );
   } catch (error) {
-    console.error("Error updating vitamin:", error);
+    console.error("Error deleting vitamin:", error);
 
     return new NextResponse(
       JSON.stringify({
-        error: "Error updating vitamin",
+        error: "Error deleting vitamin",
         details: error.message,
       }),
       {

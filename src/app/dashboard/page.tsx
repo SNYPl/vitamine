@@ -32,6 +32,12 @@ export default function Dashboard() {
     try {
       const response = await fetch("/api/supplements/get", {
         cache: "no-store",
+        next: { revalidate: 0 },
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
       });
       if (response.ok) {
         const data = await response.json();
@@ -252,12 +258,21 @@ export default function Dashboard() {
       try {
         const response = await fetch(`/api/supplements/delete?id=${id}`, {
           method: "DELETE",
+          cache: "no-store",
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+          },
         });
 
         if (response.ok) {
+          const data = await response.json();
           setVitamins(vitamins.filter((vitamin) => vitamin._id !== id));
           alert("Product deleted successfully");
-          refreshData();
+
+          // Force a refresh of the data after deletion
+          setTimeout(() => {
+            refreshData();
+          }, 500);
         } else {
           const data = await response.json();
           alert(data.message || "Failed to delete product");
