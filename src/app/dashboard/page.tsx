@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
 import { categories } from "@/data/categories";
+import { useRouter } from "next/navigation";
 
 interface Vitamin {
   _id: string;
@@ -25,39 +26,45 @@ export default function Dashboard() {
   const [deleteInProgress, setDeleteInProgress] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const fetchVitamins = async () => {
+    try {
+      const response = await fetch("/api/supplements/get", {
+        cache: "no-store",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setVitamins(data);
+      } else {
+        console.error("Failed to fetch vitamins");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchVitamins = async () => {
-      try {
-        const response = await fetch("/api/supplements/get");
-        if (response.ok) {
-          const data = await response.json();
-          setVitamins(data);
-        } else {
-          console.error("Failed to fetch vitamins");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchVitamins();
   }, []);
 
-  // Filter vitamins based on selected category and search query
+  const refreshData = () => {
+    setLoading(true);
+    fetchVitamins();
+    router.refresh();
+  };
+
   const filteredVitamins = vitamins.filter((vitamin) => {
-    // Category filter
-    const categoryMatch = 
-      selectedCategory === "all" || 
+    const categoryMatch =
+      selectedCategory === "all" ||
       vitamin.category?.includes(selectedCategory);
-    
-    // Search filter - case insensitive search in product name
-    const searchMatch = 
-      searchQuery === "" || 
+
+    const searchMatch =
+      searchQuery === "" ||
       vitamin.name.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return categoryMatch && searchMatch;
   });
 
@@ -66,15 +73,25 @@ export default function Dashboard() {
   }
 
   if (!session) {
-    return <div className={styles.accessDenied}>Access denied. Please log in with admin credentials.</div>;
+    return (
+      <div className={styles.accessDenied}>
+        Access denied. Please log in with admin credentials.
+      </div>
+    );
   }
-
 
   return (
     <div className={styles.dashboard}>
       <div className={styles.dashboardHeader}>
         <h1>ვიტამინების მენეჯმენტი</h1>
         <div className={styles.actions}>
+          <button
+            onClick={refreshData}
+            className={styles.refreshButton}
+            disabled={loading}
+          >
+            {loading ? "განახლება..." : "განაახლე"}
+          </button>
           <Link href="/dashboard/add-vitamin" className={styles.addButton}>
             დაამატე პროდუქტი
           </Link>
@@ -92,8 +109,8 @@ export default function Dashboard() {
               className={styles.searchInput}
             />
             {searchQuery && (
-              <button 
-                className={styles.clearButton} 
+              <button
+                className={styles.clearButton}
                 onClick={() => setSearchQuery("")}
                 aria-label="Clear search"
               >
@@ -101,14 +118,16 @@ export default function Dashboard() {
               </button>
             )}
           </div>
-          
+
           <div className={styles.categoryFilter}>
             <span className={styles.filterLabel}>ფილტრი კატეგორიით:</span>
             <div className={styles.categoryButtons}>
               {categories.map((category) => (
                 <button
                   key={category.value}
-                  className={`${styles.categoryButton} ${selectedCategory === category.value ? styles.active : ''}`}
+                  className={`${styles.categoryButton} ${
+                    selectedCategory === category.value ? styles.active : ""
+                  }`}
                   onClick={() => setSelectedCategory(category.value)}
                 >
                   {category.name}
@@ -117,10 +136,13 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        
+
         <div className={styles.resultsInfo}>
           {!loading && (
-            <p>ნაჩვენებია {filteredVitamins.length} პროდუქტი {vitamins.length} პროდუქტიდან</p>
+            <p>
+              ნაჩვენებია {filteredVitamins.length} პროდუქტი {vitamins.length}{" "}
+              პროდუქტიდან
+            </p>
           )}
         </div>
       </div>
@@ -130,7 +152,7 @@ export default function Dashboard() {
       ) : filteredVitamins.length === 0 ? (
         <div className={styles.noResults}>
           <p>პროდუქტი ვერ მოიძებნა შერჩეული ფილტრებით.</p>
-          <button 
+          <button
             className={styles.resetFilters}
             onClick={() => {
               setSelectedCategory("all");
@@ -233,9 +255,9 @@ export default function Dashboard() {
         });
 
         if (response.ok) {
-          // Remove the deleted item from the state
           setVitamins(vitamins.filter((vitamin) => vitamin._id !== id));
           alert("Product deleted successfully");
+          refreshData();
         } else {
           const data = await response.json();
           alert(data.message || "Failed to delete product");

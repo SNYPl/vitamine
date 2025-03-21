@@ -165,7 +165,7 @@ export default function AddVitamin() {
   const handleMainImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setMainImageFile(e.target.files[0]);
-      
+
       // Create a preview URL for the selected file
       const reader = new FileReader();
       reader.onload = (event) => {
@@ -177,16 +177,18 @@ export default function AddVitamin() {
     }
   };
 
-  const handleAdditionalImagesSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAdditionalImagesSelect = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (e.target.files && e.target.files.length > 0) {
       const newFiles = Array.from(e.target.files);
-      setAdditionalImageFiles(prev => [...prev, ...newFiles]);
-      
+      setAdditionalImageFiles((prev) => [...prev, ...newFiles]);
+
       // Create preview URLs for all selected files
       const currentImages = getValues("images") || [];
       const newPreviews: string[] = [];
-      
-      newFiles.forEach(file => {
+
+      newFiles.forEach((file) => {
         const reader = new FileReader();
         reader.onload = (event) => {
           if (event.target?.result) {
@@ -202,12 +204,12 @@ export default function AddVitamin() {
   };
 
   const removeAdditionalImage = (index: number) => {
-    setAdditionalImageFiles(prev => {
+    setAdditionalImageFiles((prev) => {
       const newFiles = [...prev];
       newFiles.splice(index, 1);
       return newFiles;
     });
-    
+
     const currentImages = getValues("images");
     setValue(
       "images",
@@ -253,43 +255,45 @@ export default function AddVitamin() {
         setUploadProgress(10);
         const formData = new FormData();
         formData.append("file", mainImageFile);
-        
+
         const uploadResponse = await fetch("/api/upload", {
           method: "POST",
           body: formData,
         });
-        
+
         if (!uploadResponse.ok) {
           throw new Error("Failed to upload main image");
         }
-        
+
         const uploadResult = await uploadResponse.json();
         mainImageUrl = uploadResult.url;
         setUploadProgress(40);
       }
 
       // Upload additional images if selected
-      let additionalImageUrls = data.images.filter(url => url.startsWith('http'));
+      let additionalImageUrls = data.images.filter((url) =>
+        url.startsWith("http")
+      );
       if (additionalImageFiles.length > 0) {
         setUploadProgress(50);
-        
+
         const uploadPromises = additionalImageFiles.map(async (file) => {
           const formData = new FormData();
           formData.append("file", file);
-          
+
           const uploadResponse = await fetch("/api/upload", {
             method: "POST",
             body: formData,
           });
-          
+
           if (!uploadResponse.ok) {
             throw new Error("Failed to upload additional image");
           }
-          
+
           const uploadResult = await uploadResponse.json();
           return uploadResult.url;
         });
-        
+
         const uploadedUrls = await Promise.all(uploadPromises);
         additionalImageUrls = [...additionalImageUrls, ...uploadedUrls];
         setUploadProgress(80);
@@ -303,7 +307,7 @@ export default function AddVitamin() {
       };
 
       setUploadProgress(90);
-      
+
       // Send the data to your API
       const response = await fetch("/api/supplements/create", {
         method: "POST",
@@ -321,6 +325,7 @@ export default function AddVitamin() {
         setMessage({ type: "success", text: "Vitamin created successfully!" });
         setTimeout(() => {
           router.push("/dashboard");
+          router.refresh();
         }, 2000);
       } else {
         setMessage({
@@ -360,9 +365,7 @@ export default function AddVitamin() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formSection}>
-          <h2 className={styles.sectionTitle}>ინფორმაცია
-
-          </h2>
+          <h2 className={styles.sectionTitle}>ინფორმაცია</h2>
 
           <div className={styles.formGroup}>
             <label htmlFor="name">სახელი:</label>
@@ -519,9 +522,11 @@ export default function AddVitamin() {
                   onChange={handleMainImageSelect}
                   className={styles.fileInput}
                 />
-                <button 
-                  type="button" 
-                  onClick={() => document.getElementById('mainImageUpload')?.click()}
+                <button
+                  type="button"
+                  onClick={() =>
+                    document.getElementById("mainImageUpload")?.click()
+                  }
                   className={styles.uploadButton}
                 >
                   Select Image
@@ -530,7 +535,7 @@ export default function AddVitamin() {
                   {mainImageFile ? mainImageFile.name : "No file selected"}
                 </span>
               </div>
-              
+
               {/* Show direct URL input as alternative */}
               <div className={styles.formGroup}>
                 <label htmlFor="mainImageUrl">ან შეიყვანე ლინკი:</label>
@@ -541,7 +546,7 @@ export default function AddVitamin() {
                   {...register("mainImage")}
                 />
               </div>
-              
+
               {/* Image preview */}
               {mainImageValue && (
                 <div className={styles.mainImagePreview}>
@@ -587,7 +592,7 @@ export default function AddVitamin() {
 
         <div className={styles.formSection}>
           <h2 className={styles.sectionTitle}>სხვა ფოტოები</h2>
-          
+
           <div className={styles.formGroup}>
             <label htmlFor="additionalImages">ატვირთე სხვა ფოტოები:</label>
             <div className={styles.fileInputWrapper}>
@@ -599,20 +604,22 @@ export default function AddVitamin() {
                 onChange={handleAdditionalImagesSelect}
                 className={styles.fileInput}
               />
-              <button 
-                type="button" 
-                onClick={() => document.getElementById('additionalImagesUpload')?.click()}
+              <button
+                type="button"
+                onClick={() =>
+                  document.getElementById("additionalImagesUpload")?.click()
+                }
                 className={styles.uploadButton}
               >
                 Select Images
               </button>
               <span className={styles.fileName}>
-                {additionalImageFiles.length > 0 
-                  ? `${additionalImageFiles.length} files selected` 
+                {additionalImageFiles.length > 0
+                  ? `${additionalImageFiles.length} files selected`
                   : "No files selected"}
               </span>
             </div>
-            
+
             {/* Direct URL input */}
             <div className={styles.imageUrlInputGroup}>
               <input
@@ -633,7 +640,7 @@ export default function AddVitamin() {
               </button>
             </div>
           </div>
-          
+
           {/* Image previews */}
           {imagesValue.length > 0 && (
             <div className={styles.additionalImagesGrid}>
@@ -641,8 +648,8 @@ export default function AddVitamin() {
                 <div key={index} className={styles.imageItem}>
                   <div className={styles.imagePreview}>
                     <img src={image} alt={`Product ${index + 1}`} />
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => removeAdditionalImage(index)}
                       className={styles.removeImageButton}
                       aria-label="Remove image"
@@ -677,8 +684,8 @@ export default function AddVitamin() {
                 value={desc}
                 onChange={(e) => handleDescriptionChange(e, index)}
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => removeDescriptionPoint(index)}
                 className={styles.removeButton}
               >
@@ -687,8 +694,8 @@ export default function AddVitamin() {
             </div>
           ))}
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={addDescriptionPoint}
             className={styles.addButton}
           >
@@ -717,8 +724,8 @@ export default function AddVitamin() {
                 value={ingredient}
                 onChange={(e) => handleIngredientChange(e, index)}
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => removeIngredient(index)}
                 className={styles.removeButton}
               >
@@ -727,8 +734,8 @@ export default function AddVitamin() {
             </div>
           ))}
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={addIngredient}
             className={styles.addButton}
           >
@@ -757,7 +764,9 @@ export default function AddVitamin() {
                   <input
                     type="text"
                     value={fact.title}
-                    onChange={(e) => handleSupplementFactChange(e, index, "title")}
+                    onChange={(e) =>
+                      handleSupplementFactChange(e, index, "title")
+                    }
                   />
                 </div>
 
@@ -766,12 +775,14 @@ export default function AddVitamin() {
                   <input
                     type="text"
                     value={fact.info}
-                    onChange={(e) => handleSupplementFactChange(e, index, "info")}
+                    onChange={(e) =>
+                      handleSupplementFactChange(e, index, "info")
+                    }
                   />
                 </div>
 
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => removeSupplementFact(index)}
                   className={styles.removeButton}
                 >
@@ -781,8 +792,8 @@ export default function AddVitamin() {
             </div>
           ))}
 
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={addSupplementFact}
             className={styles.addButton}
           >
@@ -805,7 +816,6 @@ export default function AddVitamin() {
               <option value="Canada">Canada</option>
               <option value="UK">United Kingdom</option>
               <option value="Germany">Germany</option>
-              
             </select>
           </div>
 
@@ -828,13 +838,13 @@ export default function AddVitamin() {
                 დაამატე თეგი
               </button>
             </div>
-            
+
             <div className={styles.tagsContainer}>
               {tagsValues.map((tag, index) => (
                 <div key={index} className={styles.tagItem}>
                   <span>{tag}</span>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => removeTag(index)}
                     className={styles.removeTagButton}
                   >
@@ -847,21 +857,21 @@ export default function AddVitamin() {
         </div>
 
         <div className={styles.formActions}>
-          <button 
-            type="button" 
-            onClick={() => router.push('/dashboard')}
+          <button
+            type="button"
+            onClick={() => router.push("/dashboard")}
             className={styles.cancelButton}
             disabled={isSubmitting}
           >
             Cancel
           </button>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={styles.saveButton}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'ემატება...' : 'დაამატე პროდუქტი'}
+            {isSubmitting ? "ემატება..." : "დაამატე პროდუქტი"}
           </button>
         </div>
       </form>
@@ -869,7 +879,7 @@ export default function AddVitamin() {
       {/* Upload progress indicator */}
       {isUploading && (
         <div className={styles.uploadProgressContainer}>
-          <div 
+          <div
             className={styles.uploadProgressBar}
             style={{ width: `${uploadProgress}%` }}
           ></div>
