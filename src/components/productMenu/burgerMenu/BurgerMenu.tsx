@@ -7,6 +7,9 @@ import { MenuOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { categories } from "@/data/categories.js";
+import { useSession } from "next-auth/react";
+import LoginBtn from "@/components/header/topNav/authBtns/LoginBtn";
+import SignOut from "@/components/header/topNav/authBtns/SignOutBtn";
 
 interface BurgerMenuProps {
   activeMenu: boolean;
@@ -15,6 +18,7 @@ interface BurgerMenuProps {
 const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   const showDrawer = () => {
     setOpen(true);
@@ -23,6 +27,21 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
   const onClose = () => {
     setOpen(false);
   };
+
+  // Custom wrapped login button that closes drawer when clicked
+  const WrappedLoginBtn = () => (
+    <div onClick={onClose}>
+      <LoginBtn />
+    </div>
+  );
+
+  const loginComponent = !session?.user ? (
+    <WrappedLoginBtn />
+  ) : (
+    <div onClick={onClose}>
+      <SignOut user={session?.user.name} />
+    </div>
+  );
 
   return (
     <div className={style.burgerMenuContainer}>
@@ -43,6 +62,10 @@ const BurgerMenu: React.FC<BurgerMenuProps> = ({ activeMenu = false }) => {
         className={style.menuDrawer}
       >
         <div className={style.drawerContent}>
+          <div className={style.userSection}>
+            {loginComponent}
+          </div>
+          
           <div className={style.menuList}>
             {categories.map((item, index) => (
               <Link

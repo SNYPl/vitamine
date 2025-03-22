@@ -1,8 +1,8 @@
 .shop {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #f9fafb;
+  gap: 40px;
 }
 
 /* Hero Section */
@@ -108,11 +108,12 @@
 
 /* Main Content */
 .mainContent {
-  padding: 50px 0;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .searchWrapper {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   background-color: white;
   border-radius: 12px;
   padding: 20px;
@@ -121,8 +122,13 @@
 
 .searchMenu {
   display: flex;
-  column-gap: 30px;
+  gap: 20px;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 
 .shopSection {
@@ -133,25 +139,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.filterBar h2 {
-  font-size: 1.8rem;
-  color: #2d3748;
-  font-weight: 700;
-  position: relative;
+  margin-bottom: 20px;
   
-  &:after {
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 3px;
-    background-color: #88c74a;
-    bottom: -10px;
-    left: 0;
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    
+    @media (max-width: 768px) {
+      font-size: 1.3rem;
+    }
   }
 }
 
@@ -303,5 +299,20 @@
   
   .pageNumbers span:not(.activePage):not(:first-child):not(:last-child) {
     display: none;
+  }
+  
+  .mainContent {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .shopSection {
+    margin-top: 30px;
+  }
+  
+  .filterBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }
