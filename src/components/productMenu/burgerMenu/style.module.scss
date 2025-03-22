@@ -184,6 +184,62 @@
   height: 100%;
 }
 
+.userSection {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 1.05rem;
+    
+    i {
+      margin-right: 8px;
+      color: #88c74a;
+    }
+    
+    &:hover {
+      color: #88c74a;
+    }
+  }
+  
+  :global {
+    .profileCont {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      .profile {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        
+        i {
+          margin-right: 8px;
+          color: #88c74a;
+        }
+        
+        a {
+          margin-left: 5px;
+          color: #88c74a;
+          font-weight: 500;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      
+      button {
+        width: 100%;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
 .menuList {
   flex: 1;
   padding: 16px 0;

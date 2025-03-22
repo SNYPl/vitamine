@@ -246,11 +246,6 @@
   .nonIntroduction {
     display: block;
 
-    // img {
-    // width: auto;
-    // max-width: 100%;
-    // height: auto;
-    // }
   }
 }
 
@@ -263,7 +258,6 @@
 
 @media only screen and (max-width: 770px) {
   .nonIntroduction {
-    margin: 0 !important;
 
     &:hover {
       h4 {
@@ -297,5 +291,15 @@
     a {
       text-align: center;
     }
+  }
+}
+
+
+@media only screen and (max-width: 450px) {
+  .nonIntroduction {
+    
+    margin: 0 auto;
+
+   
   }
 }

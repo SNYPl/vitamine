@@ -27,7 +27,7 @@ const MobileMenuOpener = () => {
         placement="left"
         width={320}
       >
-        <MobileNavigator />
+        <MobileNavigator onClose={onCloseDrawer} />
       </Drawer>
     </>
   );
