@@ -26,11 +26,14 @@ export default function Dashboard() {
   const [deleteInProgress, setDeleteInProgress] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50;
   const router = useRouter();
 
-  const fetchVitamins = async () => {
+  const fetchVitaminsWithTimestamp = async () => {
     try {
-      const response = await fetch("/api/supplements/get", {
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/supplements/get?t=${timestamp}`, {
         cache: "no-store",
         next: { revalidate: 0 },
         headers: {
@@ -53,12 +56,12 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchVitamins();
+    fetchVitaminsWithTimestamp();
   }, []);
 
   const refreshData = () => {
     setLoading(true);
-    fetchVitamins();
+    fetchVitaminsWithTimestamp();
     router.refresh();
   };
 
@@ -73,6 +76,62 @@ export default function Dashboard() {
 
     return categoryMatch && searchMatch;
   });
+
+  // Get current vitamins for pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentVitamins = filteredVitamins.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredVitamins.length / itemsPerPage);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
+  const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
+  
+  // Function to generate page numbers with ellipsis
+  const getPageNumbers = () => {
+    const maxPagesToShow = 5;
+    let pages = [];
+    
+    if (totalPages <= maxPagesToShow) {
+      // If we have fewer pages than max, show all
+      pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+    } else {
+      // Always show first page
+      pages.push(1);
+      
+      // Calculate start and end of middle pages
+      let startPage = Math.max(2, currentPage - 1);
+      let endPage = Math.min(totalPages - 1, currentPage + 1);
+      
+      // Adjust if we're at the beginning or end
+      if (currentPage <= 2) {
+        endPage = 3;
+      } else if (currentPage >= totalPages - 1) {
+        startPage = totalPages - 2;
+      }
+      
+      // Add ellipsis before middle pages if needed
+      if (startPage > 2) {
+        pages.push('...');
+      }
+      
+      // Add middle pages
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+      
+      // Add ellipsis after middle pages if needed
+      if (endPage < totalPages - 1) {
+        pages.push('...');
+      }
+      
+      // Always show last page
+      pages.push(totalPages);
+    }
+    
+    return pages;
+  };
 
   if (status === "loading") {
     return <div className={styles.loadingContainer}>Loading session...</div>;
@@ -146,7 +205,7 @@ export default function Dashboard() {
         <div className={styles.resultsInfo}>
           {!loading && (
             <p>
-              ნაჩვენებია {filteredVitamins.length} პროდუქტი {vitamins.length}{" "}
+              ნაჩვენებია {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredVitamins.length)} პროდუქტი {vitamins.length}{" "}
               პროდუქტიდან
             </p>
           )}
@@ -170,7 +229,7 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className={styles.vitaminGrid}>
-          {filteredVitamins.map((vitamin) => (
+          {currentVitamins.map((vitamin) => (
             <div key={vitamin._id} className={styles.vitaminCard}>
               <div className={styles.vitaminImage}>
                 {vitamin.mainImage ? (
@@ -246,6 +305,40 @@ export default function Dashboard() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {filteredVitamins.length > itemsPerPage && (
+        <div className={styles.pagination}>
+          <button 
+            onClick={prevPage} 
+            disabled={currentPage === 1}
+            className={styles.paginationButton}
+          >
+            წინა გვერდი
+          </button>
+          <div className={styles.pageNumbers}>
+            {getPageNumbers().map((page, index) => (
+              page === '...' ? 
+              <span key={`ellipsis-${index}`} className={styles.ellipsis}>...</span> :
+              <button
+                key={`page-${page}`}
+                onClick={() => paginate(page as number)}
+                className={`${styles.pageButton} ${
+                  currentPage === page ? styles.activePage : ""
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+          <button 
+            onClick={nextPage} 
+            disabled={currentPage === totalPages}
+            className={styles.paginationButton}
+          >
+            შემდეგი გვერდი
+          </button>
         </div>
       )}
     </div>
