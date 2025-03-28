@@ -39,14 +39,15 @@ export default function Dashboard() {
   } = useQuery(
     "dashboardVitamins",
     async () => {
-      const response = await axios.get("/api/supplements/get", {
+      const timestamp = new Date().getTime();
+      const response = await axios.get(`/api/supplements/get?t=${timestamp}`, {
         headers: {
           "Cache-Control": "no-cache, no-store, must-revalidate",
           Pragma: "no-cache",
           Expires: "0",
         },
       });
-      return response.data;
+      return response.data.data || response.data;
     },
     {
       refetchOnWindowFocus: true,
@@ -54,7 +55,8 @@ export default function Dashboard() {
       refetchOnReconnect: true,
       staleTime: 0,
       cacheTime: 0,
-      refetchInterval: 5000, // Refetch every 5 seconds
+      refetchInterval: 5000,
+      refetchIntervalInBackground: false,
     }
   );
 

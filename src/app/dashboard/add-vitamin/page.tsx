@@ -329,13 +329,16 @@ export default function AddVitamin() {
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin created successfully!" });
 
-        // Invalidate and refetch the dashboard vitamins query
-        await queryClient.invalidateQueries("dashboardVitamins");
-        await queryClient.refetchQueries("dashboardVitamins", { exact: true });
+        // More effective cache invalidation for production
+        queryClient.clear(); // Clear the entire cache
 
-        // Then redirect and refresh the page
+        // Specific invalidation for dashboard
+        await queryClient.invalidateQueries("dashboardVitamins");
+        await queryClient.refetchQueries("dashboardVitamins");
+
+        // Force refresh on redirect with timestamp to bust browser cache
         setTimeout(() => {
-          router.replace("/dashboard");
+          router.replace(`/dashboard?t=${Date.now()}`);
         }, 1500);
       } else {
         setMessage({

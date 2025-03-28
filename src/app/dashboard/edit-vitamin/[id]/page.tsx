@@ -530,12 +530,16 @@ export default function EditVitamin({ params }: { params: Params }) {
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin updated successfully!" });
 
-        // Invalidate and refetch the dashboard vitamins query
-        await queryClient.invalidateQueries("dashboardVitamins");
-        await queryClient.refetchQueries("dashboardVitamins", { exact: true });
+        // More effective cache invalidation for production
+        queryClient.clear(); // Clear the entire cache
 
+        // Specific invalidation for dashboard
+        await queryClient.invalidateQueries("dashboardVitamins");
+        await queryClient.refetchQueries("dashboardVitamins");
+
+        // Force refresh on redirect with timestamp to bust browser cache
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push(`/dashboard?t=${Date.now()}`);
         }, 2000);
       } else {
         const errorData = await response.json();
