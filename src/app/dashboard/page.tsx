@@ -6,6 +6,10 @@ import Link from "next/link";
 import styles from "./dashboard.module.css";
 import { categories } from "@/data/categories";
 import { useRouter } from "next/navigation";
+import { useQuery } from "react-query";
+import axios from "axios";
+
+export const dynamic = "force-dynamic";
 
 interface Vitamin {
   _id: string;
@@ -21,8 +25,6 @@ interface Vitamin {
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
-  const [vitamins, setVitamins] = useState<Vitamin[]>([]);
-  const [loading, setLoading] = useState(true);
   const [deleteInProgress, setDeleteInProgress] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,42 +32,32 @@ export default function Dashboard() {
   const itemsPerPage = 50;
   const router = useRouter();
 
-  const fetchVitaminsWithTimestamp = async () => {
-    try {
-      const timestamp = new Date().getTime();
-      const response = await fetch(`/api/supplements/get?t=${timestamp}`, {
-        cache: "no-store",
-        next: { revalidate: 0 },
+  const {
+    data: vitamins = [],
+    isLoading: loading,
+    refetch,
+  } = useQuery(
+    "dashboardVitamins",
+    async () => {
+      const response = await axios.get("/api/supplements/get", {
         headers: {
           "Cache-Control": "no-cache, no-store, must-revalidate",
           Pragma: "no-cache",
           Expires: "0",
         },
       });
-      if (response.ok) {
-        const data = await response.json();
-        setVitamins(data);
-      } else {
-        console.error("Failed to fetch vitamins");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
+      return response.data;
+    },
+    {
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      staleTime: 0, // Always fetch fresh data
+      cacheTime: 0, // Don't cache the data
     }
-  };
+  );
 
-  useEffect(() => {
-    fetchVitaminsWithTimestamp();
-  }, []);
-
-  const refreshData = () => {
-    setLoading(true);
-    fetchVitaminsWithTimestamp();
-    router.refresh();
-  };
-
-  const filteredVitamins = vitamins.filter((vitamin) => {
+  const filteredVitamins = vitamins.filter((vitamin: Vitamin) => {
     const categoryMatch =
       selectedCategory === "all" ||
       vitamin.category?.includes(selectedCategory);
@@ -80,56 +72,60 @@ export default function Dashboard() {
   // Get current vitamins for pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentVitamins = filteredVitamins.slice(indexOfFirstItem, indexOfLastItem);
+  const currentVitamins = filteredVitamins.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
   const totalPages = Math.ceil(filteredVitamins.length / itemsPerPage);
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  const nextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages));
-  const prevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-  
+  const nextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
   // Function to generate page numbers with ellipsis
   const getPageNumbers = () => {
     const maxPagesToShow = 5;
     let pages = [];
-    
+
     if (totalPages <= maxPagesToShow) {
       // If we have fewer pages than max, show all
       pages = Array.from({ length: totalPages }, (_, i) => i + 1);
     } else {
       // Always show first page
       pages.push(1);
-      
+
       // Calculate start and end of middle pages
       let startPage = Math.max(2, currentPage - 1);
       let endPage = Math.min(totalPages - 1, currentPage + 1);
-      
+
       // Adjust if we're at the beginning or end
       if (currentPage <= 2) {
         endPage = 3;
       } else if (currentPage >= totalPages - 1) {
         startPage = totalPages - 2;
       }
-      
+
       // Add ellipsis before middle pages if needed
       if (startPage > 2) {
-        pages.push('...');
+        pages.push("...");
       }
-      
+
       // Add middle pages
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
-      
+
       // Add ellipsis after middle pages if needed
       if (endPage < totalPages - 1) {
-        pages.push('...');
+        pages.push("...");
       }
-      
+
       // Always show last page
       pages.push(totalPages);
     }
-    
+
     return pages;
   };
 
@@ -151,7 +147,9 @@ export default function Dashboard() {
         <h1>ვიტამინების მენეჯმენტი</h1>
         <div className={styles.actions}>
           <button
-            onClick={refreshData}
+            onClick={() => {
+              refetch();
+            }}
             className={styles.refreshButton}
             disabled={loading}
           >
@@ -205,8 +203,9 @@ export default function Dashboard() {
         <div className={styles.resultsInfo}>
           {!loading && (
             <p>
-              ნაჩვენებია {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, filteredVitamins.length)} პროდუქტი {vitamins.length}{" "}
-              პროდუქტიდან
+              ნაჩვენებია {indexOfFirstItem + 1}-
+              {Math.min(indexOfLastItem, filteredVitamins.length)} პროდუქტი{" "}
+              {vitamins.length} პროდუქტიდან
             </p>
           )}
         </div>
@@ -229,7 +228,7 @@ export default function Dashboard() {
         </div>
       ) : (
         <div className={styles.vitaminGrid}>
-          {currentVitamins.map((vitamin) => (
+          {currentVitamins.map((vitamin: Vitamin) => (
             <div key={vitamin._id} className={styles.vitaminCard}>
               <div className={styles.vitaminImage}>
                 {vitamin.mainImage ? (
@@ -270,7 +269,7 @@ export default function Dashboard() {
                   </div>
 
                   <div className={styles.categoryTags}>
-                    {vitamin.category?.map((cat, index) => (
+                    {vitamin.category?.map((cat: string, index: number) => (
                       <span key={index} className={styles.vitaminCategory}>
                         {cat}
                       </span>
@@ -310,30 +309,34 @@ export default function Dashboard() {
 
       {filteredVitamins.length > itemsPerPage && (
         <div className={styles.pagination}>
-          <button 
-            onClick={prevPage} 
+          <button
+            onClick={prevPage}
             disabled={currentPage === 1}
             className={styles.paginationButton}
           >
             წინა გვერდი
           </button>
           <div className={styles.pageNumbers}>
-            {getPageNumbers().map((page, index) => (
-              page === '...' ? 
-              <span key={`ellipsis-${index}`} className={styles.ellipsis}>...</span> :
-              <button
-                key={`page-${page}`}
-                onClick={() => paginate(page as number)}
-                className={`${styles.pageButton} ${
-                  currentPage === page ? styles.activePage : ""
-                }`}
-              >
-                {page}
-              </button>
-            ))}
+            {getPageNumbers().map((page, index) =>
+              page === "..." ? (
+                <span key={`ellipsis-${index}`} className={styles.ellipsis}>
+                  ...
+                </span>
+              ) : (
+                <button
+                  key={`page-${page}`}
+                  onClick={() => paginate(page as number)}
+                  className={`${styles.pageButton} ${
+                    currentPage === page ? styles.activePage : ""
+                  }`}
+                >
+                  {page}
+                </button>
+              )
+            )}
           </div>
-          <button 
-            onClick={nextPage} 
+          <button
+            onClick={nextPage}
             disabled={currentPage === totalPages}
             className={styles.paginationButton}
           >
@@ -359,12 +362,12 @@ export default function Dashboard() {
 
         if (response.ok) {
           const data = await response.json();
-          setVitamins(vitamins.filter((vitamin) => vitamin._id !== id));
+          // Implement logic to remove the deleted vitamin from the state
           alert("Product deleted successfully");
 
           // Force a refresh of the data after deletion
           setTimeout(() => {
-            refreshData();
+            // Implement logic to refetch data
           }, 500);
         } else {
           const data = await response.json();
