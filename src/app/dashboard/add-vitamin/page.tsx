@@ -331,6 +331,7 @@ export default function AddVitamin() {
 
         // Invalidate the dashboard vitamins query to trigger a refetch
         await queryClient.invalidateQueries("dashboardVitamins");
+        await queryClient.refetchQueries("dashboardVitamins");
 
         // Then redirect and refresh the page
         setTimeout(() => {

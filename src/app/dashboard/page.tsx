@@ -32,7 +32,11 @@ export default function Dashboard() {
   const itemsPerPage = 50;
   const router = useRouter();
 
-  const { data: vitamins = [], isLoading: loading } = useQuery(
+  const {
+    data: vitamins = [],
+    isLoading: loading,
+    refetch,
+  } = useQuery(
     "dashboardVitamins",
     async () => {
       const response = await axios.get("/api/supplements/get", {
@@ -48,6 +52,8 @@ export default function Dashboard() {
       refetchOnWindowFocus: true,
       refetchOnMount: true,
       refetchOnReconnect: true,
+      staleTime: 0, // Always fetch fresh data
+      cacheTime: 0, // Don't cache the data
     }
   );
 
@@ -142,7 +148,7 @@ export default function Dashboard() {
         <div className={styles.actions}>
           <button
             onClick={() => {
-              // Implement refresh logic
+              refetch();
             }}
             className={styles.refreshButton}
             disabled={loading}

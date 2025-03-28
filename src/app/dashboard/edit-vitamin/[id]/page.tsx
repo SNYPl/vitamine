@@ -532,6 +532,7 @@ export default function EditVitamin({ params }: { params: Params }) {
 
         // Invalidate the dashboard vitamins query to trigger a refetch
         await queryClient.invalidateQueries("dashboardVitamins");
+        await queryClient.refetchQueries("dashboardVitamins");
 
         setTimeout(() => {
           router.push("/dashboard");
