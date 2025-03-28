@@ -7,6 +7,9 @@ import styles from "./addVitamin.module.scss";
 import Link from "next/link";
 import { categories } from "@/data/categories";
 import Image from "next/image";
+import { useQueryClient } from "react-query";
+
+export const dynamic = "force-dynamic";
 
 interface SupplementFact {
   title: string;
@@ -42,6 +45,7 @@ interface VitaminForm {
 
 export default function AddVitamin() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
   const [newImageUrl, setNewImageUrl] = useState("");
@@ -325,15 +329,11 @@ export default function AddVitamin() {
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin created successfully!" });
 
-        // First update dashboard via fetch to trigger revalidation
-        await fetch("/api/supplements/get", {
-          cache: "no-store",
-          next: { revalidate: 0 },
-        });
+        // Invalidate the dashboard vitamins query to trigger a refetch
+        await queryClient.invalidateQueries("dashboardVitamins");
 
         // Then redirect and refresh the page
         setTimeout(() => {
-          // Use replace instead of push for a full refresh
           router.replace("/dashboard");
         }, 1500);
       } else {

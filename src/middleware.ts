@@ -49,9 +49,27 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  // Add cache control headers for dynamic routes
+  const response = NextResponse.next();
+
+  // Add cache control headers
+  response.headers.set(
+    "Cache-Control",
+    "no-store, no-cache, must-revalidate, proxy-revalidate"
+  );
+  response.headers.set("Pragma", "no-cache");
+  response.headers.set("Expires", "0");
+
+  return response;
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/profile/:path*", "/wishlist/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/api/:path*",
+    "/shop/:path*",
+    "/profile/:path*",
+    "/wishlist/:path*",
+    "/cart/:path*",
+  ],
 };

@@ -4,8 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./edit.module.css";
 import Image from "next/image";
+import { useQueryClient } from "react-query";
 // Remove the direct S3 upload imports as they won't work client-side
 // import { uploadImageToS3, uploadMultipleImagesToS3 } from "@/lib/s3-upload";
+
+export const dynamic = "force-dynamic";
 
 // Add this interface
 interface Params {
@@ -42,6 +45,7 @@ interface Vitamin {
 
 export default function EditVitamin({ params }: { params: Params }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { id } = params;
   const [vitamin, setVitamin] = useState<Vitamin | null>(null);
   const [loading, setLoading] = useState(true);
@@ -525,9 +529,12 @@ export default function EditVitamin({ params }: { params: Params }) {
 
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin updated successfully!" });
+
+        // Invalidate the dashboard vitamins query to trigger a refetch
+        await queryClient.invalidateQueries("dashboardVitamins");
+
         setTimeout(() => {
           router.push("/dashboard");
-          router.refresh();
         }, 2000);
       } else {
         const errorData = await response.json();
