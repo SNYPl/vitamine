@@ -530,9 +530,9 @@ export default function EditVitamin({ params }: { params: Params }) {
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin updated successfully!" });
 
-        // Invalidate the dashboard vitamins query to trigger a refetch
+        // Invalidate and refetch the dashboard vitamins query
         await queryClient.invalidateQueries("dashboardVitamins");
-        await queryClient.refetchQueries("dashboardVitamins");
+        await queryClient.refetchQueries("dashboardVitamins", { exact: true });
 
         setTimeout(() => {
           router.push("/dashboard");

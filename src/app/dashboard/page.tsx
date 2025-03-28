@@ -52,8 +52,9 @@ export default function Dashboard() {
       refetchOnWindowFocus: true,
       refetchOnMount: true,
       refetchOnReconnect: true,
-      staleTime: 0, // Always fetch fresh data
-      cacheTime: 0, // Don't cache the data
+      staleTime: 0,
+      cacheTime: 0,
+      refetchInterval: 5000, // Refetch every 5 seconds
     }
   );
 
@@ -361,14 +362,9 @@ export default function Dashboard() {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          // Implement logic to remove the deleted vitamin from the state
-          alert("Product deleted successfully");
-
           // Force a refresh of the data after deletion
-          setTimeout(() => {
-            // Implement logic to refetch data
-          }, 500);
+          await refetch();
+          alert("Product deleted successfully");
         } else {
           const data = await response.json();
           alert(data.message || "Failed to delete product");

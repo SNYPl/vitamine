@@ -329,9 +329,9 @@ export default function AddVitamin() {
       if (response.ok) {
         setMessage({ type: "success", text: "Vitamin created successfully!" });
 
-        // Invalidate the dashboard vitamins query to trigger a refetch
+        // Invalidate and refetch the dashboard vitamins query
         await queryClient.invalidateQueries("dashboardVitamins");
-        await queryClient.refetchQueries("dashboardVitamins");
+        await queryClient.refetchQueries("dashboardVitamins", { exact: true });
 
         // Then redirect and refresh the page
         setTimeout(() => {
