@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./style.module.scss";
 import Description from "./description/Description";
 import Specifications from "./specifications/Specifications";
@@ -38,6 +38,29 @@ const ProductDescription: React.FC<descriptionProps> = ({
   id,
   user,
 }) => {
+  const [tabBarGutter, setTabBarGutter] = useState<number>(30);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 576) {
+        setTabBarGutter(10);
+      } else if (window.innerWidth <= 768) {
+        setTabBarGutter(20);
+      } else {
+        setTabBarGutter(30);
+      }
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const items: TabsProps["items"] = [
     {
       key: "description",
@@ -72,7 +95,7 @@ const ProductDescription: React.FC<descriptionProps> = ({
         items={items} 
         className={style.tabs}
         size="large"
-        tabBarGutter={30}
+        tabBarGutter={tabBarGutter}
       />
     </section>
   );

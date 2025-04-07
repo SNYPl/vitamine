@@ -23,7 +23,7 @@ export default function OrganizationSchema({
       logo: logoUrl,
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+1-123-456-7890", // Replace with actual contact number
+        telephone: "+995 551 607 474", // Replace with actual contact number
         contactType: "customer service",
         availableLanguage: "English",
       },

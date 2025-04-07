@@ -62,7 +62,7 @@ const Footer: React.FC = ({}) => {
             <div className={styles.footerColumn}>
               <h4>კონტაქტი</h4>
               <address className={styles.footerAddress}>
-                <p><i className="fas fa-phone-alt"></i> +1 234 567 8900</p>
+                <p><i className="fas fa-phone-alt"></i> +995 551 607 474</p>
                 <p><i className="fas fa-envelope"></i> vitamine.vitvit@gmail.com</p>
               </address>
             </div>

@@ -9,6 +9,7 @@ import { ReduxToolkitProvider } from "@/components/helper/reduxProvider";
 import React from "react";
 import ProductInfoModal from "@/components/productInfoModal/ProductInfoModal";
 import AuthWrapper from "./auth_wrapper";
+import ContactButtons from "@/components/common/ContactButtons";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -90,6 +91,7 @@ export default function RootLayout({
                 <Header />
                 <ProductInfoModal />
                 {children}
+                <ContactButtons />
               </AuthWrapper>
             </QueryClientProviderHelper>
             <footer className={"container"}>
